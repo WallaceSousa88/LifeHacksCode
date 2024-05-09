@@ -30,7 +30,7 @@ screenshot_path1 = os.path.join(screenshot_dir, screenshot_name1)
 screenshot1.save(screenshot_path1)
 
 WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[text()='Auditing']"))).click()
-time.sleep(4)
+time.sleep(5)
 
 screenshot2 = pyautogui.screenshot()
 screenshot_name2 = "TI.AC.0093_print_2.png"
@@ -44,7 +44,7 @@ ninety_days_ago = ninety_days_ago.replace(hour=0, minute=0)
 hoje = hoje.replace(hour=23, minute=59)
 url = f"https://dev.azure.com/cemig/_settings/audit?logs-period={ninety_days_ago.strftime('%Y-%m-%dT%H:%M')}Z-{hoje.strftime('%Y-%m-%dT%H:%M')}Z"
 driver.get(url)
-time.sleep(4)
+time.sleep(5)
 
 csv = f"https://auditservice.dev.azure.com/cemig/_apis/audit/downloadLog?format=csv"
 driver.get(csv)
@@ -56,12 +56,12 @@ first_element = WebDriverWait(driver, 20).until(
 )
 first_element.click()
 
-scroll_time = 180 #3min rodando
+scroll_time = 180
 pause_time = 0.5
 scrolls = int(scroll_time / pause_time)
 for _ in range(scrolls):
     driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.PAGE_DOWN)
-    time.sleep(pause_time)
+    WebDriverWait(driver, pause_time).until(EC.visibility_of_element_located((By.TAG_NAME, 'body')))
 
 screenshot3 = pyautogui.screenshot()
 screenshot_name3 = "TI.AC.0093_print_3.png"

@@ -34,11 +34,11 @@ screenshot1 = pyautogui.screenshot()
 screenshot_name1 = "TI.MUD.0052_print_1.png"
 screenshot_path1 = os.path.join(screenshot_dir, screenshot_name1)
 screenshot1.save(screenshot_path1)
-time.sleep(3)
+time.sleep(5)
 
 element = driver.find_element(By.XPATH, "//div[@aria-level='1' and @class='bolt-header-title title-m l' and @role='heading' and text()='master']")
 element.click()
-time.sleep(3)
+time.sleep(5)
 
 pyautogui.press('pagedown')
 time.sleep(5)
@@ -47,7 +47,7 @@ screenshot2 = pyautogui.screenshot()
 screenshot_name2 = "TI.MUD.0052_print_2.png"
 screenshot_path2 = os.path.join(screenshot_dir, screenshot_name2)
 screenshot2.save(screenshot_path2)
-time.sleep(3)
+time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/_settings/audit")
 time.sleep(5)
@@ -55,7 +55,7 @@ screenshot3 = pyautogui.screenshot()
 screenshot_name3 = "TI.MUD.0052_print_3.png"
 screenshot_path3 = os.path.join(screenshot_dir, screenshot_name3)
 screenshot3.save(screenshot_path3)
-time.sleep(3)
+time.sleep(5)
 
 hoje = datetime.now()
 ninety_days_ago = hoje - timedelta(days=89)
@@ -76,18 +76,18 @@ first_element = WebDriverWait(driver, 20).until(
 )
 first_element.click()
 
-scroll_time = 180 #3min rodando
+scroll_time = 180
 pause_time = 0.5
 scrolls = int(scroll_time / pause_time)
 for _ in range(scrolls):
     driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.PAGE_DOWN)
-    time.sleep(pause_time)
+    WebDriverWait(driver, pause_time).until(EC.visibility_of_element_located((By.TAG_NAME, 'body')))
 
 screenshot4 = pyautogui.screenshot()
 screenshot_name4 = "TI.MUD.0052_print_4.png"
 screenshot_path4 = os.path.join(screenshot_dir, screenshot_name4)
 screenshot4.save(screenshot_path4)
-time.sleep(3)
+time.sleep(5)
 
 def subs_texto_imagem(doc, search_text, image_path):
     for p in doc.paragraphs:
@@ -124,4 +124,3 @@ word_file_path = os.path.join(screenshot_dir, 'TI.MUD.0052.docx')
 doc.save(word_file_path)
 
 driver.quit()
-s
