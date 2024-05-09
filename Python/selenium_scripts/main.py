@@ -42,7 +42,7 @@ def execute_script(script_name, user_id):
     os.system(f'python {script_name} {user_id}')
 
 def remove_csv(user_id):
-    files = glob.glob(f'C:\\Users\\{user_id}\\Downloads\\auditLog*.csv')
+    files = glob.glob(f'C:\\Users\\{user_id}\\Downloads\\auditLog*.csv')    
     for file in files:
         os.remove(file)
 
