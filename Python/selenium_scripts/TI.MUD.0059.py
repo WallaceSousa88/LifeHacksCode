@@ -13,16 +13,17 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 
 user_id = sys.argv[1]
+unidade_disco = sys.argv[2]
 
-driver_path = "C:\\edgedriver_win64\\msedgedriver.exe"
+driver_path = f"{unidade_disco}:\\edgedriver_win64\\msedgedriver.exe"
 driver = webdriver.Edge(service=Service(executable_path=driver_path))
 driver.maximize_window()
 
+screenshot_dir = f"{unidade_disco}:\\Users\\{user_id}\\Desktop\\Relatorio"
+doc = Document(f"{unidade_disco}:\\Users\\{user_id}\\Desktop\\Relatorio\\TI.MUD.0059.docx")
+
 driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories?_a=policies&refs=refs/heads/master")
 time.sleep(15)
-
-screenshot_dir = f"C:\\Users\\{user_id}\\Desktop\\Relatorio"
-doc = Document(f"C:\\Users\\{user_id}\\Desktop\\Relatorio\\TI.AC.0093.docx")
 
 screenshot1 = pyautogui.screenshot()
 screenshot_name1 = "TI.MUD.0059_print_1.png"
@@ -53,9 +54,9 @@ screenshot3.save(screenshot_path3)
 time.sleep(5)
 
 hoje = datetime.now()
-periodo = hoje - timedelta(days=89)
+periodo = hoje - timedelta(days=90)
 
-periodo = periodo.replace(hour=0, minute=0)
+ninety_days_ago = ninety_days_ago.replace(hour=datetime.now().hour, minute=0) + timedelta(hours=4)
 hoje = hoje.replace(hour=23, minute=59)
 url = f"https://dev.azure.com/cemig/_settings/audit?logs-period={periodo.strftime('%Y-%m-%dT%H:%M')}Z-{hoje.strftime('%Y-%m-%dT%H:%M')}Z"
 driver.get(url)
