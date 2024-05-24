@@ -2,6 +2,7 @@
 # pip install pynput
 # pip install keyboard
 
+import sys
 from pynput.mouse import Button as MouseButton, Controller
 import time
 import keyboard
@@ -39,7 +40,10 @@ def auto_clicker(botao, tempo_entre_cliques):
         if auto_clicker_ativo:
             mouse.press(botao_mouse)
             mouse.release(botao_mouse)
-            time.sleep(tempo_entre_cliques)
+            for _ in range(int(tempo_entre_cliques * 10)):
+                if not auto_clicker_ativo:
+                    break
+                time.sleep(0.1)
         else:
             time.sleep(0.1)
 
@@ -49,6 +53,15 @@ def iniciar_auto_clicker():
     tempo_entre_cliques = float(entry.get())
     thread_auto_clicker = threading.Thread(target=auto_clicker, args=(botao, tempo_entre_cliques))
     thread_auto_clicker.start()
+
+def fechar_programa():
+    global auto_clicker_ativo
+    global thread_auto_clicker
+    auto_clicker_ativo = False
+    if thread_auto_clicker is not None:
+        thread_auto_clicker.join()
+    root.quit()
+    sys.exit()
 
 root = Tk()
 
@@ -65,5 +78,5 @@ entry.pack()
 
 Button(root, text="Aplicar", command=iniciar_auto_clicker).pack()
 
-root.protocol("WM_DELETE_WINDOW", root.quit)
+root.protocol("WM_DELETE_WINDOW", fechar_programa)
 root.mainloop()
