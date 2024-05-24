@@ -5,6 +5,7 @@
 from pynput.mouse import Button, Controller
 import time
 import keyboard
+import threading
 
 mouse = Controller()
 auto_clicker_ativo = False
@@ -24,18 +25,26 @@ def auto_clicker():
 
     print(f"Auto Clicker pronto para ser ativado com a tecla 'F4'.")
 
-    while True:
-        if keyboard.is_pressed('f4'):
-            auto_clicker_ativo = not auto_clicker_ativo
-            if auto_clicker_ativo:
-                print("Auto Clicker ativado.")
-            else:
-                print("Auto Clicker desativado.")
+    def on_f4_press(event):
+        global auto_clicker_ativo
+        if event.event_type == 'down':
+            return
+        auto_clicker_ativo = not auto_clicker_ativo
+        if auto_clicker_ativo:
+            print("Auto Clicker ativado.")
+        else:
+            print("Auto Clicker desativado.")
 
+    keyboard.hook_key('f4', on_f4_press)
+
+    while True:
         if auto_clicker_ativo:
             mouse.press(botao_mouse)
             mouse.release(botao_mouse)
             time.sleep(tempo_entre_cliques)
-        time.sleep(0.1)
+        else:
+            time.sleep(0.1)
 
-auto_clicker()
+threading.Thread(target=auto_clicker).start()
+
+keyboard.wait()
