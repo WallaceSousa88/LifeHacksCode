@@ -8,6 +8,7 @@ import time
 import keyboard
 import threading
 from tkinter import *
+import random
 
 mouse = Controller()
 auto_clicker_ativo = False
@@ -40,10 +41,11 @@ def auto_clicker(botao, tempo_entre_cliques):
         if auto_clicker_ativo:
             mouse.press(botao_mouse)
             mouse.release(botao_mouse)
+            keyboard.press_and_release(str(random.randint(1, 4)))
             for _ in range(int(tempo_entre_cliques * 10)):
                 if not auto_clicker_ativo:
                     break
-                time.sleep(0.1)
+                time.sleep(random.randint(100, 1000) / 1000)
         else:
             time.sleep(0.1)
 
