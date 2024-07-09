@@ -25,19 +25,32 @@ doc = Document(f"{unidade_disco}:\\Users\\{user_id}\\Desktop\\Relatorio\\TI.AC.0
 driver.get("https://dev.azure.com/cemig/_settings/organizationOverview")
 time.sleep(15)
 
+element = driver.find_element(By.XPATH, "//div[@class='title-l' and text()='Overview']")
+element.click()
+time.sleep(5)
+
 screenshot1 = pyautogui.screenshot()
-screenshot_name1 = "TI.AC.0092_print_1.png"
+screenshot_name1 = "TI.AC.0092_print_1_organization_owner.png"
 screenshot_path1 = os.path.join(screenshot_dir, screenshot_name1)
 screenshot1.save(screenshot_path1)
+time.sleep(5)
+
+pyautogui.press('pagedown')
+time.sleep(5)
+
+screenshot2 = pyautogui.screenshot()
+screenshot_name2 = "TI.AC.0092_print_2_organization_owner.png"
+screenshot_path2 = os.path.join(screenshot_dir, screenshot_name2)
+screenshot2.save(screenshot_path2)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/_settings/groups")
 time.sleep(5)
 
-screenshot2 = pyautogui.screenshot()
-screenshot_name2 = "TI.AC.0092_print_2.png"
-screenshot_path2 = os.path.join(screenshot_dir, screenshot_name2)
-screenshot2.save(screenshot_path2)
+screenshot3 = pyautogui.screenshot()
+screenshot_name3 = "TI.AC.0092_print_3_permissions.png"
+screenshot_path3 = os.path.join(screenshot_dir, screenshot_name3)
+screenshot3.save(screenshot_path3)
 time.sleep(5)
 
 element = driver.find_element(By.XPATH, "//span[text()='Total']")
@@ -47,11 +60,11 @@ time.sleep(5)
 pyautogui.press('pagedown')
 time.sleep(5)
 
-screenshot3 = pyautogui.screenshot()
-screenshot_name3 = "TI.AC.0092_print_3.png"
-screenshot_path3 = os.path.join(screenshot_dir, screenshot_name3)
-screenshot3.save(screenshot_path3)
-time.sleep(5)
+screenshot4 = pyautogui.screenshot()
+screenshot_name4 = "TI.AC.0092_print_4_permissions.png"
+screenshot_path4 = os.path.join(screenshot_dir, screenshot_name4)
+screenshot4.save(screenshot_path4)
+time.sleep(5)   
 
 search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//input[@type='text' and @aria-label='Search groups']")))
 search_field.click()
@@ -61,10 +74,10 @@ cemig_element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.X
 cemig_element.click()
 time.sleep(5)
 
-screenshot4 = pyautogui.screenshot()
-screenshot_name4 = "TI.AC.0092_print_4.png"
-screenshot_path4 = os.path.join(screenshot_dir, screenshot_name4)
-screenshot4.save(screenshot_path4)
+screenshot5 = pyautogui.screenshot()
+screenshot_name5 = "TI.AC.0092_print_5_gerentes.png"
+screenshot_path5 = os.path.join(screenshot_dir, screenshot_name5)
+screenshot5.save(screenshot_path5)
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//div[@class='text-ellipsis bolt-header-title title-m l' and @role='heading' and text()='[cemig]\\Gerentes']")))
@@ -74,10 +87,10 @@ time.sleep(5)
 pyautogui.press('pagedown')
 time.sleep(5)
 
-screenshot5 = pyautogui.screenshot()
-screenshot_name5 = "TI.AC.0092_print_5.png"
-screenshot_path5 = os.path.join(screenshot_dir, screenshot_name5)
-screenshot5.save(screenshot_path5)
+screenshot6 = pyautogui.screenshot()
+screenshot_name6 = "TI.AC.0092_print_6_gerentes.png"
+screenshot_path6 = os.path.join(screenshot_dir, screenshot_name6)
+screenshot6.save(screenshot_path6)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/_settings/groups")
@@ -87,14 +100,15 @@ search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XP
 search_field.click()
 search_field.send_keys('NSIG - Coordenadores')
 time.sleep(5)
+
 cemig_element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis capitalize' and text()='[cemig]']")))
 cemig_element.click()
 time.sleep(5)
 
-screenshot6 = pyautogui.screenshot()
-screenshot_name6 = "TI.AC.0092_print_6.png"
-screenshot_path6 = os.path.join(screenshot_dir, screenshot_name6)
-screenshot6.save(screenshot_path6)
+screenshot7 = pyautogui.screenshot()
+screenshot_name7 = "TI.AC.0092_print_7_coordenadores.png"
+screenshot_path7 = os.path.join(screenshot_dir, screenshot_name7)
+screenshot7.save(screenshot_path7)
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//div[@class='text-ellipsis bolt-header-title title-m l' and @role='heading' and text()='[cemig]\\NSIG - Coordenadores']")))
@@ -104,10 +118,10 @@ time.sleep(5)
 pyautogui.press('pagedown')
 time.sleep(5)
 
-screenshot7 = pyautogui.screenshot()
-screenshot_name7 = "TI.AC.0092_print_7.png"
-screenshot_path7 = os.path.join(screenshot_dir, screenshot_name7)
-screenshot7.save(screenshot_path7)
+screenshot8 = pyautogui.screenshot()
+screenshot_name8 = "TI.AC.0092_print_8_coordenadores.png"
+screenshot_path8 = os.path.join(screenshot_dir, screenshot_name8)
+screenshot8.save(screenshot_path8)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/_settings/groups")
@@ -117,14 +131,15 @@ search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XP
 search_field.click()
 search_field.send_keys('Project Collection Administrators')
 time.sleep(5)
+
 cemig_element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis capitalize' and text()='[cemig]']")))
 cemig_element.click()
 time.sleep(5)
 
-screenshot8 = pyautogui.screenshot()
-screenshot_name8 = "TI.AC.0092_print_8.png"
-screenshot_path8 = os.path.join(screenshot_dir, screenshot_name8)
-screenshot8.save(screenshot_path8)
+screenshot9 = pyautogui.screenshot()
+screenshot_name9 = "TI.AC.0092_print_9_project_collection_administrators.png"
+screenshot_path9 = os.path.join(screenshot_dir, screenshot_name9)
+screenshot9.save(screenshot_path9)
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//div[@class='text-ellipsis bolt-header-title title-m l' and @role='heading' and text()='[cemig]\\Project Collection Administrators']")))
@@ -134,19 +149,19 @@ time.sleep(5)
 pyautogui.press('pagedown')
 time.sleep(5)
 
-screenshot9 = pyautogui.screenshot()
-screenshot_name9 = "TI.AC.0092_print_9.png"
-screenshot_path9 = os.path.join(screenshot_dir, screenshot_name9)
-screenshot9.save(screenshot_path9)
+screenshot10 = pyautogui.screenshot()
+screenshot_name10 = "TI.AC.0092_print_10_project_collection_administrators.png"
+screenshot_path10 = os.path.join(screenshot_dir, screenshot_name10)
+screenshot10.save(screenshot_path10)
 time.sleep(5)
 
 WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[text()='Members']"))).click()
 time.sleep(5)
 
-screenshot10 = pyautogui.screenshot()
-screenshot_name10 = "TI.AC.0092_print_10.png"
-screenshot_path10 = os.path.join(screenshot_dir, screenshot_name10)
-screenshot10.save(screenshot_path10)
+screenshot11 = pyautogui.screenshot()
+screenshot_name11 = "TI.AC.0092_print_11_project_collection_administrators.png"
+screenshot_path11 = os.path.join(screenshot_dir, screenshot_name11)
+screenshot11.save(screenshot_path11)
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//div[@class='text-ellipsis bolt-header-title title-m l' and @role='heading' and text()='[cemig]\\Project Collection Administrators']")))
@@ -156,10 +171,10 @@ time.sleep(5)
 pyautogui.press('pagedown')
 time.sleep(5)
 
-screenshot11 = pyautogui.screenshot()
-screenshot_name11 = "TI.AC.0092_print_11.png"
-screenshot_path11 = os.path.join(screenshot_dir, screenshot_name11)
-screenshot11.save(screenshot_path11)
+screenshot12 = pyautogui.screenshot()
+screenshot_name12 = "TI.AC.0092_print_12_project_collection_administrators.png"
+screenshot_path12 = os.path.join(screenshot_dir, screenshot_name12)
+screenshot12.save(screenshot_path12)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/_settings/groups")
@@ -169,14 +184,15 @@ search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XP
 search_field.click()
 search_field.send_keys('Project Collection Build Administrators')
 time.sleep(5)
+
 cemig_element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis capitalize' and text()='[cemig]']")))
 cemig_element.click()
 time.sleep(5)
 
-screenshot12 = pyautogui.screenshot()
-screenshot_name12 = "TI.AC.0092_print_12.png"
-screenshot_path12 = os.path.join(screenshot_dir, screenshot_name12)
-screenshot12.save(screenshot_path12)
+screenshot13 = pyautogui.screenshot()
+screenshot_name13 = "TI.AC.0092_print_13_project_collection_build_administrators.png"
+screenshot_path13 = os.path.join(screenshot_dir, screenshot_name13)
+screenshot13.save(screenshot_path13)
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//div[@class='text-ellipsis bolt-header-title title-m l' and @role='heading' and text()='[cemig]\\Project Collection Build Administrators']")))
@@ -186,10 +202,10 @@ time.sleep(5)
 pyautogui.press('pagedown')
 time.sleep(5)
 
-screenshot13 = pyautogui.screenshot()
-screenshot_name13 = "TI.AC.0092_print_13.png"
-screenshot_path13 = os.path.join(screenshot_dir, screenshot_name13)
-screenshot13.save(screenshot_path13)
+screenshot14 = pyautogui.screenshot()
+screenshot_name14 = "TI.AC.0092_print_14_project_collection_build_administrators.png"
+screenshot_path14 = os.path.join(screenshot_dir, screenshot_name14)
+screenshot14.save(screenshot_path14)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/_settings/groups")
@@ -199,14 +215,15 @@ search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XP
 search_field.click()
 search_field.send_keys('Project Collection Build Service Accounts')
 time.sleep(5)
+
 cemig_element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis capitalize' and text()='[cemig]']")))
 cemig_element.click()
 time.sleep(5)
 
-screenshot14 = pyautogui.screenshot()
-screenshot_name14 = "TI.AC.0092_print_14.png"
-screenshot_path14 = os.path.join(screenshot_dir, screenshot_name14)
-screenshot14.save(screenshot_path14)
+screenshot15 = pyautogui.screenshot()
+screenshot_name15 = "TI.AC.0092_print_15_project_collection_build_service_accounts.png"
+screenshot_path15 = os.path.join(screenshot_dir, screenshot_name15)
+screenshot15.save(screenshot_path15)
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//div[@class='text-ellipsis bolt-header-title title-m l' and @role='heading' and text()='[cemig]\\Project Collection Build Service Accounts']")))
@@ -216,10 +233,10 @@ time.sleep(5)
 pyautogui.press('pagedown')
 time.sleep(5)
 
-screenshot15 = pyautogui.screenshot()
-screenshot_name15 = "TI.AC.0092_print_15.png"
-screenshot_path15 = os.path.join(screenshot_dir, screenshot_name15)
-screenshot15.save(screenshot_path15)
+screenshot16 = pyautogui.screenshot()
+screenshot_name16 = "TI.AC.0092_print_16_project_collection_build_service_accounts.png"
+screenshot_path16 = os.path.join(screenshot_dir, screenshot_name16)
+screenshot16.save(screenshot_path16)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/_settings/groups")
@@ -229,14 +246,15 @@ search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XP
 search_field.click()
 search_field.send_keys('Project Collection Proxy Service Accounts')
 time.sleep(5)
+
 cemig_element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis capitalize' and text()='[cemig]']")))
 cemig_element.click()
 time.sleep(5)
 
-screenshot16 = pyautogui.screenshot()
-screenshot_name16 = "TI.AC.0092_print_16.png"
-screenshot_path16 = os.path.join(screenshot_dir, screenshot_name16)
-screenshot16.save(screenshot_path16)
+screenshot17 = pyautogui.screenshot()
+screenshot_name17 = "TI.AC.0092_print_17_project_collection_proxy_service_accounts.png"
+screenshot_path17 = os.path.join(screenshot_dir, screenshot_name17)
+screenshot17.save(screenshot_path17)
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//div[@class='text-ellipsis bolt-header-title title-m l' and @role='heading' and text()='[cemig]\\Project Collection Proxy Service Accounts']")))
@@ -246,10 +264,10 @@ time.sleep(5)
 pyautogui.press('pagedown')
 time.sleep(5)
 
-screenshot17 = pyautogui.screenshot()
-screenshot_name17 = "TI.AC.0092_print_17.png"
-screenshot_path17 = os.path.join(screenshot_dir, screenshot_name17)
-screenshot17.save(screenshot_path17)
+screenshot18 = pyautogui.screenshot()
+screenshot_name18 = "TI.AC.0092_print_18_project_collection_proxy_service_accounts.png"
+screenshot_path18 = os.path.join(screenshot_dir, screenshot_name18)
+screenshot18.save(screenshot_path18)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/_settings/groups")
@@ -259,14 +277,15 @@ search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XP
 search_field.click()
 search_field.send_keys('Project Collection Service Accounts')
 time.sleep(5)
+
 cemig_element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis capitalize' and text()='[cemig]']")))
 cemig_element.click()
 time.sleep(5)
 
-screenshot18 = pyautogui.screenshot()
-screenshot_name18 = "TI.AC.0092_print_18.png"
-screenshot_path18 = os.path.join(screenshot_dir, screenshot_name18)
-screenshot18.save(screenshot_path18)
+screenshot19 = pyautogui.screenshot()
+screenshot_name19 = "TI.AC.0092_print_19_project_collection_service_accounts.png"
+screenshot_path19 = os.path.join(screenshot_dir, screenshot_name19)
+screenshot19.save(screenshot_path19)
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//div[@class='text-ellipsis bolt-header-title title-m l' and @role='heading' and text()='[cemig]\\Project Collection Service Accounts']")))
@@ -276,25 +295,26 @@ time.sleep(5)
 pyautogui.press('pagedown')
 time.sleep(5)
 
-screenshot19 = pyautogui.screenshot()
-screenshot_name19 = "TI.AC.0092_print_19.png"
-screenshot_path19 = os.path.join(screenshot_dir, screenshot_name19)
-screenshot19.save(screenshot_path19)
+screenshot20 = pyautogui.screenshot()
+screenshot_name20 = "TI.AC.0092_print_20_project_collection_service_accounts.png"
+screenshot_path20 = os.path.join(screenshot_dir, screenshot_name20)
+screenshot20.save(screenshot_path20)
 time.sleep(5)
 
 WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[text()='Members']"))).click()
 time.sleep(5)
 
-screenshot20 = pyautogui.screenshot()
-screenshot_name20 = "TI.AC.0092_print_20.png"
-screenshot_path20 = os.path.join(screenshot_dir, screenshot_name20)
-screenshot20.save(screenshot_path20)
+screenshot21 = pyautogui.screenshot()
+screenshot_name21 = "TI.AC.0092_print_21_project_collection_service_accounts.png"
+screenshot_path21 = os.path.join(screenshot_dir, screenshot_name21)
+screenshot21.save(screenshot_path21)
 time.sleep(5)
 
 search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//input[@type='text' and @aria-label='Search users and groups']")))
 search_field.click()
 search_field.send_keys('Enterprise Service Accounts')
 time.sleep(5)
+
 cemig_element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis' and text()='group']")))
 cemig_element.click()
 time.sleep(5)
@@ -302,10 +322,10 @@ time.sleep(5)
 WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[text()='Members']"))).click()
 time.sleep(5)
 
-screenshot21 = pyautogui.screenshot()
-screenshot_name21 = "TI.AC.0092_print_21.png"
-screenshot_path21 = os.path.join(screenshot_dir, screenshot_name21)
-screenshot21.save(screenshot_path21)
+screenshot22 = pyautogui.screenshot()
+screenshot_name22 = "TI.AC.0092_print_22_project_collection_service_accounts.png"
+screenshot_path22 = os.path.join(screenshot_dir, screenshot_name22)
+screenshot22.save(screenshot_path22)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/_settings/groups")
@@ -315,14 +335,15 @@ search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XP
 search_field.click()
 search_field.send_keys('Project Collection Test Service Accounts')
 time.sleep(5)
+
 cemig_element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis capitalize' and text()='[cemig]']")))
 cemig_element.click()
 time.sleep(5)
 
-screenshot22 = pyautogui.screenshot()
-screenshot_name22 = "TI.AC.0092_print_22.png"
-screenshot_path22 = os.path.join(screenshot_dir, screenshot_name22)
-screenshot22.save(screenshot_path22)
+screenshot23 = pyautogui.screenshot()
+screenshot_name23 = "TI.AC.0092_print_23_project_collection_test_service_accounts.png"
+screenshot_path23 = os.path.join(screenshot_dir, screenshot_name23)
+screenshot23.save(screenshot_path23)
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//div[@class='text-ellipsis bolt-header-title title-m l' and @role='heading' and text()='[cemig]\\Project Collection Test Service Accounts']")))
@@ -332,10 +353,10 @@ time.sleep(5)
 pyautogui.press('pagedown')
 time.sleep(5)
 
-screenshot23 = pyautogui.screenshot()
-screenshot_name23 = "TI.AC.0092_print_23.png"
-screenshot_path23 = os.path.join(screenshot_dir, screenshot_name23)
-screenshot23.save(screenshot_path23)
+screenshot24 = pyautogui.screenshot()
+screenshot_name24 = "TI.AC.0092_print_24_project_collection_test_service_accounts.png"
+screenshot_path24 = os.path.join(screenshot_dir, screenshot_name24)
+screenshot24.save(screenshot_path24)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/_settings/groups")
@@ -345,14 +366,15 @@ search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XP
 search_field.click()
 search_field.send_keys('Project Collection Valid Users')
 time.sleep(5)
+
 cemig_element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis capitalize' and text()='[cemig]']")))
 cemig_element.click()
 time.sleep(5)
 
-screenshot24 = pyautogui.screenshot()
-screenshot_name24 = "TI.AC.0092_print_24.png"
-screenshot_path24 = os.path.join(screenshot_dir, screenshot_name24)
-screenshot24.save(screenshot_path24)
+screenshot25 = pyautogui.screenshot()
+screenshot_name25 = "TI.AC.0092_print_25_project_collection_valid_users.png"
+screenshot_path25 = os.path.join(screenshot_dir, screenshot_name25)
+screenshot25.save(screenshot_path25)
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//div[@class='text-ellipsis bolt-header-title title-m l' and @role='heading' and text()='[cemig]\\Project Collection Valid Users']")))
@@ -362,10 +384,10 @@ time.sleep(5)
 pyautogui.press('pagedown')
 time.sleep(5)
 
-screenshot25 = pyautogui.screenshot()
-screenshot_name25 = "TI.AC.0092_print_25.png"
-screenshot_path25 = os.path.join(screenshot_dir, screenshot_name25)
-screenshot25.save(screenshot_path25)
+screenshot26 = pyautogui.screenshot()
+screenshot_name26 = "TI.AC.0092_print_26_project_collection_valid_users.png"
+screenshot_path26 = os.path.join(screenshot_dir, screenshot_name26)
+screenshot26.save(screenshot_path26)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/_settings/groups")
@@ -375,14 +397,15 @@ search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XP
 search_field.click()
 search_field.send_keys('Project-Scoped Users')
 time.sleep(5)
+
 cemig_element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis capitalize' and text()='[cemig]']")))
 cemig_element.click()
 time.sleep(5)
 
-screenshot26 = pyautogui.screenshot()
-screenshot_name26 = "TI.AC.0092_print_26.png"
-screenshot_path26 = os.path.join(screenshot_dir, screenshot_name26)
-screenshot26.save(screenshot_path26)
+screenshot27 = pyautogui.screenshot()
+screenshot_name27 = "TI.AC.0092_print_27_project_scoped_users.png"
+screenshot_path27 = os.path.join(screenshot_dir, screenshot_name27)
+screenshot27.save(screenshot_path27)
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//div[@class='text-ellipsis bolt-header-title title-m l' and @role='heading' and text()='[cemig]\\Project-Scoped Users']")))
@@ -392,10 +415,10 @@ time.sleep(5)
 pyautogui.press('pagedown')
 time.sleep(5)
 
-screenshot27 = pyautogui.screenshot()
-screenshot_name27 = "TI.AC.0092_print_27.png"
-screenshot_path27 = os.path.join(screenshot_dir, screenshot_name27)
-screenshot27.save(screenshot_path27)
+screenshot28 = pyautogui.screenshot()
+screenshot_name28 = "TI.AC.0092_print_28_project_scoped_users.png"
+screenshot_path28 = os.path.join(screenshot_dir, screenshot_name28)
+screenshot28.save(screenshot_path28)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/_settings/groups")
@@ -405,14 +428,15 @@ search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XP
 search_field.click()
 search_field.send_keys('Qualidade')
 time.sleep(5)
+
 cemig_element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis capitalize' and text()='[cemig]']")))
 cemig_element.click()
 time.sleep(5)
 
-screenshot28 = pyautogui.screenshot()
-screenshot_name28 = "TI.AC.0092_print_28.png"
-screenshot_path28 = os.path.join(screenshot_dir, screenshot_name28)
-screenshot28.save(screenshot_path28)
+screenshot29 = pyautogui.screenshot()
+screenshot_name29 = "TI.AC.0092_print_29_qualidade.png"
+screenshot_path29 = os.path.join(screenshot_dir, screenshot_name29)
+screenshot29.save(screenshot_path29)
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//div[@class='text-ellipsis bolt-header-title title-m l' and @role='heading' and text()='[cemig]\\Qualidade']")))
@@ -422,10 +446,10 @@ time.sleep(5)
 pyautogui.press('pagedown')
 time.sleep(5)
 
-screenshot29 = pyautogui.screenshot()
-screenshot_name29 = "TI.AC.0092_print_29.png"
-screenshot_path29 = os.path.join(screenshot_dir, screenshot_name29)
-screenshot29.save(screenshot_path29)
+screenshot30 = pyautogui.screenshot()
+screenshot_name30 = "TI.AC.0092_print_30_qualidade.png"
+screenshot_path30 = os.path.join(screenshot_dir, screenshot_name30)
+screenshot30.save(screenshot_path30)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/_settings/groups")
@@ -435,14 +459,15 @@ search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XP
 search_field.click()
 search_field.send_keys('Security Service Group')
 time.sleep(5)
+
 cemig_element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis capitalize' and text()='[cemig]']")))
 cemig_element.click()
 time.sleep(5)
 
-screenshot30 = pyautogui.screenshot()
-screenshot_name30 = "TI.AC.0092_print_30.png"
-screenshot_path30 = os.path.join(screenshot_dir, screenshot_name30)
-screenshot30.save(screenshot_path30)
+screenshot31 = pyautogui.screenshot()
+screenshot_name31 = "TI.AC.0092_print_31_security_service_group.png"
+screenshot_path31 = os.path.join(screenshot_dir, screenshot_name31)
+screenshot31.save(screenshot_path31)
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//div[@class='text-ellipsis bolt-header-title title-m l' and @role='heading' and text()='[cemig]\\Security Service Group']")))
@@ -452,41 +477,17 @@ time.sleep(5)
 pyautogui.press('pagedown')
 time.sleep(5)
 
-screenshot31 = pyautogui.screenshot()
-screenshot_name31 = "TI.AC.0092_print_31.png"
-screenshot_path31 = os.path.join(screenshot_dir, screenshot_name31)
-screenshot31.save(screenshot_path31)
+screenshot32 = pyautogui.screenshot()
+screenshot_name32 = "TI.AC.0092_print_32_security_service_group.png"
+screenshot_path32 = os.path.join(screenshot_dir, screenshot_name32)
+screenshot32.save(screenshot_path32)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/SGL/_settings/permissions")
 time.sleep(5)
 
-screenshot32 = pyautogui.screenshot()
-screenshot_name32 = "TI.AC.0092_print_32.png"
-screenshot_path32 = os.path.join(screenshot_dir, screenshot_name32)
-screenshot32.save(screenshot_path32)
-time.sleep(5)
-
-driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
-time.sleep(5)
-
-element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-BATCH-3']")))
-element.click()
-time.sleep(5)
-
-element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='bolt-tab-text' and @data-content='Security']")))
-element.click()
-time.sleep(5)
-
-element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis' and text()='master']")))
-element.click()
-time.sleep(5)
-
-element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='capitalize members-text ' and text()='Build Administrators']")))
-element.click()
-
 screenshot33 = pyautogui.screenshot()
-screenshot_name33 = "TI.AC.0092_print_33.png"
+screenshot_name33 = "TI.AC.0092_print_33_sgl_permissions.png"
 screenshot_path33 = os.path.join(screenshot_dir, screenshot_name33)
 screenshot33.save(screenshot_path33)
 time.sleep(5)
@@ -494,6 +495,31 @@ time.sleep(5)
 driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
 time.sleep(5)
 
+element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-BATCH-3']")))
+element.click()
+time.sleep(5)
+
+element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='bolt-tab-text' and @data-content='Security']")))
+element.click()
+time.sleep(5)
+
+element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis' and text()='master']")))
+element.click()
+time.sleep(5)
+
+element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='capitalize members-text ' and text()='Build Administrators']")))
+element.click()
+time.sleep(5)
+
+screenshot34 = pyautogui.screenshot()
+screenshot_name34 = "TI.AC.0092_print_34_batch3_build_administrators.png"
+screenshot_path34 = os.path.join(screenshot_dir, screenshot_name34)
+screenshot34.save(screenshot_path34)
+time.sleep(5)
+
+driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
+time.sleep(5)
+
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-COLETOR-ANDROID']")))
 element.click()
 time.sleep(5)
@@ -508,11 +534,12 @@ time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='capitalize members-text ' and text()='Build Administrators']")))
 element.click()
+time.sleep(5)
 
-screenshot34 = pyautogui.screenshot()
-screenshot_name34 = "TI.AC.0092_print_34.png"
-screenshot_path34 = os.path.join(screenshot_dir, screenshot_name34)
-screenshot34.save(screenshot_path34)
+screenshot35 = pyautogui.screenshot()
+screenshot_name35 = "TI.AC.0092_print_35_coletor_build_administrators.png"
+screenshot_path35 = os.path.join(screenshot_dir, screenshot_name35)
+screenshot35.save(screenshot_path35)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
@@ -532,11 +559,12 @@ time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='capitalize members-text ' and text()='Build Administrators']")))
 element.click()
+time.sleep(5)
 
-screenshot35 = pyautogui.screenshot()
-screenshot_name35 = "TI.AC.0092_print_35.png"
-screenshot_path35 = os.path.join(screenshot_dir, screenshot_name35)
-screenshot35.save(screenshot_path35)
+screenshot36 = pyautogui.screenshot()
+screenshot_name36 = "TI.AC.0092_print_36_empreiteira_build_administrators.png"
+screenshot_path36 = os.path.join(screenshot_dir, screenshot_name36)
+screenshot36.save(screenshot_path36)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
@@ -556,11 +584,12 @@ time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='capitalize members-text ' and text()='Build Administrators']")))
 element.click()
+time.sleep(5)
 
-screenshot36 = pyautogui.screenshot()
-screenshot_name36 = "TI.AC.0092_print_36.png"
-screenshot_path36 = os.path.join(screenshot_dir, screenshot_name36)
-screenshot36.save(screenshot_path36)
+screenshot37 = pyautogui.screenshot()
+screenshot_name37 = "TI.AC.0092_print_37_web_build_administrators.png"
+screenshot_path37 = os.path.join(screenshot_dir, screenshot_name37)
+screenshot37.save(screenshot_path37)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
@@ -580,11 +609,12 @@ time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='capitalize members-text ' and text()='Contributors']")))
 element.click()
+time.sleep(5)
 
-screenshot37 = pyautogui.screenshot()
-screenshot_name37 = "TI.AC.0092_print_37.png"
-screenshot_path37 = os.path.join(screenshot_dir, screenshot_name37)
-screenshot37.save(screenshot_path37)
+screenshot38 = pyautogui.screenshot()
+screenshot_name38 = "TI.AC.0092_print_38_batch3_contributors.png"
+screenshot_path38 = os.path.join(screenshot_dir, screenshot_name38)
+screenshot38.save(screenshot_path38)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
@@ -604,11 +634,12 @@ time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='capitalize members-text ' and text()='Contributors']")))
 element.click()
+time.sleep(5)
 
-screenshot38 = pyautogui.screenshot()
-screenshot_name38 = "TI.AC.0092_print_38.png"
-screenshot_path38 = os.path.join(screenshot_dir, screenshot_name38)
-screenshot38.save(screenshot_path38)
+screenshot39 = pyautogui.screenshot()
+screenshot_name39 = "TI.AC.0092_print_39_coletor_contributors.png"
+screenshot_path39 = os.path.join(screenshot_dir, screenshot_name39)
+screenshot39.save(screenshot_path39)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
@@ -628,11 +659,12 @@ time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='capitalize members-text ' and text()='Contributors']")))
 element.click()
+time.sleep(5)
 
-screenshot39 = pyautogui.screenshot()
-screenshot_name39 = "TI.AC.0092_print_39.png"
-screenshot_path39 = os.path.join(screenshot_dir, screenshot_name39)
-screenshot39.save(screenshot_path39)
+screenshot40 = pyautogui.screenshot()
+screenshot_name40 = "TI.AC.0092_print_40_empreiteira_contributors.png"
+screenshot_path40 = os.path.join(screenshot_dir, screenshot_name40)
+screenshot40.save(screenshot_path40)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
@@ -652,11 +684,12 @@ time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='capitalize members-text ' and text()='Contributors']")))
 element.click()
+time.sleep(5)
 
-screenshot40 = pyautogui.screenshot()
-screenshot_name40 = "TI.AC.0092_print_40.png"
-screenshot_path40 = os.path.join(screenshot_dir, screenshot_name40)
-screenshot40.save(screenshot_path40)
+screenshot41 = pyautogui.screenshot()
+screenshot_name41 = "TI.AC.0092_print_41_web_contributors.png"
+screenshot_path41 = os.path.join(screenshot_dir, screenshot_name41)
+screenshot41.save(screenshot_path41)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
@@ -676,42 +709,19 @@ time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='capitalize members-text ' and text()='Project Administrators']")))
 element.click()
+time.sleep(5)
 
-screenshot41 = pyautogui.screenshot()
-screenshot_name41 = "TI.AC.0092_print_41.png"
-screenshot_path41 = os.path.join(screenshot_dir, screenshot_name41)
-screenshot41.save(screenshot_path41)
+screenshot42 = pyautogui.screenshot()
+screenshot_name42 = "TI.AC.0092_print_42_batch3_master.png"
+screenshot_path42 = os.path.join(screenshot_dir, screenshot_name42)
+screenshot42.save(screenshot_path42)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/SGL/_settings/projectOverview")
 time.sleep(5)
 
-screenshot42 = pyautogui.screenshot()
-screenshot_name42 = "TI.AC.0092_print_42.png"
-screenshot_path42 = os.path.join(screenshot_dir, screenshot_name42)
-screenshot42.save(screenshot_path42)
-time.sleep(5)
-
-driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
-time.sleep(5)
-
-element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-BATCH-3']")))
-element.click()
-time.sleep(5)
-
-element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='bolt-tab-text' and @data-content='Security']")))
-element.click()
-time.sleep(5)
-
-element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis' and text()='master']")))
-element.click()
-time.sleep(5)
-
-element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='capitalize members-text ' and text()='Readers']")))
-element.click()
-
 screenshot43 = pyautogui.screenshot()
-screenshot_name43 = "TI.AC.0092_print_43.png"
+screenshot_name43 = "TI.AC.0092_print_43_project_details.png"
 screenshot_path43 = os.path.join(screenshot_dir, screenshot_name43)
 screenshot43.save(screenshot_path43)
 time.sleep(5)
@@ -719,7 +729,7 @@ time.sleep(5)
 driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
 time.sleep(5)
 
-element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-COLETOR-ANDROID']")))
+element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-BATCH-3']")))
 element.click()
 time.sleep(5)
 
@@ -733,9 +743,10 @@ time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='capitalize members-text ' and text()='Readers']")))
 element.click()
+time.sleep(5)
 
 screenshot44 = pyautogui.screenshot()
-screenshot_name44 = "TI.AC.0092_print_44.png"
+screenshot_name44 = "TI.AC.0092_print_44_batch3_readers.png"
 screenshot_path44 = os.path.join(screenshot_dir, screenshot_name44)
 screenshot44.save(screenshot_path44)
 time.sleep(5)
@@ -743,6 +754,31 @@ time.sleep(5)
 driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
 time.sleep(5)
 
+element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-COLETOR-ANDROID']")))
+element.click()
+time.sleep(5)
+
+element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='bolt-tab-text' and @data-content='Security']")))
+element.click()
+time.sleep(5)
+
+element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis' and text()='master']")))
+element.click()
+time.sleep(5)
+
+element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='capitalize members-text ' and text()='Readers']")))
+element.click()
+time.sleep(5)
+
+screenshot45 = pyautogui.screenshot()
+screenshot_name45 = "TI.AC.0092_print_45_coletor_readers.png"
+screenshot_path45 = os.path.join(screenshot_dir, screenshot_name45)
+screenshot45.save(screenshot_path45)
+time.sleep(5)
+
+driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
+time.sleep(5)
+
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-EMPREITEIRA-DESKTOP']")))
 element.click()
 time.sleep(5)
@@ -757,11 +793,12 @@ time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='capitalize members-text ' and text()='Readers']")))
 element.click()
+time.sleep(5)
 
-screenshot45 = pyautogui.screenshot()
-screenshot_name45 = "TI.AC.0092_print_45.png"
-screenshot_path45 = os.path.join(screenshot_dir, screenshot_name45)
-screenshot45.save(screenshot_path45)
+screenshot46 = pyautogui.screenshot()
+screenshot_name46 = "TI.AC.0092_print_46_empreiteira_readers.png"
+screenshot_path46 = os.path.join(screenshot_dir, screenshot_name46)
+screenshot46.save(screenshot_path46)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
@@ -781,11 +818,12 @@ time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='capitalize members-text ' and text()='Readers']")))
 element.click()
+time.sleep(5)
 
-screenshot46 = pyautogui.screenshot()
-screenshot_name46 = "TI.AC.0092_print_46.png"
-screenshot_path46 = os.path.join(screenshot_dir, screenshot_name46)
-screenshot46.save(screenshot_path46)
+screenshot47 = pyautogui.screenshot()
+screenshot_name47 = "TI.AC.0092_print_47_web_readers.png"
+screenshot_path47 = os.path.join(screenshot_dir, screenshot_name47)
+screenshot47.save(screenshot_path47)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
@@ -805,11 +843,12 @@ time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='capitalize members-text ' and text()='FERNANDO LOPES DA SILVEIRA']")))
 element.click()
+time.sleep(5)
 
-screenshot47 = pyautogui.screenshot()
-screenshot_name47 = "TI.AC.0092_print_47.png"
-screenshot_path47 = os.path.join(screenshot_dir, screenshot_name47)
-screenshot47.save(screenshot_path47)
+screenshot48 = pyautogui.screenshot()
+screenshot_name48 = "TI.AC.0092_print_48_batch3_owner.png"
+screenshot_path48 = os.path.join(screenshot_dir, screenshot_name48)
+screenshot48.save(screenshot_path48)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
@@ -829,12 +868,63 @@ time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='capitalize members-text ' and text()='FERNANDO LOPES DA SILVEIRA']")))
 element.click()
-
-screenshot48 = pyautogui.screenshot()
-screenshot_name48 = "TI.AC.0092_print_48.png"
-screenshot_path48 = os.path.join(screenshot_dir, screenshot_name48)
-screenshot48.save(screenshot_path48)
 time.sleep(5)
+
+screenshot49 = pyautogui.screenshot()
+screenshot_name49 = "TI.AC.0092_print_49_web_owner.png"
+screenshot_path49 = os.path.join(screenshot_dir, screenshot_name49)
+screenshot49.save(screenshot_path49)
+time.sleep(5)
+
+# driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
+# time.sleep(5)
+
+# element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-COLETOR-ANDROID']")))
+# element.click()
+# time.sleep(5)
+
+# element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='bolt-tab-text' and @data-content='Security']")))
+# element.click()
+# time.sleep(5)
+
+# element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis' and text()='master']")))
+# element.click()
+# time.sleep(5)
+
+# element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='capitalize members-text ' and text()='FERNANDO LOPES DA SILVEIRA']")))
+# element.click()
+# time.sleep(5)
+
+# screenshot50 = pyautogui.screenshot()
+# screenshot_name50 = "TI.AC.0092_print_50_coletor_owner.png"
+# screenshot_path50 = os.path.join(screenshot_dir, screenshot_name50)
+# screenshot50.save(screenshot_path50)
+# time.sleep(5)
+
+# driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
+# time.sleep(5)
+
+# element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-EMPREITEIRA-DESKTOP']")))
+# element.click()
+# time.sleep(5)
+
+# element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='bolt-tab-text' and @data-content='Security']")))
+# element.click()
+# time.sleep(5)
+
+# element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis' and text()='master']")))
+# element.click()
+# time.sleep(5)
+
+# element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='capitalize members-text ' and text()='FERNANDO LOPES DA SILVEIRA']")))
+# element.click()
+# time.sleep(5)
+
+# screenshot51 = pyautogui.screenshot()
+# screenshot_name51 = "TI.AC.0092_print_51_empreiteira_owner.png"
+# screenshot_path51 = os.path.join(screenshot_dir, screenshot_name51)
+# screenshot51.save(screenshot_path51)
+# time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
 time.sleep(5)
@@ -853,11 +943,12 @@ time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='capitalize members-text ' and text()='SGL Build Service (cemig)']")))
 element.click()
+time.sleep(5)
 
-screenshot49 = pyautogui.screenshot()
-screenshot_name49 = "TI.AC.0092_print_49.png"
-screenshot_path49 = os.path.join(screenshot_dir, screenshot_name49)
-screenshot49.save(screenshot_path49)
+screenshot52 = pyautogui.screenshot()
+screenshot_name52 = "TI.AC.0092_print_52_batch3_build_service.png"
+screenshot_path52 = os.path.join(screenshot_dir, screenshot_name52)
+screenshot52.save(screenshot_path52)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
@@ -877,11 +968,12 @@ time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='capitalize members-text ' and text()='SGL Build Service (cemig)']")))
 element.click()
+time.sleep(5)
 
-screenshot50 = pyautogui.screenshot()
-screenshot_name50 = "TI.AC.0092_print_50.png"
-screenshot_path50 = os.path.join(screenshot_dir, screenshot_name50)
-screenshot50.save(screenshot_path50)
+screenshot53 = pyautogui.screenshot()
+screenshot_name53 = "TI.AC.0092_print_53_coletor_build_service.png"
+screenshot_path53 = os.path.join(screenshot_dir, screenshot_name53)
+screenshot53.save(screenshot_path53)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
@@ -901,11 +993,12 @@ time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='capitalize members-text ' and text()='SGL Build Service (cemig)']")))
 element.click()
+time.sleep(5)
 
-screenshot51 = pyautogui.screenshot()
-screenshot_name51 = "TI.AC.0092_print_51.png"
-screenshot_path51 = os.path.join(screenshot_dir, screenshot_name51)
-screenshot51.save(screenshot_path51)
+screenshot54 = pyautogui.screenshot()
+screenshot_name54 = "TI.AC.0092_print_54_empreiteira_build_service.png"
+screenshot_path54 = os.path.join(screenshot_dir, screenshot_name54)
+screenshot54.save(screenshot_path54)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
@@ -925,11 +1018,12 @@ time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='capitalize members-text ' and text()='SGL Build Service (cemig)']")))
 element.click()
+time.sleep(5)
 
-screenshot52 = pyautogui.screenshot()
-screenshot_name52 = "TI.AC.0092_print_52.png"
-screenshot_path52 = os.path.join(screenshot_dir, screenshot_name52)
-screenshot52.save(screenshot_path52)
+screenshot55 = pyautogui.screenshot()
+screenshot_name55 = "TI.AC.0092_print_55_web_build_service.png"
+screenshot_path55 = os.path.join(screenshot_dir, screenshot_name55)
+screenshot55.save(screenshot_path55)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/_settings/groups")
@@ -939,6 +1033,7 @@ search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XP
 search_field.click()
 search_field.send_keys('NSIG - Coordenadores')
 time.sleep(5)
+
 cemig_element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis capitalize' and text()='[cemig]']")))
 cemig_element.click()
 time.sleep(5)
@@ -947,19 +1042,19 @@ element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, 
 element.click()
 time.sleep(5)
 
-screenshot53 = pyautogui.screenshot()
-screenshot_name53 = "TI.AC.0092_print_53.png"
-screenshot_path53 = os.path.join(screenshot_dir, screenshot_name53)
-screenshot53.save(screenshot_path53)
+screenshot56 = pyautogui.screenshot()
+screenshot_name56 = "TI.AC.0092_print_56_coordenadores.png"
+screenshot_path56 = os.path.join(screenshot_dir, screenshot_name56)
+screenshot56.save(screenshot_path56)
 time.sleep(5)
 
 driver.get("https://dev.azure.com/cemig/_settings/audit")
 time.sleep(5)
 
-screenshot54 = pyautogui.screenshot()
-screenshot_name54 = "TI.MUD.0059_print_54.png"
-screenshot_path54 = os.path.join(screenshot_dir, screenshot_name54)
-screenshot54.save(screenshot_path54)
+screenshot57 = pyautogui.screenshot()
+screenshot_name57 = "TI.AC.0092_print_57_auditing.png"
+screenshot_path57 = os.path.join(screenshot_dir, screenshot_name57)
+screenshot57.save(screenshot_path57)
 time.sleep(5)
 
 hoje = datetime.now()
@@ -981,17 +1076,17 @@ first_element = WebDriverWait(driver, 20).until(
 )
 first_element.click()
 
-scroll_time = 180
+scroll_time = 120
 pause_time = 0.5
 scrolls = int(scroll_time / pause_time)
 for _ in range(scrolls):
     driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.PAGE_DOWN)
     WebDriverWait(driver, pause_time).until(EC.visibility_of_element_located((By.TAG_NAME, 'body')))
 
-screenshot55 = pyautogui.screenshot()
-screenshot_name55 = "TI.AC.0092_print_55.png"
-screenshot_path55 = os.path.join(screenshot_dir, screenshot_name55)
-screenshot55.save(screenshot_path55)
+screenshot58 = pyautogui.screenshot()
+screenshot_name58 = "TI.AC.0092_print_58_auditing.png"
+screenshot_path58 = os.path.join(screenshot_dir, screenshot_name58)
+screenshot58.save(screenshot_path58)
 
 def subs_texto_imagem(doc, search_text, image_path):
     for p in doc.paragraphs:
@@ -1000,61 +1095,64 @@ def subs_texto_imagem(doc, search_text, image_path):
             run = p.add_run()
             run.add_picture(image_path, width=Inches(6.0))
 
-subs_texto_imagem(doc, '$03$', screenshot_path1)
-subs_texto_imagem(doc, '$04$', screenshot_path2)
-subs_texto_imagem(doc, '$05$', screenshot_path3)
-subs_texto_imagem(doc, '$06$', screenshot_path4)
-subs_texto_imagem(doc, '$07$', screenshot_path5)
-subs_texto_imagem(doc, '$08$', screenshot_path6)
-subs_texto_imagem(doc, '$09$', screenshot_path7)
-subs_texto_imagem(doc, '$10$', screenshot_path8)
-subs_texto_imagem(doc, '$11$', screenshot_path9)
-subs_texto_imagem(doc, '$12$', screenshot_path10)
-subs_texto_imagem(doc, '$13$', screenshot_path11)
-subs_texto_imagem(doc, '$14$', screenshot_path12)
-subs_texto_imagem(doc, '$15$', screenshot_path13)
-subs_texto_imagem(doc, '$16$', screenshot_path14)
-subs_texto_imagem(doc, '$17$', screenshot_path15)
-subs_texto_imagem(doc, '$18$', screenshot_path16)
-subs_texto_imagem(doc, '$19$', screenshot_path17)
-subs_texto_imagem(doc, '$20$', screenshot_path18)
-subs_texto_imagem(doc, '$21$', screenshot_path19)
-subs_texto_imagem(doc, '$22$', screenshot_path20)
-subs_texto_imagem(doc, '$23$', screenshot_path21)
-subs_texto_imagem(doc, '$24$', screenshot_path22)
-subs_texto_imagem(doc, '$25$', screenshot_path23)
-subs_texto_imagem(doc, '$26$', screenshot_path24)
-subs_texto_imagem(doc, '$27$', screenshot_path25)
-subs_texto_imagem(doc, '$28$', screenshot_path26)
-subs_texto_imagem(doc, '$29$', screenshot_path27)
-subs_texto_imagem(doc, '$30$', screenshot_path28)
-subs_texto_imagem(doc, '$31$', screenshot_path29)
-subs_texto_imagem(doc, '$32$', screenshot_path30)
-subs_texto_imagem(doc, '$33$', screenshot_path31)
-subs_texto_imagem(doc, '$34$', screenshot_path32)
-subs_texto_imagem(doc, '$35$', screenshot_path33)
-subs_texto_imagem(doc, '$36$', screenshot_path34)
-subs_texto_imagem(doc, '$37$', screenshot_path35)
-subs_texto_imagem(doc, '$38$', screenshot_path36)
-subs_texto_imagem(doc, '$39$', screenshot_path37)
-subs_texto_imagem(doc, '$40$', screenshot_path38)
-subs_texto_imagem(doc, '$41$', screenshot_path39)
-subs_texto_imagem(doc, '$42$', screenshot_path40)
-subs_texto_imagem(doc, '$43$', screenshot_path41)
-subs_texto_imagem(doc, '$44$', screenshot_path42)
-subs_texto_imagem(doc, '$45$', screenshot_path43)
-subs_texto_imagem(doc, '$46$', screenshot_path44)
-subs_texto_imagem(doc, '$47$', screenshot_path45)
-subs_texto_imagem(doc, '$48$', screenshot_path46)
-subs_texto_imagem(doc, '$49$', screenshot_path47)
-subs_texto_imagem(doc, '$50$', screenshot_path48)
-subs_texto_imagem(doc, '$51$', screenshot_path49)
-subs_texto_imagem(doc, '$52$', screenshot_path50)
-subs_texto_imagem(doc, '$53$', screenshot_path51)
-subs_texto_imagem(doc, '$54$', screenshot_path52)
-subs_texto_imagem(doc, '$55$', screenshot_path53)
-subs_texto_imagem(doc, '$56$', screenshot_path54)
-subs_texto_imagem(doc, '$57$', screenshot_path55)
+subs_texto_imagem(doc, '$print_1_organization_owner$', screenshot_path1)
+subs_texto_imagem(doc, '$print_2_organization_owner$', screenshot_path2)
+subs_texto_imagem(doc, '$print_3_permissions$', screenshot_path3)
+subs_texto_imagem(doc, '$print_4_permissions$', screenshot_path4)
+subs_texto_imagem(doc, '$print_5_gerentes$', screenshot_path5)
+subs_texto_imagem(doc, '$print_6_gerentes$', screenshot_path6)
+subs_texto_imagem(doc, '$print_7_coordenadores$', screenshot_path7)
+subs_texto_imagem(doc, '$print_8_coordenadores$', screenshot_path8)
+subs_texto_imagem(doc, '$print_9_project_collection_administrators$', screenshot_path9)
+subs_texto_imagem(doc, '$print_10_project_collection_administrators$', screenshot_path10)
+subs_texto_imagem(doc, '$print_11_project_collection_administrators$', screenshot_path11)
+subs_texto_imagem(doc, '$print_12_project_collection_administrators$', screenshot_path12)
+subs_texto_imagem(doc, '$print_13_project_collection_build_administrators$', screenshot_path13)
+subs_texto_imagem(doc, '$print_14_project_collection_build_administrators$', screenshot_path14)
+subs_texto_imagem(doc, '$print_15_project_collection_build_service_accounts$', screenshot_path15)
+subs_texto_imagem(doc, '$print_16_project_collection_build_service_accounts$', screenshot_path16)
+subs_texto_imagem(doc, '$print_17_project_collection_proxy_service_accounts$', screenshot_path17)
+subs_texto_imagem(doc, '$print_18_project_collection_proxy_service_accounts$', screenshot_path18)
+subs_texto_imagem(doc, '$print_19_project_collection_service_accounts$', screenshot_path19)
+subs_texto_imagem(doc, '$print_20_project_collection_service_accounts$', screenshot_path20)
+subs_texto_imagem(doc, '$print_21_project_collection_service_accounts$', screenshot_path21)
+subs_texto_imagem(doc, '$print_22_project_collection_service_accounts$', screenshot_path22)
+subs_texto_imagem(doc, '$print_23_project_collection_test_service_accounts$', screenshot_path23)
+subs_texto_imagem(doc, '$print_24_project_collection_test_service_accounts$', screenshot_path24)
+subs_texto_imagem(doc, '$print_25_project_collection_valid_users$', screenshot_path25)
+subs_texto_imagem(doc, '$print_26_project_collection_valid_users$', screenshot_path26)
+subs_texto_imagem(doc, '$print_27_project_scoped_users$', screenshot_path27)
+subs_texto_imagem(doc, '$print_28_project_scoped_users$', screenshot_path28)
+subs_texto_imagem(doc, '$print_29_qualidade$', screenshot_path29)
+subs_texto_imagem(doc, '$print_30_qualidade$', screenshot_path30)
+subs_texto_imagem(doc, '$print_31_security_service_group$', screenshot_path31)
+subs_texto_imagem(doc, '$print_32_security_service_group$', screenshot_path32)
+subs_texto_imagem(doc, '$print_33_sgl_permissions$', screenshot_path33)
+subs_texto_imagem(doc, '$print_34_batch3_build_administrators$', screenshot_path34)
+subs_texto_imagem(doc, '$print_35_coletor_build_administrators$', screenshot_path35)
+subs_texto_imagem(doc, '$print_36_empreiteira_build_administrators$', screenshot_path36)
+subs_texto_imagem(doc, '$print_37_web_build_administrators$', screenshot_path37)
+subs_texto_imagem(doc, '$print_38_batch3_contributors$', screenshot_path38)
+subs_texto_imagem(doc, '$print_39_coletor_contributors$', screenshot_path39)
+subs_texto_imagem(doc, '$print_40_empreiteira_contributors$', screenshot_path40)
+subs_texto_imagem(doc, '$print_41_web_contributors$', screenshot_path41)
+subs_texto_imagem(doc, '$print_42_batch3_master$', screenshot_path42)
+subs_texto_imagem(doc, '$print_43_project_details$', screenshot_path43)
+subs_texto_imagem(doc, '$print_44_batch3_readers$', screenshot_path44)
+subs_texto_imagem(doc, '$print_45_coletor_readers$', screenshot_path45)
+subs_texto_imagem(doc, '$print_46_empreiteira_readers$', screenshot_path46)
+subs_texto_imagem(doc, '$print_47_web_readers$', screenshot_path47)
+subs_texto_imagem(doc, '$print_48_batch3_owner$', screenshot_path48)
+subs_texto_imagem(doc, '$print_49_web_owner$', screenshot_path49)
+# subs_texto_imagem(doc, '$print_50_coletor_owner$', screenshot_path50)
+# subs_texto_imagem(doc, '$print_51_empreiteira_owner$', screenshot_path51)
+subs_texto_imagem(doc, '$print_52_batch3_build_service$', screenshot_path52)
+subs_texto_imagem(doc, '$print_53_coletor_build_service$', screenshot_path53)
+subs_texto_imagem(doc, '$print_54_empreiteira_build_service$', screenshot_path54)
+subs_texto_imagem(doc, '$print_55_web_build_service$', screenshot_path55)
+subs_texto_imagem(doc, '$print_56_coordenadores$', screenshot_path56)
+subs_texto_imagem(doc, '$print_57_auditing$', screenshot_path57)
+subs_texto_imagem(doc, '$print_58_auditing$', screenshot_path58)
 
 def subs_texto_data(doc, old_text, new_text):
     for p in doc.paragraphs:

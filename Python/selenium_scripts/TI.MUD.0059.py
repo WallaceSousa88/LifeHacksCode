@@ -54,11 +54,11 @@ screenshot3.save(screenshot_path3)
 time.sleep(5)
 
 hoje = datetime.now()
-periodo = hoje - timedelta(days=90)
+ninety_days_ago = hoje - timedelta(days=90)
 
 ninety_days_ago = ninety_days_ago.replace(hour=datetime.now().hour, minute=0) + timedelta(hours=4)
 hoje = hoje.replace(hour=23, minute=59)
-url = f"https://dev.azure.com/cemig/_settings/audit?logs-period={periodo.strftime('%Y-%m-%dT%H:%M')}Z-{hoje.strftime('%Y-%m-%dT%H:%M')}Z"
+url = f"https://dev.azure.com/cemig/_settings/audit?logs-period={ninety_days_ago.strftime('%Y-%m-%dT%H:%M')}Z-{hoje.strftime('%Y-%m-%dT%H:%M')}Z"
 driver.get(url)
 time.sleep(5)
 
@@ -112,8 +112,8 @@ def subs_texto_data(doc, old_text, new_text):
 
 now_str = datetime.now().strftime('%d/%m/%Y')
 subs_texto_data(doc, '$01$', f'{hoje.strftime("%d/%m/%Y")}')
-subs_texto_data(doc, '$02$', f'{periodo.strftime("%d/%m/%Y")} a {hoje.strftime("%d/%m/%Y")}')
-subs_texto_data(doc, '$05$', f'{periodo.strftime("%d/%m/%Y")} a {hoje.strftime("%d/%m/%Y")}')
+subs_texto_data(doc, '$02$', f'{ninety_days_ago.strftime("%d/%m/%Y")} a {hoje.strftime("%d/%m/%Y")}')
+subs_texto_data(doc, '$05$', f'{ninety_days_ago.strftime("%d/%m/%Y")} a {hoje.strftime("%d/%m/%Y")}')
 
 word_file_path = os.path.join(screenshot_dir, 'TI.MUD.0059.docx')
 doc.save(word_file_path)

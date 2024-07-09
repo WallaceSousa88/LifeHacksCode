@@ -78,7 +78,7 @@ first_element = WebDriverWait(driver, 20).until(
 )
 first_element.click()
 
-scroll_time = 180
+scroll_time = 120
 pause_time = 0.5
 scrolls = int(scroll_time / pause_time)
 for _ in range(scrolls):

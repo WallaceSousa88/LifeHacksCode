@@ -3,6 +3,8 @@ import ast
 import glob
 import math
 import shutil
+import sys
+from pathlib import Path
 
 def calc_sleep_time(script_name):
     with open(script_name, 'r') as file:
@@ -17,15 +19,35 @@ def calc_sleep_time(script_name):
     return total_sleep_time_in_minutes + scroll_time_in_minutes
 
 def execute_script(script_name, user_id, unidade_disco):
-    os.system(f'python {script_name} {user_id} {unidade_disco}')
+    doc_path = Path(f"{unidade_disco}:\\Users\\{user_id}\\Desktop\\Relatorio\\{script_name.replace('.py', '.docx')}")
+    if not doc_path.exists():
+        print(f"Erro: O arquivo {doc_path} não foi encontrado.")
+        print("Por favor, verifique se o arquivo existe no diretório especificado.")
+        sys.exit(1)
+    status = os.system(f'python {script_name} {user_id} {unidade_disco}')
+    if status != 0:
+        print("Erro: Ocorreu um erro ao tentar executar o script.")
+        print("Por favor, verifique os seguintes requisitos:")
+        print("1. Driver Selenium instalado/atualizado na raiz da unidade em que for executado.")
+        print("2. Python 3.6 ou superior instalado.")
+        print("3. As seguintes bibliotecas Python instaladas: selenium, pyautogui, python-docx, pillow, pyscreeze.")
+        print('4. Uma pasta com o nome "Relatorio" no desktop da unidade em que for executado com os arquivos de modelo .docx.')
+        sys.exit(1)
 
 def remove_csv(user_id, unidade_disco):
     files = glob.glob(f'{unidade_disco}:\\Users\\{user_id}\\Downloads\\auditLog*.csv')
     for file in files:
-        os.remove(file)
+        try:
+            os.remove(file)
+        except FileNotFoundError:
+            print(f"Arquivo {file} não encontrado. Continuando...")
+            continue
 
 def copiar_csv(user_id, unidade_disco):
-    shutil.copy(f'{unidade_disco}:\\Users\\{user_id}\\Downloads\\auditLog.csv', f'{unidade_disco}:\\Users\\{user_id}\\Desktop\\Relatorio\\')
+    try:
+        shutil.copy(f'{unidade_disco}:\\Users\\{user_id}\\Downloads\\auditLog.csv', f'{unidade_disco}:\\Users\\{user_id}\\Desktop\\Relatorio\\')
+    except FileNotFoundError:
+        print("Arquivo auditLog.csv não encontrado. Continuando...")
 
 def main():
     user_id = input("Digite sua matrícula: ")
