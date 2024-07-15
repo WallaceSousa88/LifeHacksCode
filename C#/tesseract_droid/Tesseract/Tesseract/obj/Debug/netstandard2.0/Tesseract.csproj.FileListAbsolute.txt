@@ -1,0 +1,16 @@
+C:\Users\e610098\Desktop\LifeHacksCode\C#\tesseract_droid\Tesseract\Tesseract\bin\Debug\netstandard2.0\Tesseract.deps.json
+C:\Users\e610098\Desktop\LifeHacksCode\C#\tesseract_droid\Tesseract\Tesseract\bin\Debug\netstandard2.0\Tesseract.dll
+C:\Users\e610098\Desktop\LifeHacksCode\C#\tesseract_droid\Tesseract\Tesseract\bin\Debug\netstandard2.0\ref\Tesseract.dll
+C:\Users\e610098\Desktop\LifeHacksCode\C#\tesseract_droid\Tesseract\Tesseract\bin\Debug\netstandard2.0\Tesseract.pdb
+C:\Users\e610098\Desktop\LifeHacksCode\C#\tesseract_droid\Tesseract\Tesseract\obj\Debug\netstandard2.0\Tesseract.csproj.AssemblyReference.cache
+C:\Users\e610098\Desktop\LifeHacksCode\C#\tesseract_droid\Tesseract\Tesseract\obj\Debug\netstandard2.0\Tesseract.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\e610098\Desktop\LifeHacksCode\C#\tesseract_droid\Tesseract\Tesseract\obj\Debug\netstandard2.0\App.xaml.g.cs
+C:\Users\e610098\Desktop\LifeHacksCode\C#\tesseract_droid\Tesseract\Tesseract\obj\Debug\netstandard2.0\MainPage.xaml.g.cs
+C:\Users\e610098\Desktop\LifeHacksCode\C#\tesseract_droid\Tesseract\Tesseract\obj\Debug\netstandard2.0\Tesseract.AssemblyInfoInputs.cache
+C:\Users\e610098\Desktop\LifeHacksCode\C#\tesseract_droid\Tesseract\Tesseract\obj\Debug\netstandard2.0\Tesseract.AssemblyInfo.cs
+C:\Users\e610098\Desktop\LifeHacksCode\C#\tesseract_droid\Tesseract\Tesseract\obj\Debug\netstandard2.0\Tesseract.csproj.CoreCompileInputs.cache
+C:\Users\e610098\Desktop\LifeHacksCode\C#\tesseract_droid\Tesseract\Tesseract\obj\Debug\netstandard2.0\Tesseract.sourcelink.json
+C:\Users\e610098\Desktop\LifeHacksCode\C#\tesseract_droid\Tesseract\Tesseract\obj\Debug\netstandard2.0\XamlC.stamp
+C:\Users\e610098\Desktop\LifeHacksCode\C#\tesseract_droid\Tesseract\Tesseract\obj\Debug\netstandard2.0\Tesseract.dll
+C:\Users\e610098\Desktop\LifeHacksCode\C#\tesseract_droid\Tesseract\Tesseract\obj\Debug\netstandard2.0\refint\Tesseract.dll
+C:\Users\e610098\Desktop\LifeHacksCode\C#\tesseract_droid\Tesseract\Tesseract\obj\Debug\netstandard2.0\Tesseract.pdb
