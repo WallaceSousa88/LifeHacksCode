@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Tesseract")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bf460f8995f2aca83f31197e03695b3acb8fe082")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ab26decd994a29728d021a97c75c58ac35cfebf6")]
 [assembly: System.Reflection.AssemblyProductAttribute("Tesseract")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Tesseract")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

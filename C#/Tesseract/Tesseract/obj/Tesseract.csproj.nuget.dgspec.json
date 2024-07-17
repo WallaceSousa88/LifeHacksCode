@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\e610098\\Desktop\\LifeHacksCode\\C#\\tesseract_droid\\Tesseract\\Tesseract\\Tesseract.csproj": {}
+    "C:\\Users\\walla\\Desktop\\LifeHacksCode\\C#\\Tesseract\\Tesseract\\Tesseract.csproj": {}
   },
   "projects": {
-    "C:\\Users\\e610098\\Desktop\\LifeHacksCode\\C#\\tesseract_droid\\Tesseract\\Tesseract\\Tesseract.csproj": {
+    "C:\\Users\\walla\\Desktop\\LifeHacksCode\\C#\\Tesseract\\Tesseract\\Tesseract.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\e610098\\Desktop\\LifeHacksCode\\C#\\tesseract_droid\\Tesseract\\Tesseract\\Tesseract.csproj",
+        "projectUniqueName": "C:\\Users\\walla\\Desktop\\LifeHacksCode\\C#\\Tesseract\\Tesseract\\Tesseract.csproj",
         "projectName": "Tesseract",
-        "projectPath": "C:\\Users\\e610098\\Desktop\\LifeHacksCode\\C#\\tesseract_droid\\Tesseract\\Tesseract\\Tesseract.csproj",
-        "packagesPath": "C:\\Users\\e610098\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\e610098\\Desktop\\LifeHacksCode\\C#\\tesseract_droid\\Tesseract\\Tesseract\\obj\\",
+        "projectPath": "C:\\Users\\walla\\Desktop\\LifeHacksCode\\C#\\Tesseract\\Tesseract\\Tesseract.csproj",
+        "packagesPath": "C:\\Users\\walla\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\walla\\Desktop\\LifeHacksCode\\C#\\Tesseract\\Tesseract\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\e610098\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\walla\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -50,13 +50,41 @@
         "netstandard2.1": {
           "targetAlias": "netstandard2.1",
           "dependencies": {
+            "IronOcr": {
+              "target": "Package",
+              "version": "[2024.7.13, )"
+            },
+            "Microsoft.Bcl.HashCode": {
+              "target": "Package",
+              "version": "[1.1.1, )"
+            },
+            "Portable.BouncyCastle": {
+              "target": "Package",
+              "version": "[1.9.0, )"
+            },
+            "System.Diagnostics.DiagnosticSource": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "System.Management": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "System.Memory.Data": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Xam.Plugin.Media": {
+              "target": "Package",
+              "version": "[6.0.2, )"
+            },
             "Xamarin.Essentials": {
               "target": "Package",
-              "version": "[1.7.0, )"
+              "version": "[1.8.1, )"
             },
             "Xamarin.Forms": {
               "target": "Package",
-              "version": "[5.0.0.2196, )"
+              "version": "[5.0.0.2662, )"
             }
           },
           "imports": [

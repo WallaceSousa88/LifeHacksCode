@@ -15,9 +15,11 @@
                 Margin="20"
                 Clicked="OnSelectImageClicked" />
 
-        <Editor Grid.Row="1"
+        <Editor x:Name="ResultadoOCR"  
+                Grid.Row="1"
                 Margin="20"
                 Placeholder="Texto da Imagem"
                 IsReadOnly="True" />
     </Grid>
+
 </ContentPage>
