@@ -34,6 +34,11 @@ def carregar_pergunta(nome_arquivo="pergunta.txt"):
   else:
     return None
 
+def salvar_resposta(resposta, nome_arquivo="resposta.txt"):
+    """Salva a resposta no arquivo, criando-o se não existir."""
+    with open(nome_arquivo, "a", encoding="utf-8") as arquivo:
+        arquivo.write(resposta + "\n")
+
 while True:
   pergunta = carregar_pergunta()
   if pergunta:
@@ -44,6 +49,8 @@ while True:
     historico.append(f"Gemini: {response.text}")
     print(f"Gemini: {response.text}")
 
+    salvar_resposta(f"Você: {pergunta}\nGemini: {response.text}")
+
     with open("pergunta.txt", "w", encoding="utf-8") as arquivo:
       arquivo.write("")
   else:
@@ -51,4 +58,7 @@ while True:
     break
 
   if input("Deseja fazer outra pergunta? (s/n): ").lower() != 's':
+    if os.path.exists("resposta.txt"):
+      os.remove("resposta.txt")
+      print("Arquivo 'resposta.txt' deletado.")
     break
