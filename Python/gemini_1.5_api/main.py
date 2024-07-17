@@ -1,11 +1,11 @@
 # pip install google-generativeai
+# https://status.cloud.google.com/
 
 import os
 import google.generativeai as genai
 
-genai.configure(api_key=os.environ["GEMINI_API_KEY"])
+genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
 
-# See https://ai.google.dev/api/python/google/generativeai/GenerativeModel
 generation_config = {
   "temperature": 0.5,
   "top_p": 0.95,
@@ -17,15 +17,38 @@ generation_config = {
 model = genai.GenerativeModel(
   model_name="gemini-1.5-pro",
   generation_config=generation_config,
-  # safety_settings = Adjust safety settings
-  # See https://ai.google.dev/gemini-api/docs/safety-settings
 )
+
+historico = []
 
 chat_session = model.start_chat(
-  history=[
-  ]
+  history=historico
 )
 
-response = chat_session.send_message("INSERT_INPUT_HERE")
+def carregar_pergunta(nome_arquivo="pergunta.txt"):
+  """Carrega a pergunta do arquivo."""
+  if os.path.exists(nome_arquivo):
+    with open(nome_arquivo, "r", encoding="utf-8") as arquivo:
+      pergunta = arquivo.read().strip()
+    return pergunta
+  else:
+    return None
 
-print(response.text)
+while True:
+  pergunta = carregar_pergunta()
+  if pergunta:
+    print(f"Você: {pergunta}")
+
+    historico.append(f"Usuário: {pergunta}")
+    response = chat_session.send_message(pergunta)
+    historico.append(f"Gemini: {response.text}")
+    print(f"Gemini: {response.text}")
+
+    with open("pergunta.txt", "w", encoding="utf-8") as arquivo:
+      arquivo.write("")
+  else:
+    print("Arquivo 'pergunta.txt' não encontrado. Crie o arquivo com sua pergunta.")
+    break
+
+  if input("Deseja fazer outra pergunta? (s/n): ").lower() != 's':
+    break
