@@ -19,11 +19,7 @@ model = genai.GenerativeModel(
   generation_config=generation_config,
 )
 
-historico = []
-
-chat_session = model.start_chat(
-  history=historico
-)
+historico_conversa = ""
 
 def carregar_pergunta(nome_arquivo="pergunta.txt"):
   """Carrega a pergunta do arquivo."""
@@ -44,12 +40,19 @@ while True:
   if pergunta:
     print(f"Você: {pergunta}")
 
-    historico.append(f"Usuário: {pergunta}")
-    response = chat_session.send_message(pergunta)
-    historico.append(f"Gemini: {response.text}")
-    print(f"Gemini: {response.text}")
+    historico_conversa += f"Usuário: {pergunta}\n"
 
-    salvar_resposta(f"Você: {pergunta}\nGemini: {response.text}")
+    response = model.generate_content(
+        historico_conversa 
+    )
+
+    resposta_texto = response.text
+
+    historico_conversa += f"Gemini: {resposta_texto}\n"
+
+    print(f"Gemini: {resposta_texto}")
+
+    salvar_resposta(f"Você: {pergunta}\nGemini: {resposta_texto}")
 
     with open("pergunta.txt", "w", encoding="utf-8") as arquivo:
       arquivo.write("")
@@ -62,3 +65,4 @@ while True:
       os.remove("resposta.txt")
       print("Arquivo 'resposta.txt' deletado.")
     break
+  

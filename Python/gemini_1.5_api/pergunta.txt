@@ -1,1 +1,0 @@
-Faça uma lista de todos os feriados do ano de 2024 para quem mora em belo horizonte, minas gerais, sendo a primeira coluna o mes, a segunda coluna o dia, e uma terceira coluna para dizer de segunda a domingo qual aquele dia representa
