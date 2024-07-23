@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "9d7Da1CwWMc=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\e610098\\Desktop\\LifeHacksCode\\C#\\console_tesseract\\console_tesseract.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\e610098\\.nuget\\packages\\microsoft.win32.systemevents\\8.0.0\\microsoft.win32.systemevents.8.0.0.nupkg.sha512",
+    "C:\\Users\\e610098\\.nuget\\packages\\system.drawing.common\\8.0.7\\system.drawing.common.8.0.7.nupkg.sha512",
+    "C:\\Users\\e610098\\.nuget\\packages\\system.reflection.emit\\4.7.0\\system.reflection.emit.4.7.0.nupkg.sha512",
+    "C:\\Users\\e610098\\.nuget\\packages\\tesseract\\5.2.0\\tesseract.5.2.0.nupkg.sha512"
+  ],
+  "logs": []
+}
