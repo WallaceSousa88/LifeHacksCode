@@ -13,11 +13,22 @@ def listar_arquivos(caminho, nivel=0):
 def salvar_em_txt(caminho):
     nome_arquivo = os.path.basename(caminho) + '.txt'
     caminho_area_trabalho = os.path.join(os.path.expanduser("~"), "Desktop", nome_arquivo)  
-    with open(caminho_area_trabalho, 'w') as f:
-        for linha in listar_arquivos(caminho):
-            f.write(linha)
+    try:
+        with open(caminho_area_trabalho, 'w') as f:
+            for linha in listar_arquivos(caminho):
+                f.write(linha)
+        print(f"Lista de arquivos salva em: {caminho_area_trabalho}")
+    except PermissionError:
+        print(f"Erro: Permissão negada para escrever em: {caminho_area_trabalho}")
+    except Exception as e:
+        print(f"Erro ao salvar o arquivo: {e}")
 
-caminho = input("Digite o caminho do diretório que você deseja mapear: ")
-salvar_em_txt(caminho)
+def main():
+    caminho = input("Digite o caminho do diretório que você deseja mapear: ")
+    if os.path.isdir(caminho):
+        salvar_em_txt(caminho)
+    else:
+        print("Erro: Caminho inválido ou não é um diretório.")
 
-print(f"Lista de arquivos salva em: {os.path.join(os.path.expanduser('~'), 'Desktop')}")
+if __name__ == "__main__":
+    main()
