@@ -72,6 +72,10 @@ csv = f"https://auditservice.dev.azure.com/cemig/_apis/audit/downloadLog?format=
 driver.get(csv)
 time.sleep(5)
 
+json = f"https://auditservice.dev.azure.com/cemig/_apis/audit/downloadLog?format=json"
+driver.get(json)
+time.sleep(5)
+
 first_element_xpath = "//span[@class='text-ellipsis']"
 first_element = WebDriverWait(driver, 20).until(
     EC.visibility_of_element_located((By.XPATH, first_element_xpath))

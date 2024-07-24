@@ -43,11 +43,26 @@ def remove_csv(user_id, unidade_disco):
             print(f"Arquivo {file} não encontrado. Continuando...")
             continue
 
+def remove_json(user_id, unidade_disco):
+    files = glob.glob(f'{unidade_disco}:\\Users\\{user_id}\\Downloads\\auditLog*.json')
+    for file in files:
+        try:
+            os.remove(file)
+        except FileNotFoundError:
+            print(f"Arquivo {file} não encontrado. Continuando...")
+            continue
+
 def copiar_csv(user_id, unidade_disco):
     try:
         shutil.copy(f'{unidade_disco}:\\Users\\{user_id}\\Downloads\\auditLog.csv', f'{unidade_disco}:\\Users\\{user_id}\\Desktop\\Relatorio\\')
     except FileNotFoundError:
         print("Arquivo auditLog.csv não encontrado. Continuando...")
+
+def copiar_json(user_id, unidade_disco):
+    try:
+        shutil.copy(f'{unidade_disco}:\\Users\\{user_id}\\Downloads\\auditLog.json', f'{unidade_disco}:\\Users\\{user_id}\\Desktop\\Relatorio\\')
+    except FileNotFoundError:
+        print("Arquivo auditLog.json não encontrado. Continuando...")
 
 def main():
     user_id = input("Digite sua matrícula: ")
@@ -64,29 +79,41 @@ def main():
         
         if choice == '1':
             remove_csv(user_id, unidade_disco)
+            remove_json(user_id, unidade_disco)
             execute_script('TI.AC.0092.py', user_id, unidade_disco)
             copiar_csv(user_id, unidade_disco)
+            copiar_json(user_id, unidade_disco)
         elif choice == '2':
             remove_csv(user_id, unidade_disco)
+            remove_json(user_id, unidade_disco)
             execute_script('TI.AC.0093.py', user_id, unidade_disco)
             copiar_csv(user_id, unidade_disco)
+            copiar_json(user_id, unidade_disco)
         elif choice == '3':
             remove_csv(user_id, unidade_disco)
+            remove_json(user_id, unidade_disco)
             execute_script('TI.AC.0097.py', user_id, unidade_disco)
             copiar_csv(user_id, unidade_disco)
+            copiar_json(user_id, unidade_disco)
         elif choice == '4':
             remove_csv(user_id, unidade_disco)
+            remove_json(user_id, unidade_disco)
             execute_script('TI.MUD.0052.py', user_id, unidade_disco)
             copiar_csv(user_id, unidade_disco)
+            copiar_json(user_id, unidade_disco)
         elif choice == '5':
             remove_csv(user_id, unidade_disco)
+            remove_json(user_id, unidade_disco)
             execute_script('TI.MUD.0059.py', user_id, unidade_disco)
             copiar_csv(user_id, unidade_disco)
+            copiar_json(user_id, unidade_disco)
         elif choice == str(len(scripts) + 1):
             remove_csv(user_id, unidade_disco)
+            remove_json(user_id, unidade_disco)
             for script in scripts:
                 execute_script(script, user_id, unidade_disco)
             copiar_csv(user_id, unidade_disco)
+            copiar_json(user_id, unidade_disco)
         elif choice == str(len(scripts) + 2):
             break
         else:
