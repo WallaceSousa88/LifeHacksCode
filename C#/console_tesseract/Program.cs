@@ -12,19 +12,33 @@ class Program
 
         var imageFiles = allFiles.Where(file => file.EndsWith(".jpg") || file.EndsWith(".jpeg") || file.EndsWith(".png")).ToArray();
 
-        var ocr = new TesseractEngine(@"./tessdata", "por", EngineMode.Default);
+        var ocr = new TesseractEngine(@"C:\x\tessdata", "por", EngineMode.Default);
 
         foreach (var imagePath in imageFiles)
         {
-            var pix = Pix.LoadFromFile(imagePath);
-            var page = ocr.Process(pix);
+            try
+            {
+                Console.WriteLine($"Processando imagem: {imagePath}");
 
-            string text = page.GetText();
-            Console.WriteLine("Texto Reconhecido para {0}: {1}", imagePath, text);
+                using (var pix = Pix.LoadFromFile(imagePath))
+                {
+                    using (var page = ocr.Process(pix))
+                    {
+                        string text = page.GetText();
 
-            string textFilePath = Path.ChangeExtension(imagePath, ".txt");
+                        string textFilePath = Path.ChangeExtension(imagePath, ".txt");
+                        File.WriteAllText(textFilePath, text);
 
-            File.WriteAllText(textFilePath, text);
+                        Console.WriteLine($"Texto salvo em: {textFilePath}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao processar {imagePath}: {ex.Message}");
+            }
         }
+
+        Console.WriteLine("Processamento concluído.");
     }
 }
