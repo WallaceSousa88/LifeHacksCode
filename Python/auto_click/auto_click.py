@@ -1,3 +1,5 @@
+# pip install pyautogui keyboard
+
 import pyautogui
 import keyboard
 import random
@@ -32,6 +34,7 @@ class Listener:
             self.__validKey.append(_hotkey)
 
 loop_active = False
+click_active = False 
 
 def press_key_randomly():
     keys = ['num1', 'num2', 'num3', 'num4']
@@ -41,12 +44,19 @@ def press_key_randomly():
         time_interval = random.uniform(0.1, 1)
         time.sleep(time_interval)
 
+def click_mouse():
+    while click_active:
+        pyautogui.click()
+        time.sleep(0.1) 
+
 def toggle_loop():
-    global loop_active
+    global loop_active, click_active
     loop_active = not loop_active
+    click_active = loop_active 
     if loop_active:
         print("Loop ativado.")
         threading.Thread(target=press_key_randomly).start()
+        threading.Thread(target=click_mouse).start()
     else:
         print("Loop desativado.")
 
