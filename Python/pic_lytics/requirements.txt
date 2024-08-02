@@ -1,0 +1,13 @@
+# Framework de Machine Learning
+tensorflow
+
+# Processamento de imagens
+opencv-python
+Pillow
+
+# Científico e numérico
+numpy
+matplotlib
+
+# Utilitários
+argparse
