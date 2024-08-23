@@ -1,5 +1,7 @@
-.vs
+# Excluir arquivos e pastas do Visual Studio
+.vs/
 
+# Excluir arquivos específicos
 LICENSE
 .editorconfig
 global.json
@@ -9,11 +11,14 @@ nuget.png
 Directory.build.props
 Directory.build.targets
 
-\Plugin.Xamarin.OCR\bin
-\Plugin.Xamarin.OCR\obj
+# Excluir pastas bin e obj do projeto Plugin.Xamarin.OCR
+Plugin.Xamarin.OCR/bin/
+Plugin.Xamarin.OCR/obj/
 
-\Plugin.Xamarin.OCR.Sample\Plugin.Xamarin.OCR.Sample\bin
-\Plugin.Xamarin.OCR.Sample\Plugin.Xamarin.OCR.Sample\obj
+# Excluir pastas bin e obj do projeto Plugin.Xamarin.OCR.Sample
+Plugin.Xamarin.OCR.Sample/Plugin.Xamarin.OCR.Sample/bin/
+Plugin.Xamarin.OCR.Sample/Plugin.Xamarin.OCR.Sample/obj/
 
-\Plugin.Xamarin.OCR.Sample\Plugin.Xamarin.OCR.Sample.Android\bin
-\Plugin.Xamarin.OCR.Sample\Plugin.Xamarin.OCR.Sample.Android\obj
+# Excluir pastas bin e obj do projeto Plugin.Xamarin.OCR.Sample.Android
+Plugin.Xamarin.OCR.Sample/Plugin.Xamarin.OCR.Sample.Android/bin/
+Plugin.Xamarin.OCR.Sample/Plugin.Xamarin.OCR.Sample.Android/obj/

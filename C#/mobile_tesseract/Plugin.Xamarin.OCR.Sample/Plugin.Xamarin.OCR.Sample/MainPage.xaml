@@ -5,34 +5,34 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
     ios:Page.UseSafeArea="true"
-    Title="OCR Plugin">
+    Title="Plugin OCR">
 
     <StackLayout Padding="20" Spacing="10">
-        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-            <Switch x:Name="TryHardSwitch" IsToggled="False" Margin="0,0,10,0" />
-            <Label Text="Try Hard?" VerticalOptions="Center" />
-        </StackLayout>
         <Button
-            x:Name="OpenFromCameraBtn"
-            Clicked="OpenFromCameraBtn_Clicked"
-            Text="From Camera .." />
+            x:Name="AbrirDaCameraBtn"
+            Clicked="AbrirDaCameraBtn_Clicked"
+            Text="Da Câmera .." />
         <Button
-            x:Name="OpenFromFileBtn"
-            Clicked="OpenFromFileBtn_Clicked"
-            Text="From File .." />
+            x:Name="AbrirDoArquivoBtn"
+            Clicked="AbrirDoArquivoBtn_Clicked"
+            Text="Do Arquivo .." />
         <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            <Image x:Name="SelectedImage" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
-            <AbsoluteLayout x:Name="Overlay" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" IsVisible="False"/>
+            <Image x:Name="ImagemSelecionada" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
         </AbsoluteLayout>
         <Label
-            x:Name="ResultLbl"
+            x:Name="ResultadoLbl"
             HorizontalOptions="Center"
-            Text="Waiting for results .." />
+            Text="Aguardando resultados .." />
         <Button
-            x:Name="ClearBtn"
-            Clicked="ClearBtn_Clicked"
+            x:Name="LimparBtn"
+            Clicked="LimparBtn_Clicked"
             IsEnabled="False"
-            Text="Clear Result" />
+            Text="Limpar Resultado" />
+        <Button
+            x:Name="CopiarBtn"
+            Clicked="CopiarBtn_Clicked"
+            IsEnabled="False"
+            Text="Copiar Resultado" />
     </StackLayout>
 
 </ContentPage>
