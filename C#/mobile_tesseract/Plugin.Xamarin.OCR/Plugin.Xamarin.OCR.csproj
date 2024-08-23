@@ -46,7 +46,6 @@
 	<!-- Package additions -->
 	<ItemGroup>
 		<Compile Include="*.cs" />
-		<None Include="..\..\README.md" Pack="true" PackagePath="." />
 		<PackageReference Include="DotNet.ReproducibleBuilds" Version="1.2.4">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -112,8 +111,8 @@
 		</PackageReference>
 	</ItemGroup>
     <ItemGroup>
-	<None Include="..\..\nuget.png" PackagePath="icon.png" Pack="true" />
-	<None Include="..\..\README.md" Pack="true" PackagePath="\" />
+	<None Include="\..\nuget.png" PackagePath="icon.png" Pack="true" />
+	<None Include="\..\README.md" Pack="true" PackagePath="\" />
 </ItemGroup>
 	<ItemGroup>
 		<None Remove="Abstractions\IOcrService.cs" />
