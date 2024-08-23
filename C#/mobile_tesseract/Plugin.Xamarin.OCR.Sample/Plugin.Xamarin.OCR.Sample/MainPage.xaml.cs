@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using SkiaSharp;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -80,35 +79,16 @@ namespace Plugin.Xamarin.OCR.Sample
         {
             await Clipboard.SetTextAsync(ResultadoLbl.Text);
         }
-
-        private SKBitmap CarregarBitmap(byte[] dadosImagem)
-        {
-            return SKBitmap.Decode(dadosImagem);
-        }
-
-        /// <summary>
-        /// Processa uma foto usando o serviço OCR.
-        /// </summary>
-        /// <param name="foto">A foto a ser processada.</param>
-        /// <returns>O resultado do OCR.</returns>
+        
         private async Task<OcrResult> ProcessarFoto(FileResult foto)
         {
-            // Abre um fluxo para a foto
             using var fluxoFonte = await foto.OpenReadAsync();
 
-            // Cria um array de bytes para armazenar os dados da imagem
             var dadosImagem = new byte[fluxoFonte.Length];
             await fluxoFonte.ReadAsync(dadosImagem, 0, dadosImagem.Length);
 
-            // Usa SkiaSharp para carregar a imagem e obter suas dimensões
-            var bitmap = CarregarBitmap(dadosImagem);
-            _larguraReal = bitmap.Width;
-            _alturaReal = bitmap.Height;
-
-            // Assume que ProcessImage retorna as dimensões reais da imagem
             var resultadoOCR = await _ocr.RecognizeTextAsync(dadosImagem, false);
 
-            // Exibe a imagem
             var fonteImagem = ImageSource.FromStream(() => new MemoryStream(dadosImagem));
             ImagemSelecionada.Source = fonteImagem;
 
@@ -119,8 +99,7 @@ namespace Plugin.Xamarin.OCR.Sample
 
         private double ConverterParaPixels(double unidadesXamarinForms)
         {
-            // Esta conversão dependerá da densidade da tela do dispositivo
-            var densidadeTela = DeviceDisplay.MainDisplayInfo.Density; // Xamarin.Essentials fornece isso
+            var densidadeTela = DeviceDisplay.MainDisplayInfo.Density;
             return unidadesXamarinForms * densidadeTela;
         }
     }

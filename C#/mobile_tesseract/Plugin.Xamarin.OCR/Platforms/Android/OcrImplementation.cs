@@ -18,23 +18,19 @@ namespace Plugin.Xamarin.OCR
 {
     public class OcrImplementation : IOcrService
     {
-        // Define the supported languages
         private static readonly IReadOnlyCollection<string> s_cloudSupportedLanguages = new List<string>
         {
             "ar", "zh-Hans", "zh-Hant", "da", "nl", "en", "fi", "fr", "de", "el", "hi", "hu", "it", "ja", "ko",
             "no", "pl", "pt", "ru", "es", "sv", "th", "tr", "vi"
         };
 
-        // On-device recognizer typically only supports Latin-based scripts
         private static readonly IReadOnlyCollection<string> s_onDeviceSupportedLanguages = new List<string>
         {
-            "en", "es", "fr", "de", "it", "pt" // Adjust this list as per the actual support
+            "en", "es", "fr", "de", "it", "pt"
         };
 
-        // Implement the SupportedLanguages property
         public IReadOnlyCollection<string> SupportedLanguages => s_onDeviceSupportedLanguages;
 
-        // Adjust the property dynamically based on options
         public static IReadOnlyCollection<string> GetSupportedLanguages(bool tryHard) => tryHard ? s_cloudSupportedLanguages : s_onDeviceSupportedLanguages;
 
         public event EventHandler<OcrCompletedEventArgs> RecognitionCompleted;
@@ -154,7 +150,6 @@ namespace Plugin.Xamarin.OCR
                 }
             }
 
-            // If all retries have failed, throw the last exception
             if (lastException == null)
             {
                 throw lastException!;
