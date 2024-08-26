@@ -6,9 +6,6 @@ namespace Plugin.Xamarin.OCR
     {
         private static IOcrService? s_defaultImplementation;
 
-        /// <summary>
-        /// Provides the default implementation for static usage of this API.
-        /// </summary>
         public static IOcrService Default
         {
             get
@@ -21,10 +18,6 @@ namespace Plugin.Xamarin.OCR
             }
         }
 
-        /// <summary>
-        /// Sets the default implementation.
-        /// </summary>
-        /// <param name="implementation"></param>
         internal static void SetDefault(IOcrService? implementation) =>
             s_defaultImplementation = implementation;
 

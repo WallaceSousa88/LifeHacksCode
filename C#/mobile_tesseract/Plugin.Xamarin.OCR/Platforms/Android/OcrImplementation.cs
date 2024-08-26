@@ -20,13 +20,12 @@ namespace Plugin.Xamarin.OCR
     {
         private static readonly IReadOnlyCollection<string> s_cloudSupportedLanguages = new List<string>
         {
-            "ar", "zh-Hans", "zh-Hant", "da", "nl", "en", "fi", "fr", "de", "el", "hi", "hu", "it", "ja", "ko",
-            "no", "pl", "pt", "ru", "es", "sv", "th", "tr", "vi"
+            "en", "pt"
         };
 
         private static readonly IReadOnlyCollection<string> s_onDeviceSupportedLanguages = new List<string>
         {
-            "en", "es", "fr", "de", "it", "pt"
+            "en", "pt"
         };
 
         public IReadOnlyCollection<string> SupportedLanguages => s_onDeviceSupportedLanguages;
@@ -79,26 +78,10 @@ namespace Plugin.Xamarin.OCR
             ocrResult.Success = true;
             return ocrResult;
         }
-
-        /// <summary>
-        /// Initialize the OCR on the platform
-        /// </summary>
-        /// <param name="ct">An optional cancellation token</param>
         public Task InitAsync(System.Threading.CancellationToken ct = default)
         {
-            // Initialization might not be required for ML Kit's on-device text recognition,
-            // but you can perform any necessary setup here.
-
             return Task.CompletedTask;
         }
-
-        /// <summary>
-        /// Takes an image and returns the text found in the image.
-        /// </summary>
-        /// <param name="imageData">The image data</param>
-        /// <param name="tryHard">True to try and tell the API to be more accurate, otherwise just be fast.</param>
-        /// <param name="ct">An optional cancellation token</param>
-        /// <returns>The OCR result</returns>
         public async Task<OcrResult> RecognizeTextAsync(byte[] imageData, bool tryHard = false, System.Threading.CancellationToken ct = default)
         {
             return await RecognizeTextAsync(imageData, new OcrOptions(tryHard: tryHard, patternConfig: null), ct);
@@ -120,25 +103,21 @@ namespace Plugin.Xamarin.OCR
                 {
                     if (options.TryHard)
                     {
-                        // For more accurate results, use the cloud-based recognizer (requires internet).
                         textScanner = TextRecognition.GetClient(new TextRecognizerOptions.Builder()
                             .SetExecutor(Executors.NewFixedThreadPool(Runtime.GetRuntime()?.AvailableProcessors() ?? 1))
                             .Build());
                     }
                     else
                     {
-                        // Use the default on-device recognizer for faster results.
                         textScanner = TextRecognition.GetClient(TextRecognizerOptions.DefaultOptions);
                     }
 
-                    // Try to perform the OCR operation. We should be installing the model necessary when this app is installed, but just in case ..
                     var processImageTask = ToAwaitableTask(textScanner.Process(inputImage).AddOnSuccessListener(new OnSuccessListener()).AddOnFailureListener(new OnFailureListener()));
                     var result = await processImageTask;
                     return ProcessOcrResult(result);
                 }
                 catch (MlKitException ex) when ((ex.Message ?? string.Empty).Contains("Waiting for the text optional module to be downloaded"))
                 {
-                    // If the specific exception is caught, log it and wait before retrying
                     lastException = ex;
                     Debug.WriteLine($"OCR model is not ready. Waiting before retrying... Attempt {retry + 1}/{MaxRetries}");
                     await Task.Delay(5000, ct);
@@ -185,24 +164,20 @@ namespace Plugin.Xamarin.OCR
                 {
                     if (options.TryHard)
                     {
-                        // For more accurate results, use the cloud-based recognizer (requires internet).
                         textScanner = TextRecognition.GetClient(new TextRecognizerOptions.Builder()
                             .SetExecutor(Executors.NewFixedThreadPool(1))
                             .Build());
                     }
                     else
                     {
-                        // Use the default on-device recognizer for faster results.
                         textScanner = TextRecognition.GetClient(TextRecognizerOptions.DefaultOptions);
                     }
 
-                    // Try to perform the OCR operation. We should be installing the model necessary when this app is installed, but just in case ..
                     var result = ProcessOcrResult(await ToAwaitableTask(textScanner.Process(inputImage).AddOnSuccessListener(new OnSuccessListener()).AddOnFailureListener(new OnFailureListener())));
                     RecognitionCompleted?.Invoke(this, new OcrCompletedEventArgs(result, null));
                 }
                 catch (MlKitException ex) when ((ex.Message ?? string.Empty).Contains("Waiting for the text optional module to be downloaded"))
                 {
-                    // If the specific exception is caught, log it and wait before retrying
                     lastException = ex;
                     Debug.WriteLine($"OCR model is not ready. Waiting before retrying... Attempt {retry + 1}/{MaxRetries}");
                     await Task.Delay(5000, ct);
@@ -214,7 +189,6 @@ namespace Plugin.Xamarin.OCR
                 }
             }
 
-            // If all retries have failed, throw the last exception
             if (lastException != null)
             {
                 RecognitionCompleted?.Invoke(this, new OcrCompletedEventArgs(null, lastException.Message));

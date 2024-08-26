@@ -79,7 +79,6 @@ namespace Plugin.Xamarin.OCR.Sample
         {
             await Clipboard.SetTextAsync(ResultadoLbl.Text);
         }
-        
         private async Task<OcrResult> ProcessarFoto(FileResult foto)
         {
             using var fluxoFonte = await foto.OpenReadAsync();
