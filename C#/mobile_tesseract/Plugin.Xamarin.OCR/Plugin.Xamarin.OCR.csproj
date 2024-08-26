@@ -1,49 +1,24 @@
 <Project Sdk="MSBuild.Sdk.Extras">
 	<PropertyGroup>
-		<TargetFrameworks>netstandard2.0;net48;Xamarin.Mac20;Xamarin.iOS10;Xamarin.TVOS10;Xamarin.WatchOS10;MonoAndroid12.0;uap10.0.19041;Tizen40;</TargetFrameworks>
+		<TargetFrameworks>netstandard2.0;net48;MonoAndroid12.0</TargetFrameworks>
 		<LangVersion>latest</LangVersion>
 		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
 		<Nullable>enable</Nullable>
-		<!-- NuGet -->
-		<Authors>kfrancis</Authors>
-		<Copyright>Copyright © Kori Francis</Copyright>
-		<IsPackable>True</IsPackable>
-		<PackageProjectUrl>https://github.com/kfrancis/ocr</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/kfrancis/ocr</RepositoryUrl>
-		<RepositoryType>git</RepositoryType>
-		<PackageTags>dotnet-xamarin;xamarin;plugin;</PackageTags>
-		<IncludeSymbols>True</IncludeSymbols>
-		<PublishRepositoryUrl>true</PublishRepositoryUrl>
-		<EmbedUntrackedSources>true</EmbedUntrackedSources>
-		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-		<Title>.NET Xamarin OCR Plugin</Title>
-		<Description>Plugin.Xamarin.OCR provides the ability to perform OCR on an image using platform API.</Description>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 		<DebugType>portable</DebugType>
-        <PackageIcon>icon.png</PackageIcon>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<MinVerAutoIncrement>minor</MinVerAutoIncrement>
 		<MinVerBuildMetadata>build</MinVerBuildMetadata>
 		<MinVerTagPrefix>v</MinVerTagPrefix>
 	</PropertyGroup>
     <PropertyGroup>
-        <!-- Enable NuGet package auditing -->
         <NuGetAudit>true</NuGetAudit>
-
-        <!-- Audit direct and transitive packages -->
         <NuGetAuditMode>all</NuGetAuditMode>
-
-        <!-- Report low, moderate, high and critical advisories -->
         <NuGetAuditLevel>low</NuGetAuditLevel>
 
-        <!-- Fails the build on CI or on release when a vulnerability is detected -->
         <WarningsAsErrors Condition="$(ContinuousIntegrationBuild) == 'true' OR '$(Configuration)' == 'Release'">
             (WarningsAsErrors);NU1900;NU1901;NU1902;NU1903;NU1904
         </WarningsAsErrors>
     </PropertyGroup>
-	<!-- Package additions -->
 	<ItemGroup>
 		<Compile Include="*.cs" />
 		<PackageReference Include="DotNet.ReproducibleBuilds" Version="1.2.4">
@@ -101,7 +76,7 @@
     <ItemGroup>
 	<None Include="\..\nuget.png" PackagePath="icon.png" Pack="true" />
 	<None Include="\..\README.md" Pack="true" PackagePath="\" />
-</ItemGroup>
+    </ItemGroup>
 	<ItemGroup>
 		<None Remove="Abstractions\IOcrService.cs" />
 	</ItemGroup>
