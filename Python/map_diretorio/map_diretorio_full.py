@@ -1,18 +1,13 @@
 import os
 
-def listar_arquivos(caminho, ignorar_pastas=None, nivel=0):
+def listar_arquivos(caminho, ignorar_pastas=None):
     if ignorar_pastas is None:
         ignorar_pastas = []
-    for item in os.listdir(caminho):
-        if item in ignorar_pastas:
-            continue
-        item_caminho = os.path.join(caminho, item)
-        espacos = ' ' * nivel if nivel > 0 else ''
-        if os.path.isfile(item_caminho):
-            yield f'{espacos}- {item}\n'
-        else:
-            yield f'{espacos}+ {item}\n'
-            yield from listar_arquivos(item_caminho, ignorar_pastas, nivel + 2)
+    for root, dirs, files in os.walk(caminho):
+        # Remove as pastas a serem ignoradas
+        dirs[:] = [d for d in dirs if d not in ignorar_pastas]
+        for file in files:
+            yield os.path.relpath(os.path.join(root, file), caminho)
 
 def obter_conteudo_arquivo(caminho_arquivo):
     try:
@@ -26,33 +21,16 @@ def obter_conteudo_arquivo(caminho_arquivo):
         return f"Erro ao ler o arquivo '{caminho_arquivo}': {e}"
 
 def gerar_relatorio(caminho, arquivos_conteudo=None, ignorar_pastas=None):
-    relatorio = """Preciso de ajuda com um projeto que estou desenvolvendo no VISUAL STUDIO 2022 (idioma em inglês) e que tem a seguinte estrutura de arquivos:
+    relatorio = f"Relatório da estrutura do diretório '{caminho}':\n\nEstrutura:\n"
+    for linha in listar_arquivos(caminho, ignorar_pastas):
+        relatorio += f"{linha}\n"
 
-Estrutura do Diretório:
-- '+' indica uma pasta.
-- '-' indica um arquivo.
-- A indentação representa a estrutura hierárquica de arquivos e pastas. 
-  Por exemplo, um item recuado abaixo de outro indica que ele está dentro 
-  da pasta correspondente.
-
-------------------
-Estrutura Completa: 
-    
-"""
-    try:
-        for linha in listar_arquivos(caminho, ignorar_pastas):
-            relatorio += linha
-    except PermissionError:
-        relatorio += f"Erro: Permissão negada para acessar o diretório: '{caminho}'"
-    except Exception as e:
-        relatorio += f"Erro ao listar arquivos em '{caminho}': {e}"
-    
     if arquivos_conteudo:
         relatorio += "\nConteúdo dos arquivos:\n"
         for arquivo in arquivos_conteudo:
             caminho_arquivo = os.path.join(caminho, arquivo)
             conteudo = obter_conteudo_arquivo(caminho_arquivo) 
-            relatorio += f"\nO código do arquivo '{arquivo}' atual é: \n\n```\n{conteudo}\n```\n"
+            relatorio += f"\nO código do arquivo '{arquivo}' é:\n\n```\n{conteudo}\n```\n"
     
     return relatorio
 
