@@ -4,7 +4,6 @@ def listar_arquivos(caminho, ignorar_pastas=None):
     if ignorar_pastas is None:
         ignorar_pastas = []
     for root, dirs, files in os.walk(caminho):
-        # Remove as pastas a serem ignoradas
         dirs[:] = [d for d in dirs if d not in ignorar_pastas]
         for file in files:
             yield os.path.relpath(os.path.join(root, file), caminho)
@@ -21,7 +20,7 @@ def obter_conteudo_arquivo(caminho_arquivo):
         return f"Erro ao ler o arquivo '{caminho_arquivo}': {e}"
 
 def gerar_relatorio(caminho, arquivos_conteudo=None, ignorar_pastas=None):
-    relatorio = f"Relatório da estrutura do diretório '{caminho}':\n\nEstrutura:\n"
+    relatorio = f"O diretório base é '{caminho}'. Abaixo está a lista de arquivos e pastas a partir desse diretório:\n\n"
     for linha in listar_arquivos(caminho, ignorar_pastas):
         relatorio += f"{linha}\n"
 
