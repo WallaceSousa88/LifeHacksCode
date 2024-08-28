@@ -1,24 +1,10 @@
-# Excluir arquivos e pastas do Visual Studio
 .vs/
 
-# Excluir arquivos específicos
-LICENSE
-.editorconfig
-global.json
-README.md
-nuget.png
-.gitattributes
-Directory.build.props
-Directory.build.targets
-
-# Excluir pastas bin e obj do projeto Plugin.Xamarin.OCR
 Plugin.Xamarin.OCR/bin/
 Plugin.Xamarin.OCR/obj/
 
-# Excluir pastas bin e obj do projeto Plugin.Xamarin.OCR.Sample
-Plugin.Xamarin.OCR.Sample/Plugin.Xamarin.OCR.Sample/bin/
-Plugin.Xamarin.OCR.Sample/Plugin.Xamarin.OCR.Sample/obj/
+Plugin.Xamarin.OCR.Sample/bin/
+Plugin.Xamarin.OCR.Sample/obj/
 
-# Excluir pastas bin e obj do projeto Plugin.Xamarin.OCR.Sample.Android
-Plugin.Xamarin.OCR.Sample/Plugin.Xamarin.OCR.Sample.Android/bin/
-Plugin.Xamarin.OCR.Sample/Plugin.Xamarin.OCR.Sample.Android/obj/
+Plugin.Xamarin.OCR.Sample.Android/bin/
+Plugin.Xamarin.OCR.Sample.Android/obj/
