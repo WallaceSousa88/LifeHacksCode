@@ -1,22 +1,24 @@
 import os
 
-def listar_arquivos(caminho, nivel=0):
-    for item in os.listdir(caminho):
-        espacos = ' ' * nivel
-        item_caminho = os.path.join(caminho, item)
-        if os.path.isfile(item_caminho):
-            yield f'{espacos}- {item}\n'
-        else:
-            yield f'{espacos}+ {item}\n'
-            yield from listar_arquivos(item_caminho, nivel + 2)
+def listar_arquivos(caminho, ignorar_pastas=None):
+    if ignorar_pastas is None:
+        ignorar_pastas = []
+    for root, dirs, files in os.walk(caminho):
+        dirs[:] = [d for d in dirs if d not in ignorar_pastas]
+        for file in files:
+            relpath = os.path.relpath(os.path.join(root, file), caminho)
+            if os.path.dirname(relpath):  # Verifica se o arquivo está em um subdiretório
+                yield f"\\{relpath}"
+            else:
+                yield relpath
 
 def salvar_em_txt(caminho):
     nome_arquivo = os.path.basename(caminho) + '.txt'
     caminho_area_trabalho = os.path.join(os.path.expanduser("~"), "Desktop", nome_arquivo)  
     try:
-        with open(caminho_area_trabalho, 'w') as f:
+        with open(caminho_area_trabalho, 'w', encoding='utf-8') as f:
             for linha in listar_arquivos(caminho):
-                f.write(linha)
+                f.write(linha + '\n')
         print(f"Lista de arquivos salva em: {caminho_area_trabalho}")
     except PermissionError:
         print(f"Erro: Permissão negada para escrever em: {caminho_area_trabalho}")

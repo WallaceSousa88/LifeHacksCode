@@ -6,7 +6,11 @@ def listar_arquivos(caminho, ignorar_pastas=None):
     for root, dirs, files in os.walk(caminho):
         dirs[:] = [d for d in dirs if d not in ignorar_pastas]
         for file in files:
-            yield os.path.relpath(os.path.join(root, file), caminho)
+            relpath = os.path.relpath(os.path.join(root, file), caminho)
+            if os.path.dirname(relpath):
+                yield f"\\{relpath}"
+            else:
+                yield relpath
 
 def obter_conteudo_arquivo(caminho_arquivo):
     try:
