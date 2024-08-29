@@ -59,5 +59,6 @@ graph TD
     style C fill:#f0ad4e,stroke:#eea236
     style E fill:#5cb85c,stroke:#4cae4c
     style L fill:#5cb85c,stroke:#4cae4c
+```
 
 ## Hospedagem
