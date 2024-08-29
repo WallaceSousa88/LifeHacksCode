@@ -17,10 +17,10 @@ graph TD
     N --> O(14. Microsserviço 'Relatórios' processa mensagem)
     O --> P(15. Microsserviço 'Relatórios' atualiza relatórios)
 
-    style A fill:#5cb85c80,stroke:#4cae4c,stroke-width:2px,text-align:center,font-weight:bold,font-size:12px
-    style M fill:#5cb85c80,stroke:#4cae4c,stroke-width:2px,text-align:center,font-weight:bold,font-size:12px
-    style C fill:#f0ad4e80,stroke:#eea236,stroke-width:2px,text-align:center,font-weight:bold,font-size:12px
-    style E fill:#f0ad4e80,stroke:#d9534f,stroke-width:2px,text-align:center,font-weight:bold,font-size:12px
-    style H fill:#5cb85c80,stroke:#4cae4c,stroke-width:2px,text-align:center,font-weight:bold,font-size:12px
-    style L fill:#4285f4,stroke:#4285f4,stroke-width:2px,text-align:center,font-weight:bold,font-size:12px
+    style A fill:#5cb85c80,stroke:#4cae4c,stroke-width:2px,text-align:center,font-size:12px
+    style M fill:#5cb85c80,stroke:#4cae4c,stroke-width:2px,text-align:center,font-size:12px
+    style C fill:#f0ad4e80,stroke:#eea236,stroke-width:2px,text-align:center,font-size:12px
+    style E fill:#d9534f80,stroke:#d9534f,stroke-width:2px,text-align:center,font-size:12px 
+    style H fill:#5cb85c80,stroke:#4cae4c,stroke-width:2px,text-align:center,font-size:12px
+    style L fill:#4285f480,stroke:#4285f4,stroke-width:2px,text-align:center,font-size:12px
 ```
