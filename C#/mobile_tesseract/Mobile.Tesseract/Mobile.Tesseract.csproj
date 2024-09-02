@@ -14,6 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Plugin.Xamarin.OCR\Plugin.Xamarin.OCR.csproj" />
+    <ProjectReference Include="..\Plugin.Tesseract\Plugin.Tesseract.csproj" />
   </ItemGroup>
 </Project>

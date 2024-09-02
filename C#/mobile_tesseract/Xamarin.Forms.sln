@@ -4,13 +4,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
 
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Xamarin.OCR.Sample.Android", "Plugin.Xamarin.OCR.Sample.Android\Plugin.Xamarin.OCR.Sample.Android.csproj", "{E55043A2-C982-46A3-B8CA-D246D273FB0D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mobile.Tesseract.Android", "Mobile.Tesseract.Android\Mobile.Tesseract.Android.csproj", "{E55043A2-C982-46A3-B8CA-D246D273FB0D}"
 EndProject
 
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.Xamarin.OCR.Sample", "Plugin.Xamarin.OCR.Sample\Plugin.Xamarin.OCR.Sample.csproj", "{276658CE-B4B9-45C8-84CA-5935ED1889ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mobile.Tesseract", "Mobile.Tesseract\Mobile.Tesseract.csproj", "{276658CE-B4B9-45C8-84CA-5935ED1889ED}"
 EndProject
 
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.Xamarin.OCR", "Plugin.Xamarin.OCR\Plugin.Xamarin.OCR.csproj", "{32C52C31-E3C1-41A5-94A4-9CF1B532B2BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.Tesseract", "Plugin.Tesseract\Plugin.Tesseract.csproj", "{32C52C31-E3C1-41A5-94A4-9CF1B532B2BD}"
 EndProject
 
 Global

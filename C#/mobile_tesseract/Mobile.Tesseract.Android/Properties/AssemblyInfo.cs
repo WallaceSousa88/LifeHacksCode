@@ -3,11 +3,11 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Android.App;
 
-[assembly: AssemblyTitle("Plugin.Xamarin.OCR.Sample.Android")]
+[assembly: AssemblyTitle("Mobile.Tesseract.Android")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Plugin.Xamarin.OCR.Sample.Android")]
+[assembly: AssemblyProduct("Mobile.Tesseract.Android")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

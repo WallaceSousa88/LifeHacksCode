@@ -7,8 +7,8 @@
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TemplateGuid>{c9e5eea5-ca05-42a1-839b-61506e0a37df}</TemplateGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Plugin.Xamarin.OCR.Sample.Droid</RootNamespace>
-    <AssemblyName>Plugin.Xamarin.OCR.Sample.Android</AssemblyName>
+    <RootNamespace>Mobile.Tesseract.Droid</RootNamespace>
+    <AssemblyName>Mobile.Tesseract.Android</AssemblyName>
     <Deterministic>True</Deterministic>
     <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
@@ -94,13 +94,13 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Plugin.Xamarin.OCR\Plugin.Xamarin.OCR.csproj">
+    <ProjectReference Include="..\Plugin.Tesseract\Plugin.Tesseract.csproj">
       <Project>{32c52c31-e3c1-41a5-94a4-9cf1b532b2bd}</Project>
-      <Name>Plugin.Xamarin.OCR</Name>
+      <Name>Plugin.Tesseract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Plugin.Xamarin.OCR.Sample\Plugin.Xamarin.OCR.Sample.csproj">
+    <ProjectReference Include="..\Mobile.Tesseract\Mobile.Tesseract.csproj">
       <Project>{1DC882C1-80BA-42CB-A751-836A531143F4}</Project>
-      <Name>Plugin.Xamarin.OCR.Sample</Name>
+      <Name>Mobile.Tesseract</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

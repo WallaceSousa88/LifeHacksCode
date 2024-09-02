@@ -1,10 +1,10 @@
 .vs/
 
-Plugin.Xamarin.OCR/bin/
-Plugin.Xamarin.OCR/obj/
+Plugin.Tesseract/bin/
+Plugin.Tesseract/obj/
 
-Plugin.Xamarin.OCR.Sample/bin/
-Plugin.Xamarin.OCR.Sample/obj/
+Mobile.Tesseract/bin/
+Mobile.Tesseract/obj/
 
-Plugin.Xamarin.OCR.Sample.Android/bin/
-Plugin.Xamarin.OCR.Sample.Android/obj/
+Mobile.Tesseract.Android/bin/
+Mobile.Tesseract.Android/obj/

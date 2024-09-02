@@ -1,8 +1,9 @@
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Plugin.Tesseract;
 
-namespace Plugin.Xamarin.OCR.Sample
+namespace Mobile.Tesseract
 {
     public partial class App : Application
     {

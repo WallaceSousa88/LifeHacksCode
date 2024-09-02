@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Plugin.Tesseract;
 
-namespace Plugin.Xamarin.OCR
+namespace Plugin.Tesseract
 {
     internal class OcrImplementation : IOcrService
     {

@@ -5,8 +5,9 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using Plugin.Tesseract;
 
-namespace Plugin.Xamarin.OCR.Sample
+namespace Mobile.Tesseract
 {
     public partial class MainPage : ContentPage
     {
