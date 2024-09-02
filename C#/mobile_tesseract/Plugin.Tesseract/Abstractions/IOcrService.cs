@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Plugin.Tesseract;
 
 namespace Plugin.Tesseract;
 
 public delegate bool CustomOcrValidationCallback(string extractedText);
+
 
 public interface IOcrService
 {
@@ -17,7 +17,7 @@ public interface IOcrService
 
     Task InitAsync(CancellationToken ct = default);
 
-    Task<OcrResult> RecognizeTextAsync(byte[] imageData, CancellationToken ct = default);
+    Task<OcrResult> RecognizeTextAsync(byte[] imageData, bool tryHard = false, CancellationToken ct = default);
 
     Task<OcrResult> RecognizeTextAsync(byte[] imageData, OcrOptions options, CancellationToken ct = default);
 
@@ -50,16 +50,18 @@ public class OcrCompletedEventArgs(OcrResult? result, string? errorMessage = nul
 
 public class OcrOptions
 {
-    public OcrOptions(string? language = null, List<OcrPatternConfig>? patternConfigs = null, CustomOcrValidationCallback? customCallback = null)
+    public OcrOptions(string? language = null, bool tryHard = false, List<OcrPatternConfig>? patternConfigs = null, CustomOcrValidationCallback? customCallback = null)
     {
         Language = language;
+        TryHard = tryHard;
         PatternConfigs = patternConfigs;
         CustomCallback = customCallback;
     }
 
-    public OcrOptions(string? language = null, OcrPatternConfig? patternConfig = null, CustomOcrValidationCallback? customCallback = null)
+    public OcrOptions(string? language = null, bool tryHard = false, OcrPatternConfig? patternConfig = null, CustomOcrValidationCallback? customCallback = null)
     {
         Language = language;
+        TryHard = tryHard;
         PatternConfigs = new List<OcrPatternConfig> { patternConfig };
         CustomCallback = customCallback;
     }
@@ -69,6 +71,8 @@ public class OcrOptions
     public string? Language { get; set; }
 
     public List<OcrPatternConfig>? PatternConfigs { get; set; }
+
+    public bool TryHard { get; set; }
 }
 
 public class OcrPatternConfig
@@ -90,6 +94,8 @@ public class OcrResult
 
     public IList<OcrElement> Elements { get; set; } = new List<OcrElement>();
 
+    public IList<string> Lines { get; set; } = new List<string>();
+
     public IList<string> MatchedValues { get; set; } = new List<string>();
 
     public bool Success { get; set; }
@@ -98,6 +104,14 @@ public class OcrResult
     {
         public float Confidence { get; set; }
 
+        public int Height { get; set; }
+
         public string Text { get; set; }
+
+        public int Width { get; set; }
+
+        public int X { get; set; }
+
+        public int Y { get; set; }
     }
 }
