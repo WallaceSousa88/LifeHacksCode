@@ -1,0 +1,334 @@
+
+<!DOCTYPE html>
+<html dir="ltr" lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#394B58">
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="apple-itunes-app" content="app-id=480883488">
+<link rel="manifest" href="/web-app-manifest/manifest.json">
+  <meta name="sentry-trace" content="672cff13e8dc47f082bc4415a9d595c5-3dff7c4c51a3472b-0"/>
+  <title>UNIDADE 1 - Tema 1 - Arquitetura de Aplicações Web: Eixo 6 - Microfundamento: Apis e Web Services</title>
+
+  <link rel="preload" href="https://du11hjcvx0uqb.cloudfront.net/dist/fonts/lato/extended/Lato-Regular-bd03a2cc27.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="https://du11hjcvx0uqb.cloudfront.net/dist/fonts/lato/extended/Lato-Bold-cccb897485.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="https://du11hjcvx0uqb.cloudfront.net/dist/fonts/lato/extended/Lato-Italic-4eb103b4d1.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://du11hjcvx0uqb.cloudfront.net/dist/brandable_css/no_variables/bundles/fonts-6ee09b0b2f.css" media="screen" />
+  <link rel="stylesheet" href="https://du11hjcvx0uqb.cloudfront.net/dist/brandable_css/default/variables-high_contrast-7dd4b80918af0e0218ec0229e4bd5873.css" media="all" />
+  <link rel="stylesheet" href="https://du11hjcvx0uqb.cloudfront.net/dist/brandable_css/new_styles_high_contrast/bundles/common-7f4ad40842.css" media="all" />
+  <link rel="stylesheet" href="https://du11hjcvx0uqb.cloudfront.net/dist/brandable_css/new_styles_high_contrast/bundles/wiki_page-9ab9e5b496.css" media="screen" />
+  <link rel="stylesheet" href="https://du11hjcvx0uqb.cloudfront.net/dist/brandable_css/new_styles_high_contrast/bundles/new_user_tutorials-6b15f87caf.css" media="screen" />
+  <link rel="apple-touch-icon" href="https://du11hjcvx0uqb.cloudfront.net/dist/images/apple-touch-icon-585e5d997d.png" />
+  <link rel="icon" type="image/x-icon" href="https://du11hjcvx0uqb.cloudfront.net/dist/images/favicon-e10d657a73.ico" />
+
+  <link rel="stylesheet" href="https://instructure-uploads.s3.amazonaws.com/account_117480000000000001/attachments/10567466/pucminas_prod.css" media="all" />
+<link rel="stylesheet" href="https://instructure-uploads.s3.amazonaws.com/account_117480000000000001/attachments/10568711/pucminas_graduacao.css" media="all" />
+  
+  <script>if (navigator.userAgent.match(/(MSIE|Trident\/)/)) location.replace('/ie-is-not-supported.html')</script>
+  <script>
+    INST = {"environment":"production","allowMediaComments":true,"kalturaSettings":{"domain":"nv.instructuremedia.com","resource_domain":"nv.instructuremedia.com","rtmp_domain":"iad.rtmp.instructuremedia.com","partner_id":"9","subpartner_id":"0","player_ui_conf":"0","kcw_ui_conf":"0","upload_ui_conf":"0","max_file_size_bytes":534773760,"do_analytics":false,"hide_rte_button":false,"js_uploader":true},"logPageViews":true,"editorButtons":[{"name":"Microsoft Office 365","id":2,"favorite":false,"url":"https://office365-iad-prod.instructure.com/lti/rce-content-item","icon_url":"https://office365-iad-prod.instructure.com/images/office365_icon.png","canvas_icon_class":null,"width":900,"height":600,"use_tray":false,"always_on":false,"description":"\u003cp\u003eAllows you to pull in documents from Office 365 to Canvas\u003c/p\u003e\n"},{"name":"YouTube","id":16,"favorite":false,"url":"https://www.edu-apps.org/lti_public_resources/?tool_id=youtube","icon_url":"https://www.edu-apps.org/assets/lti_public_resources/youtube_icon.png","canvas_icon_class":null,"width":560,"height":600,"use_tray":false,"always_on":false,"description":"\u003cp\u003eSearch publicly available YouTube videos. A new icon will show up in your course rich editor letting you search YouTube and click to embed videos in your course material.\u003c/p\u003e\n"},{"name":"Favoritos do Commons","id":24,"favorite":false,"url":"https://lor.instructure.com/api/lti/favorite-resources","icon_url":"https://lor.instructure.com/img/icon_commons.png","canvas_icon_class":null,"width":800,"height":400,"use_tray":true,"always_on":false,"description":"\u003cp\u003eFind and share course content\u003c/p\u003e\n"},{"name":"Studio","id":33,"favorite":false,"url":"https://pucminas.instructuremedia.com/lti/launch?custom_arc_launch_type=content_select\u0026custom_lti_use_case=editor_button","icon_url":"https://files.instructuremedia.com/logos/studio-logo-squid-tiny-electric.svg","canvas_icon_class":null,"width":860,"height":640,"use_tray":false,"always_on":false,"description":"\u003cp\u003eVideo for Education\u003c/p\u003e\n"},{"name":"Quizlet","id":140,"favorite":false,"url":"https://www.edu-apps.org/lti_public_resources/?tool_id=quizlet","icon_url":"https://www.edu-apps.org/assets/lti_public_resources/quizlet_icon.png","canvas_icon_class":null,"width":560,"height":600,"use_tray":false,"always_on":false,"description":"\u003cp\u003eSearch for and embed publicly available flashcards and question sets from Quizlet. Questions can be embedded directly into content as flash cards, review, or as a study game.\u003c/p\u003e\n"},{"name":"Interactive Content – H5P","id":302,"favorite":false,"url":"https://pucminasvirtual.h5p.com","icon_url":"https://pucminasvirtual.h5p.com/img/h5p-icon.png","canvas_icon_class":null,"width":800,"height":600,"use_tray":false,"always_on":false,"description":"\u003cp\u003eCreate, share and reuse interactive HTML5 content in your browser\u003c/p\u003e\n"},{"name":"Microsoft Teams Meetings","id":313,"favorite":false,"url":"https://msteams-lti-iad-prod.inscloudgate.net/resource_link_request","icon_url":"https://msteams-lti-iad-prod.inscloudgate.net/images/placement_icon.png","canvas_icon_class":null,"width":575,"height":700,"use_tray":false,"always_on":false,"description":"\u003cp\u003eMicrosoft Teams Meetings integration for Canvas LMS\u003c/p\u003e\n"},{"name":"Incorporar um documento Lucid","id":2135,"favorite":false,"url":"https://integration.lucid.app/canvas/lti/launchTool","icon_url":"https://cdn-cashy-static-assets.lucidchart.com/lucid/logos/Lucid-L.svg","canvas_icon_class":null,"width":1200,"height":800,"use_tray":false,"always_on":true,"description":"\u003cp\u003eInsert Lucid documents in Canvas\u003c/p\u003e\n"}]};
+    ENV = {"ASSET_HOST":"https://du11hjcvx0uqb.cloudfront.net","active_brand_config_json_url":"https://du11hjcvx0uqb.cloudfront.net/dist/brandable_css/default/variables-high_contrast-7dd4b80918af0e0218ec0229e4bd5873.json","active_brand_config":null,"confetti_branding_enabled":false,"url_to_what_gets_loaded_inside_the_tinymce_editor_css":["https://du11hjcvx0uqb.cloudfront.net/dist/brandable_css/default/variables-high_contrast-7dd4b80918af0e0218ec0229e4bd5873.css","https://du11hjcvx0uqb.cloudfront.net/dist/brandable_css/new_styles_high_contrast/bundles/what_gets_loaded_inside_the_tinymce_editor-795277483f.css","https://du11hjcvx0uqb.cloudfront.net/dist/brandable_css/no_variables/bundles/fonts-6ee09b0b2f.css"],"url_for_high_contrast_tinymce_editor_css":["https://du11hjcvx0uqb.cloudfront.net/dist/brandable_css/default/variables-high_contrast-7dd4b80918af0e0218ec0229e4bd5873.css","https://du11hjcvx0uqb.cloudfront.net/dist/brandable_css/new_styles_high_contrast/bundles/what_gets_loaded_inside_the_tinymce_editor-795277483f.css","https://du11hjcvx0uqb.cloudfront.net/dist/brandable_css/no_variables/bundles/fonts-6ee09b0b2f.css"],"current_user_id":"193028","current_user_global_id":"117480000000193028","current_user_heap_id":"uu-2-5732d4311be16e82164c8fc9796df899662fc04b0641d94f0f65c50a18fb209d-hHKyZ90K5uw61dHkHyNnHY5itoxkufHmpRCFiIEd","current_user_roles":["user","student"],"current_user_is_student":true,"current_user_types":[],"current_user_disabled_inbox":false,"current_user_visited_tabs":null,"discussions_reporting":true,"files_domain":"cluster213.canvas-user-content.com","group_information":null,"DOMAIN_ROOT_ACCOUNT_ID":"117480000000000001","DOMAIN_ROOT_ACCOUNT_UUID":"hHKyZ90K5uw61dHkHyNnHY5itoxkufHmpRCFiIEd","k12":false,"help_link_name":"Ajuda","help_link_icon":"help","use_high_contrast":true,"auto_show_cc":false,"disable_celebrations":false,"disable_keyboard_shortcuts":false,"LTI_LAUNCH_FRAME_ALLOWANCES":["geolocation *","microphone *","camera *","midi *","encrypted-media *","autoplay *","clipboard-write *","display-capture *"],"DEEP_LINKING_POST_MESSAGE_ORIGIN":"https://pucminas.instructure.com","comment_library_suggestions_enabled":false,"SETTINGS":{"open_registration":false,"collapse_global_nav":false,"release_notes_badge_disabled":false,"can_add_pronouns":false,"show_sections_in_course_tray":true},"RAILS_ENVIRONMENT":"Production","IN_PACED_COURSE":false,"SENTRY_FRONTEND":{"dsn":"https://355a1d96717e4038ac25aa852fa79a8f@relay-iad.sentry.insops.net/388","org_slug":"instructure","base_url":"https://sentry.insops.net","normalized_route":"/courses/{course_id}/pages/{id}","errors_sample_rate":"0.005","traces_sample_rate":"0.005","url_deny_pattern":"instructure-uploads.*amazonaws.com","revision":"canvas-lms@20240828.235"},"DATA_COLLECTION_ENDPOINT":"https://canvas-frontend-data-iad-prod.inscloudgate.net/submit","DOMAIN_ROOT_ACCOUNT_SFID":"001A000001KPYGl","DIRECT_SHARE_ENABLED":false,"CAN_VIEW_CONTENT_SHARES":false,"FEATURES":{"featured_help_links":true,"account_level_blackout_dates":false,"render_both_to_do_lists":false,"commons_new_quizzes":false,"course_paces_redesign":true,"course_paces_for_students":true,"explicit_latex_typesetting":false,"media_links_use_attachment_id":true,"permanent_page_links":true,"selective_release_backend":true,"selective_release_ui_api":true,"selective_release_edit_page":true,"enhanced_course_creation_account_fetching":false,"instui_for_import_page":false,"multiselect_gradebook_filters":true,"assignment_edit_placement_not_on_announcements":false,"platform_service_speedgrader":false,"instui_header":false,"rce_find_replace":true,"courses_popout_sisid":true,"dashboard_graphql_integration":false,"discussion_checkpoints":false,"speedgrader_studio_media_capture":true,"product_tours":false,"usage_rights_discussion_topics":true,"granular_permissions_manage_users":true,"create_course_subaccount_picker":true,"file_verifiers_for_quiz_links":true,"lti_deep_linking_module_index_menu_modal":true,"lti_dynamic_registration":true,"lti_registrations_next":false,"lti_multiple_assignment_deep_linking":true,"lti_overwrite_user_url_input_select_content_dialog":true,"buttons_and_icons_root_account":false,"extended_submission_state":false,"scheduled_page_publication":true,"send_usage_metrics":false,"rce_transform_loaded_content":false,"mobile_offline_mode":false,"react_discussions_post":true,"instui_nav":false,"enhanced_developer_keys_tables":true,"lti_registrations_discover_page":false,"account_level_mastery_scales":false,"non_scoring_rubrics":true,"top_navigation_placement":false,"rubric_criterion_range":true,"lti_migration_info":true,"lti_toggle_placements":true,"embedded_release_notes":false,"canvas_k6_theme":false,"new_math_equation_handling":true},"current_user":{"id":"193028","anonymous_id":"44xw","display_name":"Wallace Inacio Gomes de Sousa","avatar_image_url":"https://pucminas.instructure.com/images/thumbnails/5532831/4QxrIX0JjvoojzildXNPJspNgqSBmTscGyRTuslQ","html_url":"https://pucminas.instructure.com/about/193028","pronouns":null,"avatar_is_fallback":false,"email":"wallace.inacio@sga.pucminas.br"},"current_user_is_admin":false,"page_view_update_url":"/page_views/9232a03c-1ae1-4486-84ae-28a775ff9fc6?page_view_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpIjoiOTIzMmEwM2MtMWFlMS00NDg2LTg0YWUtMjhhNzc1ZmY5ZmM2IiwidSI6MTE3NDgwMDAwMDAwMTkzMDI4LCJjIjoiMjAyNC0wOS0wM1QwMjowNjoyOS42MFoifQ.d5hng9Ipu3d5duQiqsehMGTtI_y-yyZ5Zy3wKD7ovcM","context_asset_string":"course_155663","ping_url":"https://pucminas.instructure.com/api/v1/courses/155663/ping","TIMEZONE":"America/Sao_Paulo","CONTEXT_TIMEZONE":"America/Sao_Paulo","LOCALES":["pt-BR","pt","en"],"BIGEASY_LOCALE":"pt_BR","FULLCALENDAR_LOCALE":"pt-br","MOMENT_LOCALE":"pt-br","rce_auto_save_max_age_ms":86400000,"K5_USER":false,"USE_CLASSIC_FONT":false,"K5_HOMEROOM_COURSE":false,"K5_SUBJECT_COURSE":false,"LOCALE_TRANSLATION_FILE":"/dist/javascripts/translations/pt-BR-9f3e7bb79c.json","ACCOUNT_ID":"4019","user_cache_key":"YXIyNEQxdzF2c21abTJ1Z045cE9GQlhyT3BnVHlsUDVYdDNxUXlDUnZ5Zlc9\nO1twLTA/OntQXz1IVXBncmFxZTtuamFsa2hwdm9pdWxraW1tYXFld2c=\n","current_context":{"id":"155663","name":"Eixo 6 - Microfundamento: Apis e Web Services","type":"Course","url":"https://pucminas.instructure.com/courses/155663"},"WIKI_RIGHTS":{"read":true},"PAGE_RIGHTS":{"read":true},"DEFAULT_EDITING_ROLES":"teachers","WIKI_PAGES_PATH":"/courses/155663/pages","WIKI_PAGE":{"title":"UNIDADE 1 - Tema 1 - Arquitetura de Aplicações Web","created_at":"2023-07-31T09:22:57-03:00","url":"unidade-1-tema-1-arquitetura-de-aplicacoes-web","editing_roles":"teachers","page_id":"1290401","published":true,"hide_from_students":false,"front_page":false,"html_url":"https://pucminas.instructure.com/courses/155663/pages/unidade-1-tema-1-arquitetura-de-aplicacoes-web","todo_date":null,"publish_at":null,"updated_at":"2024-03-12T10:46:14-03:00","locked_for_user":false,"body":"\u003cdiv id=\"topo\" class=\"content-box \" style=\"margin-top: 0;\"\u003e\n\u003cdiv class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12\"\u003e\n\u003cdiv id=\"banner\"\u003e\u003cimg style=\"min-width: 100%;\" src=\"https://pucminas.instructure.com/courses/155663/files/9126393/download?wrap=1\" alt=\"\" width=\"100%\" height=\"272\" data-decorative=\"true\" data-api-endpoint=\"https://pucminas.instructure.com/api/v1/courses/155663/files/9126393\" data-api-returntype=\"File\"\u003e\n\u003cdiv id=\"faixa\" style=\"background-color: #256aa5; padding: 1%; margin-top: 2px;\"\u003e\u003cspan style=\"font-size: 18pt; color: #ffffff;\"\u003eMicrofundamento: \u003cspan\u003eAPIs e Web Services\u003c/span\u003e\u003c/span\u003e\u003c/div\u003e\n\u003c/div\u003e\n\u003cdiv id=\"breadcrumb\" style=\"margin-top: 10px;\"\u003e\u003cspan style=\"color: #333333;\"\u003e\u003cspan style=\"font-size: 10pt;\"\u003e\u003cstrong\u003e\u003cspan style=\"color: #333333;\"\u003e\u003ca style=\"color: #333333;\" title=\"Página inicial\" href=\"https://pucminas.instructure.com/courses/111711/\"\u003eMicrofundamento\u003c/a\u003e\u003c/span\u003e\u0026nbsp;\u003c/strong\u003e\u003c/span\u003e\u003c/span\u003e\u003cspan style=\"font-size: 10pt;\"\u003e\u003cstrong\u003e\u0026gt;\u003c/strong\u003e\u003c/span\u003e\u003cspan style=\"color: #256aa5; font-size: 10pt;\"\u003e \u003cstrong\u003e UNIDADE 1 - Tema 1 - Arquitetura de Aplicações Web\u003c/strong\u003e\u003c/span\u003e\u003c/div\u003e\n\u003chr style=\"margin-top: 0.5%;\"\u003e\n\u003cdiv class=\"grid-row \"\u003e\n\u003cdiv id=\"conteudo\" class=\"col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9\"\u003e\n\u003cdiv id=\"geral\" style=\"margin-top: 0;\"\u003e\n\u003ch1\u003e\u003cspan style=\"font-size: 25pt; color: #256aa5; font-family: Aleo regular, Verdana, Arial;\"\u003eARQUITETURA DE APLICAÇÕES WEB\u003c/span\u003e\u003c/h1\u003e\n\u003cdiv class=\"col\"\u003e\n\u003cdiv class=\"puv_box_info_compass\"\u003e\n\u003cdiv class=\"icon\"\u003e\u0026nbsp;\u003c/div\u003e\n\u003cdiv class=\"text\"\u003e\n\u003cp\u003eNesta sessão, vamos conhecer as principais arquiteturas de aplicações web e suas características.\u003c/p\u003e\n\u003cp\u003eAo final, você deverá:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003eConhecer as principais arquiteturas de aplicações Web e suas características.\u003c/li\u003e\n\u003cli\u003eDiferenciar os mecanismos de recuperação de informação dos servidores Web utilizados nas arquiteturas MPA e SPA.\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/div\u003e\n\u003c/div\u003e\n\u003c/div\u003e\n\u003cdiv id=\"nesta-sessao\" style=\"background-color: #256aa5; padding: 0.3% 0% 0.5% 3%; margin-bottom: 4%; width: 250px;\"\u003e\n\u003ch2\u003e\u003cspan style=\"font-size: 18pt; font-family: Aleo regular, Verdana, Arial; color: #ffffff; padding: 1px; text-align: justify;\"\u003eNESTA SESSÃO\u003c/span\u003e\u003c/h2\u003e\n\u003c/div\u003e\n\u003cdiv id=\"texto-introdutorio\" style=\"text-align: justify;\"\u003e\n\u003cp\u003eO desenvolvimento de APIs e Web Services auxilia em duas principais atividades na Web: Integração entre sistemas e desenvolvimento de aplicações web modernas.\u003c/p\u003e\n\u003cp\u003ePara entender um pouco mais sobre os cenários em que uma Web API pode ser usada no desenvolvimento de aplicações Web modernas, nesta sessão, iremos revisar as duas principais arquiteturas de aplicações Web e suas principais características: MPA e SPA.\u0026nbsp;\u003c/p\u003e\n\u003cp\u003eAssista ao vídeo a seguir:\u003cbr\u003e\u003cbr\u003e\u003c/p\u003e\n\u003cdiv id=\"texto-introdutorio\" style=\"text-align: justify;\"\u003e\n\u003cp style=\"text-align: center;\"\u003e\u003ciframe class=\"lti-embed\" style=\"width: 720px; height: 420px;\" src=\"https://pucminas.instructure.com/courses/155663/external_tools/retrieve?display=borderless\u0026amp;url=https%3A%2F%2Fpucminas.instructuremedia.com%2Flti%2Flaunch%3Fcustom_arc_launch_type%3Dbare_embed%26custom_arc_media_id%3D2053d9bd-1b80-462b-b6cb-6e0879a11154-189536\" width=\"720\" height=\"420\" allowfullscreen=\"allowfullscreen\" webkitallowfullscreen=\"webkitallowfullscreen\" mozallowfullscreen=\"mozallowfullscreen\" allow=\"geolocation *; microphone *; camera *; midi *; encrypted-media *; autoplay *; clipboard-write *; display-capture *\" data-mce-fragment=\"1\"\u003e\u003c/iframe\u003e\u003c/p\u003e\n\u003cp\u003e\u0026nbsp;\u003c/p\u003e\n\u003c/div\u003e\n\u003cp\u003e\u003cstrong\u003e\u003c/strong\u003e\u003cspan style=\"color: #236fa1;\"\u003e\u003cstrong\u003e\u003cspan style=\"font-size: 14pt;\"\u003eMulti-Page Application (MPA)\u003c/span\u003e\u003c/strong\u003e\u003c/span\u003e\u003c/p\u003e\n\u003cp\u003eAplicativos de várias páginas, também conhecidos como MPAs (\u003cem\u003eMulti-Page Application\u003c/em\u003e), são aqueles aplicativos da web que funcionam de maneira tradicional: cada vez que o usuário pede (ou envia) dados ao servidor, eles renderizam uma nova página que é enviada de volta ao navegador.\u003c/p\u003e\n\u003cp\u003eEra assim que funcionavam todos os sites durante os primeiros 20 anos da World Wide Web, e ainda é a abordagem mais usada hoje em dia devido a uma série de vantagens que os MPAs ainda podem oferecer: excelentes desempenhos de SEO (\u003cem\u003eSearch Engine Optimization\u003c/em\u003e), curva de aprendizado rápida e constante para servir, gerenciar e personalizar conteúdos estáticos e dinâmicos, e muitos sistemas de gerenciamento de conteúdo (CMS), frameworks e temas de interface do usuário - como WordPress, Joomla e similares - que podem ser usados para criá-los do zero em poucos minutos .\u003c/p\u003e\n\u003cp\u003eNo entanto, os MPAs também vêm com alguns contras notáveis: as viagens de ida e volta necessárias do lado do servidor tendem a torná-los bastante caros em termos de largura de banda; além disso, o desenvolvimento de front-end e back-end costumam ser fortemente acoplados, tornando-os mais difíceis de manter e atualizar.\u003c/p\u003e\n\u003cp\u003eFelizmente, a maioria desses problemas foi mitigada ao longo dos anos, graças a vários recursos do navegador e melhorias de tecnologia, como CDN, cache do lado do servidor, solicitações AJAX e assim por diante; ao mesmo tempo, tais técnicas aumentam a complexidade das fases de desenvolvimento e implantação; isto é, a menos que optemos por confiar em uma das plataformas CMS de que falamos anteriormente, desistindo da maioria dos aspectos de codificação - com tudo o que isso implica.\u003c/p\u003e\n\u003cp\u003e\u0026nbsp;\u003c/p\u003e\n\u003cp\u003e\u003cspan style=\"font-size: 12pt; color: #333333;\"\u003e\u003cstrong\u003eVantagens\u003c/strong\u003e\u003c/span\u003e\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e\u003cstrong\u003eMelhor desempenho de SEO\u003c/strong\u003e: como o cliente (navegador) obtém a página finalizada com todos os dados e tags HTML, especialmente as metatags que pertencem à página, os mecanismos de pesquisa podem rastrear a página e indexá-la.\u003cbr\u003e\u003cbr\u003e\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eTempo de carregamento inicial mais rápido\u003c/strong\u003e: como as páginas e o conteúdo são renderizados no lado do servidor por uma linguagem de script do lado do servidor, como PHP, antes de enviá-la para o navegador do cliente, obtemos a página renderizada rapidamente no lado do cliente. Além disso, não há necessidade de compilar as páginas da web e o conteúdo em arquivos JavaScript, como fazemos nos SPAs tradicionais, para que o aplicativo seja carregado mais rapidamente no navegador.\u003cbr\u003e\u003cbr\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch3\u003e\u003cspan style=\"font-size: 12pt;\"\u003e\u003cstrong\u003eDesvantagens\u003c/strong\u003e\u003c/span\u003e\u003c/h3\u003e\n\u003cul\u003e\n\u003cli\u003e\u003cstrong\u003eExperiência do usuário insatisfatória\u003c/strong\u003e: como cada página precisa ser renderizada novamente e esse processo leva tempo no servidor, o usuário precisa esperar até que tudo seja recarregado no navegador, o que pode afetar a experiência do usuário. Na maioria das vezes, queremos os novos dados apenas quando fornecidos com a nova solicitação; não precisamos que a base HTML seja regenerada, por exemplo, a barra de navegação e o rodapé, mas ainda assim, obtemos esses elementos base renderizados novamente, independentemente. Podemos usar AJAX para renderizar apenas um componente específico, mas isso torna o desenvolvimento mais difícil e complexo.\u003cbr\u003e\u003cbr\u003e\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eAcoplamento estreito da lógica de back-end e front-end\u003c/strong\u003e: a visualização e os dados geralmente são tratados juntos no mesmo aplicativo. Por exemplo, em um aplicativo\u003cspan\u003e\u0026nbsp;\u003c/span\u003e\u003ca href=\"http://asp.net/\"\u003eASP.NET\u003c/a\u003e\u003cspan\u003e\u0026nbsp;\u003c/span\u003eMVC, você pode renderizar a visualização com o mecanismo Razor Pages. Nesta estruturasa, para um típico aplicativo renderizado do lado do servidor tradicional , a visualização é acoplada à lógica de back-end, embora possamos separar a camada de visualização com as Views, ainda há um forte acoplamento entre a lógica e as Viewas. O desenvolvedor de back-end deve saber qual visualização (por exemplo, home.cshtml) usar para cada rota ou controlador específico. Por outro lado, o desenvolvedor de front-end precisa trabalhar na visualização dentro da mesma estrutura que o desenvolvedor de back-end. Isso adiciona mais complexidade ao projeto.\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003e\u0026nbsp;\u003c/p\u003e\n\u003cp\u003e\u003cspan style=\"color: #236fa1; font-size: 14pt;\"\u003e\u003cstrong\u003eSingle Pages Applications (SPA)\u003c/strong\u003e\u003c/span\u003e\u003c/p\u003e\n\u003cp\u003eOutro tipos de arquitetura web são os SPAs (\u003cem\u003eSingle Pages Applications\u003c/em\u003e). Um SPA é um aplicativo baseado na web que se esforça para fornecer a mesma experiência do usuário que um aplicativo de desktop. Se considerarmos o fato de que todos os SPAs ainda são servidos por meio de um servidor da web e, portanto, acessados por navegadores da web como qualquer outro site padrão, podemos entender facilmente como esse resultado desejado só pode ser alcançado alterando alguns dos padrões padrão comumente usados em desenvolvimento da web, como carregamento de recursos, gerenciamento de DOM e navegação da interface do usuário. Em um bom SPA, tanto o conteúdo quanto os recursos - HTML, JavaScript, CSS e assim por diante - são recuperados em um único carregamento de página ou dinamicamente buscados quando necessário. Isso também significa que a página não recarrega ou atualiza, ela apenas muda e se adapta em resposta às ações do usuário, executando as chamadas do lado do servidor necessárias nos bastidores.\u003c/p\u003e\n\u003cp\u003eEstes são alguns dos principais recursos fornecidos por um SPA competitivo hoje em dia:\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e\u003cstrong\u003eSem viagens \"completas\" de ida e volta do lado do servidor\u003c/strong\u003e\u003cspan\u003e\u0026nbsp;\u003c/span\u003e: um SPA competitivo pode redesenhar qualquer parte da IU do cliente sem exigir uma viagem de ida e volta completa do lado do servidor para recuperar uma página HTML completa. Isso é obtido principalmente com a implementação de um princípio de design de separação de interesses, o que significa que a fonte de dados, a lógica de negócios e a camada de apresentação serão separadas.\u003cbr\u003e\u003cbr\u003e\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eRoteamento eficiente\u003c/strong\u003e: um SPA competitivo é capaz de rastrear o estado e a localização atuais do usuário durante toda a sua experiência de navegação usando roteadores baseados em JavaScript organizados.\u003cbr\u003e\u003cbr\u003e\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eDesempenho e flexibilidade\u003c/strong\u003e: um SPA competitivo geralmente transfere toda a sua IU para o cliente, graças ao SDK JavaScript de sua escolha (Angular, React, Vue, JQuery, Bootstrap e assim por diante). Isso geralmente é bom para o desempenho da rede, pois o aumento da renderização do lado do cliente e do processamento offline reduz o impacto da interface do usuário na rede. No entanto, o negócio real trazido por essa abordagem é a flexibilidade concedida à IU, já que o desenvolvedor será capaz de reescrever completamente o front-end do aplicativo com pouco ou nenhum impacto no servidor, além de alguns dos arquivos de recursos estáticos.\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003e\u003cbr\u003e\u003cspan style=\"font-size: 12pt;\"\u003e\u003cstrong\u003eVantagens\u003c/strong\u003e\u003c/span\u003e\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e\u003cstrong\u003eMelhor experiência do usuário:\u003c/strong\u003e\u003cspan\u003e\u0026nbsp;\u003c/span\u003eo SPA é rápido ao renderizar conteúdo após o carregamento inicial. A maioria dos recursos, como estilos CSS, código JavaScript e modelos HTML, são carregados apenas uma vez durante a vida útil do aplicativo. Somente os dados são enviados e enviados posteriormente; o HTML básico e o layout permanecem inalterados, oferecendo assim uma experiência de usuário melhor e mais suave.\u003cbr\u003e\u003cbr\u003e\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eDesenvolvimento e implantação mais fáceis:\u003c/strong\u003e\u003cspan\u003e\u0026nbsp;\u003c/span\u003eo desenvolvimento do SPA é comparativamente mais fácil de começar sem a necessidade de um servidor e de uma linguagem de script do lado do servidor. Você pode simplesmente iniciar o desenvolvimento de sua máquina local com file://URI. É mais fácil de implantar também porque consiste em arquivos HTML, JavaScript e CSS; você pode simplesmente soltá-los no servidor remoto e colocá-los ao vivo imediatamente.\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003e\u0026nbsp;\u003c/p\u003e\n\u003cp\u003e\u003cspan style=\"font-size: 12pt;\"\u003e\u003cstrong\u003eDesvantagens\u003c/strong\u003e\u003c/span\u003e\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e\u003cstrong\u003eDesempenho insatisfatório no mecanismo de pesquisa:\u003c/strong\u003e\u003cspan\u003e\u0026nbsp;\u003c/span\u003eos SPAs são páginas HTML simples, a maioria sem títulos e tags de parágrafo para que os rastreadores do mecanismo de pesquisa rastreiem. O conteúdo do SPA é carregado via JavaScript que os rastreadores geralmente não conseguem executar, portanto, os SPAs costumam ter um desempenho ruim em SEO.\u003cbr\u003e\u003cbr\u003e\u003c/li\u003e\n\u003cli\u003e\u003cstrong\u003eTempo de carregamento inicial lento\u003c/strong\u003e: a maioria dos recursos, como estilos CSS, código JavaScript e modelos HTML, são carregados apenas uma vez ao longo da vida útil do aplicativo, portanto, precisamos carregar toneladas desses arquivos de recursos de uma vez no início. Ao fazer isso, o aplicativo geralmente fica mais lento em relação ao tempo de carregamento inicial, especialmente em um grande SPA.\u003c/li\u003e\n\u003c/ul\u003e\n\u003cp\u003e\u003cbr\u003eEssa lista pode crescer facilmente, pois essas são apenas algumas das principais vantagens de um SPA competitivo e bem projetado. Esses aspectos desempenham um papel importante hoje em dia, à medida que muitos sites e serviços de negócios estão mudando de sua mentalidade tradicional de\u003cspan\u003e\u0026nbsp;\u003c/span\u003e\u003cem\u003eMulti-Page Application\u003c/em\u003e\u003cspan\u003e\u0026nbsp;\u003c/span\u003e(MPA) para abordagens totalmente comprometidas ou baseadas em SPA híbridas.\u003c/p\u003e\n\u003cp\u003eE é neste cenário que as Web API’s se tornam essenciais para o desenvolvimento de aplicações modernas, pois para prover as informações para os componentes modularizados da interface do usuário, precisamos que os servidores Web forneçam “serviços” de recuperação de informações, baseado nos recursos e regras de negócio da aplicação a ser desenvolvida.\u003c/p\u003e\n\u003cp\u003e\u0026nbsp;\u003c/p\u003e\n\u003c/div\u003e\n\u003cdiv class=\"col\"\u003e\n\u003cdiv class=\"puv_box_info_lightbulb\"\u003e\n\u003cdiv class=\"icon\" style=\"text-align: center;\"\u003e\u0026nbsp;\u003c/div\u003e\n\u003cdiv class=\"text\"\u003e\n\u003cp\u003e\u003cstrong\u003eREFLEXÃO\u003c/strong\u003e\u003c/p\u003e\n\u003cp\u003e\u003cspan\u003eAs aplicações web de hoje são muito diferentes das de décadas atrás. Tínhamos menos opções e soluções naqueles dias. Hoje, temos várias opções de arquiteturas e mecanismos para desenvolver uma aplicações Web. \u003c/span\u003e\u003c/p\u003e\n\u003cp\u003e\u003cspan\u003eNeste cenário encontramos as Web APIs que são ferramentas poderosas que auxiliam no desenvolvimento de aplicações Web modernas, facilitando a recuperação de informação do servidor Web de forma simples, modular e otimizada.\u003c/span\u003e\u003c/p\u003e\n\u003c/div\u003e\n\u003c/div\u003e\n\u003c/div\u003e\n\u003cdiv class=\"col\"\u003e\n\u003cdiv class=\"puv_box_info_book\"\u003e\n\u003cdiv class=\"icon\"\u003e\u0026nbsp;\u003c/div\u003e\n\u003cdiv class=\"text\"\u003e\n\u003cp\u003e\u003cstrong\u003eMATERIAL COMPLEMENTAR\u003c/strong\u003e\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e\u003cspan\u003eAcesse os slides utilizados nesta sessão: \u003ca class=\"instructure_file_link instructure_scribd_file inline_disabled\" title=\"u1-t1-s1a-arquitetura-aplicações-web.pdf\" href=\"https://pucminas.instructure.com/courses/155663/files/9126415?wrap=1\" target=\"_blank\" data-canvas-previewable=\"false\" data-api-endpoint=\"https://pucminas.instructure.com/api/v1/courses/155663/files/9126415\" data-api-returntype=\"File\"\u003eSlides - Arquitetura de Aplicações Web\u003c/a\u003e\u003c/span\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/div\u003e\n\u003c/div\u003e\n\u003c/div\u003e\n\u003cdiv id=\"texto-exercicio-fixacao\" style=\"text-align: center;\"\u003e\u003ciframe class=\"lti-embed\" style=\"width: 100%; height: 600px;\" title=\"Clone of UNIDADE 1 - Tema 1 - Redes e sistemas distribuídos\" src=\"https://pucminas.instructure.com/courses/155663/external_tools/retrieve?display=borderless\u0026amp;url=https%3A%2F%2Fpucminasvirtual.h5p.com%2Fcontent%2F1291667404400781868\" width=\"779\" height=\"600\" allowfullscreen=\"allowfullscreen\" webkitallowfullscreen=\"webkitallowfullscreen\" mozallowfullscreen=\"mozallowfullscreen\" allow=\"geolocation *; microphone *; camera *; midi *; encrypted-media *; autoplay *; clipboard-write *; display-capture *\"\u003e\u003c/iframe\u003e\u003c/div\u003e\n\u003cp\u003e\u0026nbsp;\u003c/p\u003e\n\u003cp style=\"text-align: right;\"\u003e\u003cspan style=\"color: #808080;\"\u003e\u003cem\u003e\u003ca style=\"color: #808080;\" href=\"#topo\"\u003e ↑ Voltar ao topo\u003c/a\u003e\u003c/em\u003e\u003c/span\u003e\u003c/p\u003e\n\u003c/div\u003e\n\u003c/div\u003e\n\u003cdiv id=\"menu-lateral\" class=\"col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-3\" style=\"padding-right: 10px; padding-left: 10px;\"\u003e\n\u003cdiv id=\"menu-imagem\" style=\"margin-bottom: 0; margin-top: 0;\"\u003e\u003cimg style=\"min-width: 100%;\" src=\"https://pucminas.instructure.com/courses/155663/files/9126371/download?wrap=1\" alt=\"\" width=\"100%\" height=\"78\" data-decorative=\"true\" data-api-endpoint=\"https://pucminas.instructure.com/api/v1/courses/155663/files/9126371\" data-api-returntype=\"File\"\u003e\u003c/div\u003e\n\u003cdiv id=\"menu-unid1\" style=\"background-color: #38ffec; padding: 15px; margin-left: 0px; margin-bottom: 0; margin-top: 0; text-align: center;\"\u003e\u003cspan style=\"color: #ffffff; font-size: 12pt;\"\u003e\u003cstrong\u003e\u003cspan\u003eFUNDAMENTOS DE APIS E WEB SERVICE\u003c/span\u003e\u003c/strong\u003e\u003c/span\u003e\u003c/div\u003e\n\u003cdiv id=\"menu-unid1-tema1\" style=\"background-color: #256aa5; padding: 10px 15px; margin-left: 0; margin-bottom: 0; text-align: left;\"\u003e\u003cspan style=\"font-size: 12pt; color: #ffffff;\"\u003e \u003cstrong\u003eTema 1: \u003cspan\u003eArquitetura baseada em APIs\u003c/span\u003e\u003c/strong\u003e\u003c/span\u003e\u003c/div\u003e\n\u003cdiv id=\"sessao\" style=\"background-color: #f5f4f4; padding: 10px 15px; margin-left: 0px; border: 1px solid #dcdcdc; margin-bottom: 0px; text-align: left;\"\u003e\n\u003cdiv id=\"box-imagem-texto\" style=\"padding-top: 2px; padding-bottom: 1px; margin-bottom: 1%; text-align: left;\"\u003e\u003cimg style=\"float: left; margin-top: 10px; padding: 1%;\" src=\"https://pucminas.instructure.com/courses/155663/files/9126375/download?wrap=1\" alt=\"\" width=\"15\" height=\"10\" data-api-endpoint=\"https://pucminas.instructure.com/api/v1/courses/155663/files/9126375\" data-api-returntype=\"File\"\u003e\n\u003cdiv id=\"texto\" style=\"padding-left: 30px; padding-right: 10px; text-align: left; padding-top: 10px;\"\u003e\u003cstrong\u003e\u003cspan style=\"font-size: 12pt; color: #256aa5;\"\u003eArquitetura de Aplicações Web\u003c/span\u003e\u003c/strong\u003e\u003c/div\u003e\n\u003c/div\u003e\n\u003c/div\u003e\n\u003cdiv id=\"sessao\" style=\"background-color: #f5f4f4; padding: 10px 15px; margin-left: 0px; border: 1px solid #dcdcdc; margin-bottom: 0px; text-align: left;\"\u003e\n\u003cdiv id=\"box-imagem-texto\" style=\"padding-top: 2px; padding-bottom: 1px; margin-bottom: 1%; text-align: left;\"\u003e\u003cspan style=\"color: #333333;\"\u003e\u003cimg style=\"float: left; margin-top: 10px; padding: 1%;\" src=\"https://pucminas.instructure.com/courses/155663/files/9126366/download?wrap=1\" alt=\"\" width=\"15\" height=\"20\" data-api-endpoint=\"https://pucminas.instructure.com/api/v1/courses/155663/files/9126366\" data-api-returntype=\"File\"\u003e\u003c/span\u003e\n\u003cdiv id=\"texto\" style=\"padding-left: 30px; padding-right: 10px; text-align: left; padding-top: 10px;\"\u003e\u003cspan style=\"color: #333333;\"\u003e\u003ca style=\"color: #333333;\" title=\"UNIDADE 1 - Tema 1 - Fundamentos de APIs e Web Service\" href=\"https://pucminas.instructure.com/courses/155663/pages/unidade-1-tema-1-fundamentos-de-apis-e-web-service\" data-api-endpoint=\"https://pucminas.instructure.com/api/v1/courses/155663/pages/unidade-1-tema-1-fundamentos-de-apis-e-web-service\" data-api-returntype=\"Page\"\u003eFundamentos de APIs e Web Service\u003c/a\u003e\u003c/span\u003e\u003c/div\u003e\n\u003c/div\u003e\n\u003c/div\u003e\n\u003cdiv id=\"menu-unid1-tema2\" style=\"background-color: #256aa5; margin-left: 0; margin-top: 0; margin-bottom: 0; padding: 10px 15px;\"\u003e\u003cspan style=\"color: #ffffff;\"\u003e\u003ca style=\"color: #ffffff;\" title=\"UNIDADE 1 - Tema 2 - APIs Request–Response\" href=\"https://pucminas.instructure.com/courses/155663/pages/unidade-1-tema-2-apis-request-response\" data-api-endpoint=\"https://pucminas.instructure.com/api/v1/courses/155663/pages/unidade-1-tema-2-apis-request-response\" data-api-returntype=\"Page\"\u003e\u003cspan style=\"font-size: 12pt; padding: 7px 10px 7px 0px;\"\u003e \u003cstrong\u003eTema 2\u003c/strong\u003e\u003c/span\u003e\u003c/a\u003e\u003c/span\u003e\u003ca title=\"UNIDADE 1 - Tema 2 - APIs Request–Response\" href=\"https://pucminas.instructure.com/courses/155663/pages/unidade-1-tema-2-apis-request-response\" data-api-endpoint=\"https://pucminas.instructure.com/api/v1/courses/155663/pages/unidade-1-tema-2-apis-request-response\" data-api-returntype=\"Page\"\u003e\u003cimg style=\"float: right; padding-top: 10px; padding-right: 2px;\" src=\"https://pucminas.instructure.com/courses/155663/files/9126362/download?wrap=1\" alt=\"\" width=\"15\" height=\"13\" data-api-endpoint=\"https://pucminas.instructure.com/api/v1/courses/155663/files/9126362\" data-api-returntype=\"File\" data-decorative=\"true\"\u003e\u003c/a\u003e\u003c/div\u003e\n\u003c/div\u003e\n\u003c/div\u003e\n\u003c/div\u003e\n\u003c/div\u003e"},"WIKI_PAGE_REVISION":"3","WIKI_PAGE_SHOW_PATH":"/courses/155663/pages/unidade-1-tema-1-arquitetura-de-aplicacoes-web","WIKI_PAGE_EDIT_PATH":"/courses/155663/pages/unidade-1-tema-1-arquitetura-de-aplicacoes-web/edit","WIKI_PAGE_HISTORY_PATH":"/courses/155663/pages/unidade-1-tema-1-arquitetura-de-aplicacoes-web/revisions","COURSE_ID":"155663","MODULES_PATH":"/courses/155663/modules","wiki_page_menu_tools":[],"wiki_index_menu_tools":[],"DISPLAY_SHOW_ALL_LINK":false,"CAN_SET_TODO_DATE":false,"TITLE_AVAILABILITY_PATH":"/api/v1/courses/155663/page_title_availability","badge_counts":{"submissions":0},"notices":[],"active_context_tab":"pages"};
+    BRANDABLE_CSS_HANDLEBARS_INDEX = [["new_styles_normal_contrast","new_styles_high_contrast","new_styles_normal_contrast_rtl","new_styles_high_contrast_rtl"],{"10":["908ffbc673",0,"d5c9044c6e",2],"15":["c8540c43a4",0,"0a2196be1d",2],"19":["df5777ed9c"],"61":["1fb36890db","b83a603352","4bcf82f85a","0b171e092c"],"67":["700335fb7b",0,"1cc2485e2c",2],"71":["8ac0336ef0","bf3093677a","a8146a011b","449171073f"],"06":["ba28819778",0,"96b99aafe5",2],"f0":["b349f31f5e",0,0,0],"c8":["718c8509f5","33cd4c40e3","03d0fbcbe8","ec23096f0d"],"1e":["6eb4ecac8e","4100cb65ce","0faf4716c8","bed54fd75e"],"b3":["e5da23fb43","0911fc8ed3","05b2bb5a6f","ba2585de5c"],"0c":["4dae5befd2",0,"c18876be89",2],"da":["b5a7f9cd8f","a4e5066985","773390ae11","8e9071910c"],"1d":["2128789890",0,"e568085637",2],"08":["64bff5a97d"],"e2":["11429f119a"],"9f":["d39b291ba6",0,0,0],"2b":["c491abf31e","b11dc54da6","b58622671f","6bb4a7ae9e"],"2c":["8a926fc28b",0,0,0],"c2":["6f2721ae01"],"9c":["c31821c764",0,"1693aba1da",2],"c5":["44c6024769","31150a4a27","53dd277fa9","5fe61c91c2"],"f2":["51574f9b13"]}]
+    REMOTES = {};
+  </script>
+  <script src="https://du11hjcvx0uqb.cloudfront.net/dist/brandable_css/default/variables-high_contrast-7dd4b80918af0e0218ec0229e4bd5873.js" defer="defer"></script>
+  <script src="https://du11hjcvx0uqb.cloudfront.net/dist/timezone/America/Sao_Paulo-9fc7cc57fc.js" defer="defer"></script>
+  <script src="https://du11hjcvx0uqb.cloudfront.net/dist/timezone/America/Sao_Paulo-9fc7cc57fc.js" defer="defer"></script>
+  <script src="https://du11hjcvx0uqb.cloudfront.net/dist/timezone/pt_BR-78cd8bebd1.js" defer="defer"></script>
+  <script src="https://du11hjcvx0uqb.cloudfront.net/dist/webpack-production/moment/locale/pt-br-chunk-327ae27905fcc7f1.js" defer="defer"></script>
+  <script src="https://du11hjcvx0uqb.cloudfront.net/dist/webpack-production/react-entry-d6972cd7700667c0.js" crossorigin="anonymous" defer="defer"></script>
+  <script src="https://du11hjcvx0uqb.cloudfront.net/dist/webpack-production/main-entry-f00d809ecd786b56.js" crossorigin="anonymous" defer="defer"></script>
+<script>
+//<![CDATA[
+(window.bundles || (window.bundles = [])).push('wiki_page_show');
+(window.bundles || (window.bundles = [])).push('navigation_header');
+//]]>
+</script>
+  
+  
+</head>
+
+<body class="with-left-side course-menu-expanded padless-content pages primary-nav-expanded full-width context-course_155663 responsive_student_grades_page">
+
+<noscript>
+  <div role="alert" class="ic-flash-static ic-flash-error">
+    <div class="ic-flash__icon" aria-hidden="true">
+      <i class="icon-warning"></i>
+    </div>
+    <h1>Você precisa ter JavaScript ativado para ter acesso a essa página.</h1>
+  </div>
+</noscript>
+
+
+
+
+<div id="flash_message_holder"></div>
+<div id="flash_screenreader_holder"></div>
+
+<div id="application" class="ic-app">
+  
+
+
+
+
+<header id="mobile-header" class="no-print">
+  <button type="button" class="Button Button--icon-action-rev Button--large mobile-header-hamburger">
+    <i class="icon-solid icon-hamburger"></i>
+    <span id="mobileHeaderInboxUnreadBadge" class="menu-item__badge" style="min-width: 0; top: 12px; height: 12px; right: 6px; display:none;"></span>
+    <span class="screenreader-only">Painel de controle</span>
+  </button>
+  <div class="mobile-header-space"></div>
+    <a class="mobile-header-title expandable" href="/courses/155663" role="button" aria-controls="mobileContextNavContainer">
+      <div>Eixo 6 - Microfundamento: Apis e Web Services</div>
+        <div>UNIDADE 1 - Tema 1 - Arquitetura de Aplicações Web</div>
+    </a>
+    <div id="immersive_reader_mobile_mount_point"></div>
+    <div class="mobile-header-space"></div>
+    <button type="button" class="Button Button--icon-action-rev Button--large mobile-header-arrow" aria-label="Menu de Navegação">
+      <i class="icon-arrow-open-down" id="mobileHeaderArrowIcon"></i>
+    </button>
+</header>
+<nav id="mobileContextNavContainer"></nav>
+
+<header id="header" class="ic-app-header no-print ">
+  <a href="#content" id="skip_navigation_link">Pular para Conteúdos</a>
+  <div role="region" class="ic-app-header__main-navigation" aria-label="Navegação Global">
+    <ul id="menu" class="ic-app-header__menu-list">
+        <li class="menu-item ic-app-header__menu-list-item ">
+          <a id="global_nav_profile_link" role="button" href="/profile/settings" class="ic-app-header__menu-list-link">
+            <div class="menu-item-icon-container">
+              <div aria-hidden="true" class="fs-exclude ic-avatar ">
+                <img src="https://pucminas.instructure.com/images/thumbnails/5532831/4QxrIX0JjvoojzildXNPJspNgqSBmTscGyRTuslQ" alt="Wallace Inacio Gomes de Sousa" />
+              </div>
+              <span class="menu-item__badge"></span>
+            </div>
+            <div class="menu-item__text">
+              Conta
+            </div>
+          </a>
+        </li>
+      <li class="ic-app-header__menu-list-item ">
+        <a id="global_nav_dashboard_link" href="https://pucminas.instructure.com/" class="ic-app-header__menu-list-link">
+          <div class="menu-item-icon-container" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" class="ic-icon-svg ic-icon-svg--dashboard" version="1.1" x="0" y="0" viewBox="0 0 280 200" enable-background="new 0 0 280 200" xml:space="preserve"><path d="M273.09,180.75H197.47V164.47h62.62A122.16,122.16,0,1,0,17.85,142a124,124,0,0,0,2,22.51H90.18v16.29H6.89l-1.5-6.22A138.51,138.51,0,0,1,1.57,142C1.57,65.64,63.67,3.53,140,3.53S278.43,65.64,278.43,142a137.67,137.67,0,0,1-3.84,32.57ZM66.49,87.63,50.24,71.38,61.75,59.86,78,76.12Zm147,0L202,76.12l16.25-16.25,11.51,11.51ZM131.85,53.82v-23h16.29v23Zm15.63,142.3a31.71,31.71,0,0,1-28-16.81c-6.4-12.08-15.73-72.29-17.54-84.25a8.15,8.15,0,0,1,13.58-7.2c8.88,8.21,53.48,49.72,59.88,61.81a31.61,31.61,0,0,1-27.9,46.45ZM121.81,116.2c4.17,24.56,9.23,50.21,12,55.49A15.35,15.35,0,1,0,161,157.3C158.18,152,139.79,133.44,121.81,116.2Z" /></svg>
+
+          </div>
+          <div class="menu-item__text">
+            Painel de controle
+          </div>
+        </a>
+      </li>
+        <li class="menu-item ic-app-header__menu-list-item ic-app-header__menu-list-item--active">
+          <a id="global_nav_courses_link" role="button" href="/courses" class="ic-app-header__menu-list-link">
+            <div class="menu-item-icon-container" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" class="ic-icon-svg ic-icon-svg--courses" version="1.1" x="0" y="0" viewBox="0 0 280 259" enable-background="new 0 0 280 259" xml:space="preserve"><path d="M73.31,198c-11.93,0-22.22,8-24,18.73a26.67,26.67,0,0,0-.3,3.63v.3a22,22,0,0,0,5.44,14.65,22.47,22.47,0,0,0,17.22,8H200V228.19h-134V213.08H200V198Zm21-105.74h90.64V62H94.3ZM79.19,107.34V46.92H200v60.42Zm7.55,30.21V122.45H192.49v15.11ZM71.65,16.71A22.72,22.72,0,0,0,49,39.36V190.88a41.12,41.12,0,0,1,24.32-8h157V16.71ZM33.88,39.36A37.78,37.78,0,0,1,71.65,1.6H245.36V198H215.15v45.32h22.66V258.4H71.65a37.85,37.85,0,0,1-37.76-37.76Z"/></svg>
+
+            </div>
+            <div class="menu-item__text">
+              Cursos
+            </div>
+          </a>
+        </li>
+        <li class="menu-item ic-app-header__menu-list-item ">
+          <a id="global_nav_groups_link" role="button" href="/groups" class="ic-app-header__menu-list-link">
+            <div class="menu-item-icon-container" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" class="ic-icon-svg ic-icon-svg--groups" viewBox="0 0 200 135"><path d="M134.5 129.4c0-1.1 0-19.8-6.2-31.1-4.5-8.5-16.4-12.4-35-19.2-1.7-.6-3.4-1.1-5.1-1.7v-8.5c5.6-5.1 8.5-12.4 8.5-20.3V29.4C96.6 13 83.6 0 67.2 0S37.9 13 37.9 29.4v19.2c0 7.3 3.4 14.7 8.5 20.3v8.5c-1.7.6-3.4 1.1-5.1 1.7-18.6 6.2-30.5 10.7-35 19.2C0 109.6 0 128.8 0 129.4c0 3.4 2.3 5.6 5.6 5.6h123.7c3.5 0 5.7-2.3 5.2-5.6zm-123.2-5.7c.6-5.6 1.7-14.7 3.4-19.8C17 98.8 30 94.3 43.5 89.8c2.8-1.1 5.6-2.3 9-3.4 2.3-.6 4-2.8 4-5.1V66.7c0-1.7-.6-3.4-1.7-4.5-4-3.4-6.2-8.5-6.2-13.6V29.4c0-10.2 7.9-18.1 18.1-18.1s18.1 7.9 18.1 18.1v19.2c0 5.1-2.3 10.2-6.2 13.6-1.1 1.1-1.7 2.8-1.7 4.5v14.7c0 2.3 1.7 4.5 4 5.1 2.8 1.1 6.2 2.3 9 3.4 13.6 5.1 26.6 9.6 28.8 14.1 2.8 5.1 4 13.6 4.5 19.8H11.3zM196 79.1c-2.8-6.2-11.3-9.6-22.6-13.6l-1.7-.6v-3.4c4.5-4 6.8-9.6 6.8-15.8V35c0-12.4-9.6-22-22-22s-22 10.2-22 22v10.7c0 6.2 2.3 11.9 6.8 15.8V65l-1.7.6c-7.3 2.8-13 4.5-16.9 7.3-1.7 1.1-2.3 2.8-2.3 5.1.6 1.7 1.7 3.4 3.4 4.5 7.9 4 12.4 7.3 14.1 10.7 2.3 4.5 4 10.2 5.1 18.1.6 2.3 2.8 4.5 5.6 4.5h45.8c3.4 0 5.6-2.8 5.6-5.1 0-3.9 0-24.3-4-31.6zm-42.9 25.4c-1.1-6.8-2.8-12.4-5.1-16.9-1.7-4-5.1-6.8-9.6-10.2 1.7-1.1 3.4-1.7 5.1-2.3l5.6-2.3c1.7-.6 3.4-2.8 3.4-5.1v-9.6c0-1.7-.6-3.4-2.3-4.5-2.8-1.7-4.5-5.1-4.5-8.5V34.5c0-6.2 4.5-10.7 10.7-10.7s10.7 5.1 10.7 10.7v10.7c0 3.4-1.7 6.2-4.5 8.5-1.1 1.1-2.3 2.8-2.3 4.5v10.2c0 2.3 1.1 4.5 3.4 5.1l5.6 2.3c6.8 2.3 15.3 5.6 16.4 7.9 1.7 2.8 2.8 12.4 2.8 20.9h-35.4z"/></svg>
+
+            </div>
+            <div class="menu-item__text">
+              Grupos
+            </div>
+          </a>
+        </li>
+      <li class="menu-item ic-app-header__menu-list-item ">
+        <a id="global_nav_calendar_link" href="/calendar" class="ic-app-header__menu-list-link">
+          <div class="menu-item-icon-container" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" class="ic-icon-svg ic-icon-svg--calendar" version="1.1" x="0" y="0" viewBox="0 0 280 280" enable-background="new 0 0 280 280" xml:space="preserve"><path d="M197.07,213.38h16.31V197.07H197.07Zm-16.31,16.31V180.76h48.92v48.92Zm-48.92-16.31h16.31V197.07H131.85Zm-16.31,16.31V180.76h48.92v48.92ZM66.62,213.38H82.93V197.07H66.62ZM50.32,229.68V180.76H99.24v48.92Zm146.75-81.53h16.31V131.85H197.07Zm-16.31,16.31V115.54h48.92v48.92Zm-48.92-16.31h16.31V131.85H131.85Zm-16.31,16.31V115.54h48.92v48.92ZM66.62,148.15H82.93V131.85H66.62ZM50.32,164.46V115.54H99.24v48.92ZM34,262.29H246V82.93H34ZM246,66.62V42.16A8.17,8.17,0,0,0,237.84,34H213.38v8.15a8.15,8.15,0,1,1-16.31,0V34H82.93v8.15a8.15,8.15,0,0,1-16.31,0V34H42.16A8.17,8.17,0,0,0,34,42.16V66.62Zm-8.15-48.92a24.49,24.49,0,0,1,24.46,24.46V278.6H17.71V42.16A24.49,24.49,0,0,1,42.16,17.71H66.62V9.55a8.15,8.15,0,0,1,16.31,0v8.15H197.07V9.55a8.15,8.15,0,1,1,16.31,0v8.15Z"/></svg>
+
+          </div>
+          <div class="menu-item__text">
+            Calendário
+          </div>
+        </a>
+      </li>
+      <li class="menu-item ic-app-header__menu-list-item ">
+      <!-- TODO: Add back global search when available -->
+        <a id="global_nav_conversations_link" href="/conversations" class="ic-app-header__menu-list-link">
+          <div class="menu-item-icon-container">
+            <span aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" class="ic-icon-svg ic-icon-svg--inbox" version="1.1" x="0" y="0" viewBox="0 0 280 280" enable-background="new 0 0 280 280" xml:space="preserve"><path d="M91.72,120.75h96.56V104.65H91.72Zm0,48.28h80.47V152.94H91.72Zm0-96.56h80.47V56.37H91.72Zm160.94,34.88H228.52V10.78h-177v96.56H27.34A24.17,24.17,0,0,0,3.2,131.48V244.14a24.17,24.17,0,0,0,24.14,24.14H252.66a24.17,24.17,0,0,0,24.14-24.14V131.48A24.17,24.17,0,0,0,252.66,107.34Zm0,16.09a8.06,8.06,0,0,1,8,8v51.77l-32.19,19.31V123.44ZM67.58,203.91v-177H212.42v177ZM27.34,123.44H51.48v79.13L19.29,183.26V131.48A8.06,8.06,0,0,1,27.34,123.44ZM252.66,252.19H27.34a8.06,8.06,0,0,1-8-8V202l30,18H230.75l30-18v42.12A8.06,8.06,0,0,1,252.66,252.19Z"/></svg>
+</span>
+            <span class="menu-item__badge"></span>
+          </div>
+          <div class="menu-item__text">
+            Caixa de entrada
+          </div>
+        </a>
+      </li>
+        <li class="menu-item ic-app-header__menu-list-item" >
+          <a id="global_nav_history_link" role="button" href="#" class="ic-app-header__menu-list-link">
+            <div class="menu-item-icon-container" aria-hidden="true">
+              <svg viewBox="0 0 1920 1920" class="ic-icon-svg menu-item__icon svg-icon-history" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <path d="M960 112.941c-467.125 0-847.059 379.934-847.059 847.059 0 467.125 379.934 847.059 847.059 847.059 467.125 0 847.059-379.934 847.059-847.059 0-467.125-379.934-847.059-847.059-847.059M960 1920C430.645 1920 0 1489.355 0 960S430.645 0 960 0s960 430.645 960 960-430.645 960-960 960m417.905-575.955L903.552 988.28V395.34h112.941v536.47l429.177 321.77-67.765 90.465z" stroke="none" stroke-width="1" fill-rule="evenodd"/>
+</svg>
+            </div>
+            <div class="menu-item__text">
+              Histórico
+            </div>
+          </a>
+        </li>
+        
+    <li id="context_external_tool_33_menu_item" class="globalNavExternalTool menu-item ic-app-header__menu-list-item">
+      <a class='ic-app-header__menu-list-link' href="/accounts/1/external_tools/33?launch_type=global_navigation">
+          <svg version="1.1" class="ic-icon-svg ic-icon-svg--lti menu-item__icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64">
+            <path d="M37.5331419,41.3325083 L25.3997411,41.3325083 L25.3997411,52.8756632 C27.5972597,53.6451225 29.1733531,55.7378472 29.1733531,58.198822 C29.1733531,61.3127847 26.6499049,63.8371501 23.5370738,63.8371501 C20.4242427,63.8371501 17.9007945,61.3127847 17.9007945,58.198822 C17.9007945,55.7378472 19.4768879,53.6451225 21.6744065,52.8756632 L21.6744065,41.3325083 L17.5706263,41.3325083 L17.5717453,47.9192726 C17.5717453,50.4825483 15.4945548,52.5604939 12.9322104,52.5604939 L10.9667199,52.5588751 C10.2051449,54.7710384 8.10625368,56.3604121 5.63627929,56.3604121 C2.52344819,56.3604121 2.84217094e-14,53.8360466 2.84217094e-14,50.722084 C2.84217094e-14,47.6081214 2.52344819,45.0837559 5.63627929,45.0837559 C8.08603407,45.0837559 10.1707563,46.6472143 10.9477485,48.8310912 L12.9905507,48.8310912 C13.4625615,48.8310912 13.8452018,48.4483118 13.8452018,47.9761294 L13.8452018,41.3325083 L5.65400042,41.3325083 C4.57511859,41.3325083 3.70051205,40.4575839 3.70051205,39.3783099 L3.70051205,1.95419847 C3.70051205,0.874924458 4.57511859,-1.42108547e-14 5.65400042,-1.42108547e-14 L57.2376164,-1.42108547e-14 C58.3164983,-1.42108547e-14 59.1911048,0.874924458 59.1911048,1.95419847 L59.1911048,39.3783099 C59.1911048,40.4575839 58.3164983,41.3325083 57.2376164,41.3325083 L49.085452,41.3325083 L49.085452,47.9761294 C49.085452,48.4483118 49.4680923,48.8310912 49.9401031,48.8310912 L51.9829054,48.8310912 C52.7598976,46.6472143 54.8446197,45.0837559 57.2943745,45.0837559 C60.4072056,45.0837559 62.9306538,47.6081214 62.9306538,50.722084 C62.9306538,53.8360466 60.4072056,56.3604121 57.2943745,56.3604121 C54.8244001,56.3604121 52.725509,54.7710384 51.9639339,52.5588751 L49.9996524,52.5604938 C47.436099,52.5604939 45.3589085,50.4825483 45.3589085,47.9192726 L45.3600275,41.3325083 L41.2584765,41.3325083 L41.2584765,52.8756632 C43.4559951,53.6451225 45.0320885,55.7378472 45.0320885,58.198822 C45.0320885,61.3127847 42.5086403,63.8371501 39.3958092,63.8371501 C36.2829781,63.8371501 33.7595299,61.3127847 33.7595299,58.198822 C33.7595299,55.7378472 35.3356233,53.6451225 37.5331419,52.8756632 L37.5331419,41.3325083 Z M39.4407163,60.0484002 C40.4618389,60.0484002 41.2896223,59.2203158 41.2896223,58.198822 C41.2896223,57.1773282 40.4618389,56.3492439 39.4407163,56.3492439 C38.4195937,56.3492439 37.5918102,57.1773282 37.5918102,58.198822 C37.5918102,59.2203158 38.4195937,60.0484002 39.4407163,60.0484002 Z M23.5819809,60.0484002 C24.6031035,60.0484002 25.4308869,59.2203158 25.4308869,58.198822 C25.4308869,57.1773282 24.6031035,56.3492439 23.5819809,56.3492439 C22.5608582,56.3492439 21.7330748,57.1773282 21.7330748,58.198822 C21.7330748,59.2203158 22.5608582,60.0484002 23.5819809,60.0484002 Z M57.3392816,52.5716621 C58.3604042,52.5716621 59.1881877,51.7435778 59.1881877,50.722084 C59.1881877,49.7005902 58.3604042,48.8725058 57.3392816,48.8725058 C56.318159,48.8725058 55.4903755,49.7005902 55.4903755,50.722084 C55.4903755,51.7435778 56.318159,52.5716621 57.3392816,52.5716621 Z M5.59137222,52.5716621 C6.61249484,52.5716621 7.44027829,51.7435778 7.44027829,50.722084 C7.44027829,49.7005902 6.61249484,48.8725058 5.59137222,48.8725058 C4.57024959,48.8725058 3.74246615,49.7005902 3.74246615,50.722084 C3.74246615,51.7435778 4.57024959,52.5716621 5.59137222,52.5716621 Z M30.1554353,12.9293586 L35.7525093,16.2831044 C36.070684,16.5163802 36.2591714,16.8906762 36.2591714,17.2892282 C36.2591714,17.6877801 36.070684,18.0620761 35.7525093,18.2953519 L30.1554353,21.6490977 C29.7776345,21.8706324 29.3121961,21.8707698 28.9342686,21.6494581 C28.5563411,21.4281465 28.3232712,21.0189676 28.3227651,20.575899 L28.3227651,14.0025573 C28.3232712,13.5594887 28.5563411,13.1503099 28.9342686,12.9289982 C29.3121961,12.7076865 29.7776345,12.7078239 30.1554353,12.9293586 Z M55.6445081,31.031948 L55.6445081,4.52360758 C55.6445081,3.98397057 55.2072048,3.54650834 54.6677639,3.54650834 L8.22385298,3.54650834 C7.68441206,3.54650834 7.24710879,3.98397057 7.24710879,4.52360758 L7.24710879,31.031948 L55.6445081,31.031948 Z M55.6445081,34.5784563 L7.24710879,34.5784563 L7.24710879,36.8093831 C7.24710879,37.3490201 7.68441206,37.7864824 8.22385298,37.7864824 L54.6677639,37.7864824 C55.2072048,37.7864824 55.6445081,37.3490201 55.6445081,36.8093831 L55.6445081,34.5784563 Z"/>
+          </svg>
+        <div class="menu-item__text">
+          Studio
+        </div>
+      </a>
+    </li>
+
+      <li class="ic-app-header__menu-list-item">
+        <a id="global_nav_help_link" role="button" class="ic-app-header__menu-list-link" data-track-category="help system" data-track-label="help button" href="https://help.instructure.com">
+          <div class="menu-item-icon-container" role="presentation">
+              <svg xmlns="http://www.w3.org/2000/svg" class="ic-icon-svg menu-item__icon svg-icon-help" version="1.1" x="0" y="0" viewBox="0 0 200 200" enable-background="new 0 0 200 200" xml:space="preserve" fill="currentColor"><path d="M100,127.88A11.15,11.15,0,1,0,111.16,139,11.16,11.16,0,0,0,100,127.88Zm8.82-88.08a33.19,33.19,0,0,1,23.5,23.5,33.54,33.54,0,0,1-24,41.23,3.4,3.4,0,0,0-2.74,3.15v9.06H94.42v-9.06a14.57,14.57,0,0,1,11.13-14,22.43,22.43,0,0,0,13.66-10.27,22.73,22.73,0,0,0,2.31-17.37A21.92,21.92,0,0,0,106,50.59a22.67,22.67,0,0,0-19.68,3.88,22.18,22.18,0,0,0-8.65,17.64H66.54a33.25,33.25,0,0,1,13-26.47A33.72,33.72,0,0,1,108.82,39.8ZM100,5.2A94.8,94.8,0,1,0,194.8,100,94.91,94.91,0,0,0,100,5.2m0,178.45A83.65,83.65,0,1,1,183.65,100,83.73,83.73,0,0,1,100,183.65" transform="translate(-5.2 -5.2)"/></svg>
+
+            <span class="menu-item__badge"></span>
+          </div>
+          <div class="menu-item__text">
+            Ajuda
+          </div>
+</a>      </li>
+    </ul>
+  </div>
+  <div class="ic-app-header__secondary-navigation">
+    <ul class="ic-app-header__menu-list">
+      <li class="menu-item ic-app-header__menu-list-item">
+        <a
+          id="primaryNavToggle"
+          role="button"
+          href="#"
+          class="ic-app-header__menu-list-link ic-app-header__menu-list-link--nav-toggle"
+          aria-label="Minimizar navegação global"
+          title="Minimizar navegação global"
+        >
+          <div class="menu-item-icon-container" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" class="ic-icon-svg ic-icon-svg--navtoggle" version="1.1" x="0" y="0" width="40" height="32" viewBox="0 0 40 32" xml:space="preserve">
+  <path d="M39.5,30.28V2.48H37.18v27.8Zm-4.93-13.9L22.17,4,20.53,5.61l9.61,9.61H.5v2.31H30.14l-9.61,9.61,1.64,1.64Z"/>
+</svg>
+
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div id="global_nav_tray_container"></div>
+  <div id="global_nav_tour"></div>
+</header>
+
+
+  <div id="instructure_ajax_error_box">
+    <div style="text-align: right; background-color: #fff;"><a href="#" class="close_instructure_ajax_error_box_link">Fechar</a></div>
+    <iframe id="instructure_ajax_error_result" src="about:blank" style="border: 0;" title="Erro"></iframe>
+  </div>
+
+  <div id="wrapper" class="ic-Layout-wrapper">
+        <div class="ic-app-nav-toggle-and-crumbs no-print">
+            <button type="button" id="courseMenuToggle" class="Button Button--link ic-app-course-nav-toggle" aria-live="polite" aria-label="Ocultar Menu de Navegação dos cursos">
+              <i class="icon-hamburger" aria-hidden="true"></i>
+            </button>
+
+          <div class="ic-app-crumbs ">
+              <nav id="breadcrumbs" role="navigation" aria-label="breadcrumbs"><ul><li class="home"><a href="/"><span class="ellipsible"><i class="icon-home"
+   title="Meu painel de controle">
+  <span class="screenreader-only">Meu painel de controle</span>
+</i>
+</span></a></li><li><a href="/courses/155663"><span class="ellipsible">Eixo 6 - Microfundamento: Apis e Web Services</span></a></li><li><a href="/courses/155663/pages"><span class="ellipsible">Páginas</span></a></li><li><span class="ellipsible">UNIDADE 1 - Tema 1 - Arquitetura de Aplicações Web</span></li></ul></nav>
+          </div>
+
+
+          <div class="right-of-crumbs">
+              <div class="TutorialToggleHolder"></div>
+              <div id="immersive_reader_mount_point"></div>
+          </div>
+
+        </div>
+    <div id="main" class="ic-Layout-columns">
+        <div class="ic-Layout-watermark"></div>
+        <div id="left-side"
+          class="ic-app-course-menu ic-sticky-on list-view"
+          style="display: block"
+          >
+          <div id="sticky-container" class="ic-sticky-frame">
+              <span id="section-tabs-header-subtitle" class="ellipsis">Graduação EAD - 2024/2</span>
+            <nav role="navigation" aria-label="Menu de Navegação dos cursos"><ul id="section-tabs"><li class="section"><a href="/courses/155663" class="home">Página inicial</a></li><li class="section"><a href="/courses/155663/modules" class="modules">Módulos</a></li><li class="section"><a href="/courses/155663/grades" class="grades">Notas</a></li><li class="section"><a href="/courses/155663/outcomes" class="outcomes">Objetivos</a></li><li class="section"><a href="/courses/155663/assignments/syllabus" class="syllabus">Programa</a></li><li class="section"><a href="/courses/155663/assignments" class="assignments">Tarefas</a></li><li class="section"><a href="/courses/155663/quizzes" class="quizzes">Testes</a></li><li class="section"><a href="/courses/155663/external_tools/2135" class="context_external_tool_2135">Lucid</a></li></ul></nav>
+          </div>
+        </div>
+      <div id="not_right_side" class="ic-app-main-content">
+        <div id="content-wrapper" class="ic-Layout-contentWrapper">
+          
+          <div id="content" class="ic-Layout-contentMain" role="main">
+            
+
+  
+
+<div id="wiki_page_show"></div>
+<div id="module_navigation_target"></div>
+
+          </div>
+        </div>
+        <div id="right-side-wrapper" class="ic-app-main-content__secondary">
+          <aside id="right-side" role="complementary">
+            
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+    <div style="display:none;"><!-- Everything inside of this should always stay hidden -->
+        <div id="page_view_id">9232a03c-1ae1-4486-84ae-28a775ff9fc6</div>
+    </div>
+  <div id='aria_alerts' class='hide-text affix' role="alert" aria-live="assertive"></div>
+  <div id='StudentTray__Container'></div>
+    <div class="NewUserTutorialTray__Container"></div>
+  <div id="react-router-portals"></div>
+  
+
+  <iframe src="https://sso.canvaslms.com/post_message_forwarding?rev=59677caad5-de8233d392aa15f4&amp;token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJwYXJlbnRfZG9tYWluIjoicHVjbWluYXMuaW5zdHJ1Y3R1cmUuY29tIn0.GUJk-mp4H8ouxdKaChlEHaSAL1c0St7P8L_FQOBUgYfud8CGa2KY9gxfOAEdsp8Lz8B06hxAyaty7I7Pm7gLwg" name="post_message_forwarding" title="post_message_forwarding" id="post_message_forwarding" sandbox="allow-scripts allow-same-origin" style="display:none;"></iframe>
+
+
+  <script>
+    Object.assign(
+      ENV,
+      {}
+    )
+  </script>
+
+<script>
+//<![CDATA[
+(window.bundles || (window.bundles = [])).push('inst_fs_service_worker');
+//]]>
+</script>
+  <script src="https://instructure-uploads.s3.amazonaws.com/account_117480000000000001/attachments/11623538/pucminas_prod.js" defer="defer"></script>
+  <script src="https://instructure-uploads.s3.amazonaws.com/account_117480000000000001/attachments/7443970/pucminas_graduacao.js" defer="defer"></script>
+<script>
+  window.eesyLaunchConfig = {
+    host: 'pucminas.eesysoft.com',
+    key: 'bCmx8MGu',
+    supportTab: true
+  };  (function() {
+      var e = document.createElement('script');
+      e.src = '//' + window.eesyLaunchConfig.host + "/resources/js/canvas/launch.js";
+      e.async = true;
+      e.type = 'text/javascript';      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(e, s);
+  } ());
+</script>
+
+</div> <!-- #application -->
+</body>
+</html>
