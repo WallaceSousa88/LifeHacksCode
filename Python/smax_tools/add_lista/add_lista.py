@@ -4,21 +4,28 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import json
 import time
+import os
 
-driver_path = r"D:\\edgedriver_win64\\msedgedriver.exe"
+config_path = os.path.join(os.path.dirname(__file__), '..', 'config.json')
+with open(config_path , 'r') as config_file:
+    config = json.load(config_file)
 
-service = webdriver.edge.service.Service(executable_path=driver_path)
+driver_selenium = config['driver_selenium']
+login_url = config['login_url']
+matricula = config['matricula']
+
+service = webdriver.edge.service.Service(executable_path=driver_selenium)
 driver = webdriver.Edge(service=service)
 driver.maximize_window()
-
-driver.get("https://csc-dev.cemig.com.br/saw/Offering/44400/userOption")
+driver.get(f"{login_url}saw/Offering/44400/userOption")
 time.sleep(5)
 
 username_field = WebDriverWait(driver, 20).until(
     EC.presence_of_element_located((By.ID, "username"))
 )
-username_field.send_keys("e610098")
+username_field.send_keys(matricula)
 time.sleep(1)
 username_field.send_keys(Keys.ENTER)
 time.sleep(5)
@@ -85,6 +92,5 @@ for index, item in enumerate(itens):
         )
         ok_button.click()
 
-time.sleep(1000)
-
+time.sleep(120)
 driver.quit()
