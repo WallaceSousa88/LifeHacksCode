@@ -1,0 +1,57 @@
+{
+  "base": {
+    "Section1_c": "Campo_Dados_De_Contato",
+    "NomeCompleto_c": "Campo_Nome_Completo",
+    "Email_c": "Campo_Email",
+    "Telefone1_c": "Campo_Telefone_1",
+    "Telefone2_c": "Campo_Telefone_2",
+    "CEP_c": "Campo_Cep",
+    "Endereco_c": "Campo_Endereco",
+    "EnderecoNumero_c": "Campo_Endereco_Numero",
+    "EnderecoCompl_c": "Campo_Endereco_Complemento",
+    "Bairro_c": "Campo_Bairro",
+    "Cidade_c": "Campo_Cidade",
+    "Estado_c": "Campo_Estado",
+    "Section2_c": "Campo_Dados_Instalacao",
+    "NumeroInstalacao_c": "Campo_Numero_Instalacao",
+    "NumeroCliente_c": "Campo_Numero_Cliente",
+    "Protocolo1Nivel_c": "Campo_Protocolo_1_Nivel",
+    "Section3_c": "Campo_Dados_Denuncia",
+    "MotivoContato_c": "DanosAmbientais_c",
+    "ConteNosQueAconteceu_c": "Campo_Conte_O_Que_Aconteceu"
+  },
+
+    "data": {
+      "entities": [
+        {
+          "entity_type": "Request",
+          "properties": {
+            "RequestsOffering": "46481",
+            "Description": "<p>Descricao_Da_Denuncia</p>",
+            "UserOptions": {"complexTypeProperties": [{"properties": "$form_data"}]}
+          }
+        }
+      ],
+      "operation": "CREATE"
+    },
+
+    "headers": {
+      "Authorization": "Bearer $smax_auth_token",
+      "X-XSRF-TOKEN": "$xsrf_token",
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "x-client-tenant-version": "v27",
+      "Cookie": "$cookie_string",
+      "sec-ch-ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Microsoft Edge\";v=\"128\"",
+      "x-ui-timestamp": "$timestamp",
+      "sec-ch-ua-mobile": "?0",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 Edg/128.0.0.0",
+      "x-request-land": "Known",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "origin": "$login_url",
+      "sec-fetch-site": "same-origin",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-dest": "empty",
+      "referer": "$referer"
+    }
+}
