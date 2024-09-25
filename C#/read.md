@@ -5,7 +5,7 @@ graph TD
     A([1. Usuário envia requisição]) --> B(2. API)
     B --> C{3. Autenticação JWT}
     C -- Válido --> D(4. API roteia para o endpoint)
-    C -- Inválido --> E([5. Retorno 401 (Unauthorized)])
+    C -- Inválido --> E(5. Retorno 401 (Unauthorized))
     D --> F{6. Controlador processa a requisição}
     F --> G(7. Serviço de Negócio)
     G --> H{8. Repositório (AppDbContext)}
