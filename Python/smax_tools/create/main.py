@@ -1,6 +1,7 @@
 import requests
 import json
 import time
+import os
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -10,7 +11,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.edge.options import Options
 
 def carregar_configuracoes(nome_arquivo):
-    with open(nome_arquivo, 'r') as arquivo:
+    diretorio_atual = os.path.dirname(os.path.abspath(__file__))
+    diretorio_pai = os.path.dirname(diretorio_atual)
+    caminho_config = os.path.join(diretorio_pai, nome_arquivo)
+    with open(caminho_config, 'r') as arquivo:
         return json.load(arquivo)
 
 def carregar_dados_formulario(nome_arquivo):

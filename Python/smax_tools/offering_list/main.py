@@ -11,7 +11,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.edge.options import Options
 from urllib.parse import urlparse
 
-with open('config.json' , 'r') as config_file:
+diretorio_atual = os.path.dirname(os.path.abspath(__file__))
+diretorio_pai = os.path.dirname(diretorio_atual)
+caminho_config = os.path.join(diretorio_pai, 'config.json')
+with open(caminho_config, 'r') as config_file:
     config = json.load(config_file)
 
 login_url = config['login_url']

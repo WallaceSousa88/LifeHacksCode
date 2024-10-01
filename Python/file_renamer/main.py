@@ -18,7 +18,7 @@ def renomear_arquivos(caminho_da_pasta):
 
     for arquivo in os.listdir(caminho_da_pasta):
         caminho_completo_antigo = os.path.join(caminho_da_pasta, arquivo)
-        
+
         if not os.path.isfile(caminho_completo_antigo):
             continue
 
