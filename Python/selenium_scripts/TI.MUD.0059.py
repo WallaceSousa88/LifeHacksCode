@@ -2,6 +2,8 @@ import pyautogui
 import time
 import sys
 import os
+import json
+
 from datetime import datetime, timedelta
 from docx import Document
 from docx.shared import Inches
@@ -11,6 +13,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
+
+import json
+with open('config.json', 'r') as f:
+    config = json.load(f)
+
+url_base = config['url_base']
 
 user_id = sys.argv[1]
 unidade_disco = sys.argv[2]
@@ -22,7 +30,7 @@ driver.maximize_window()
 screenshot_dir = f"{unidade_disco}:\\Users\\{user_id}\\Desktop\\Relatorio"
 doc = Document(f"{unidade_disco}:\\Users\\{user_id}\\Desktop\\Relatorio\\TI.MUD.0059.docx")
 
-driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories?_a=policies&refs=refs/heads/master")
+driver.get(f"{url_base}SGL/_settings/repositories?_a=policies&refs=refs/heads/master")
 time.sleep(15)
 
 screenshot1 = pyautogui.screenshot()
@@ -44,7 +52,7 @@ screenshot_path2 = os.path.join(screenshot_dir, screenshot_name2)
 screenshot2.save(screenshot_path2)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/_settings/audit")
+driver.get(f"{url_base}_settings/audit")
 time.sleep(5)
 
 screenshot3 = pyautogui.screenshot()
@@ -58,7 +66,7 @@ ninety_days_ago = hoje - timedelta(days=90)
 
 ninety_days_ago = ninety_days_ago.replace(hour=datetime.now().hour, minute=0) + timedelta(hours=4)
 hoje = hoje.replace(hour=23, minute=59)
-url = f"https://dev.azure.com/cemig/_settings/audit?logs-period={ninety_days_ago.strftime('%Y-%m-%dT%H:%M')}Z-{hoje.strftime('%Y-%m-%dT%H:%M')}Z"
+url = f"{url_base}_settings/audit?logs-period={ninety_days_ago.strftime('%Y-%m-%dT%H:%M')}Z-{hoje.strftime('%Y-%m-%dT%H:%M')}Z"
 driver.get(url)
 time.sleep(5)
 

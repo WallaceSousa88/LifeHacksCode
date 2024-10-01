@@ -1,6 +1,7 @@
-# pip install google-generativeai
 # https://ai.google.dev/gemini-api/docs
 # https://status.cloud.google.com/
+
+# pip install google-generativeai
 
 import os
 import google.generativeai as genai

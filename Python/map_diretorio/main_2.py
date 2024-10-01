@@ -32,9 +32,9 @@ def gerar_relatorio(caminho, arquivos_conteudo=None, ignorar_pastas=None):
         relatorio += "\nConteúdo dos arquivos:\n"
         for arquivo in arquivos_conteudo:
             caminho_arquivo = os.path.join(caminho, arquivo)
-            conteudo = obter_conteudo_arquivo(caminho_arquivo) 
+            conteudo = obter_conteudo_arquivo(caminho_arquivo)
             relatorio += f"\nO código do arquivo '{arquivo}' é:\n\n```\n{conteudo}\n```\n"
-    
+
     return relatorio
 
 def main():
@@ -58,7 +58,7 @@ def main():
         relatorio = relatorio.replace(f"considerando o diretório '{caminho}':", "")
 
         nome_arquivo = os.path.basename(caminho) + '_relatorio.txt'
-        caminho_area_trabalho = os.path.join(os.path.expanduser("~"), "Desktop", nome_arquivo) 
+        caminho_area_trabalho = os.path.join(os.path.expanduser("~"), "Desktop", nome_arquivo)
         try:
             with open(caminho_area_trabalho, 'w', encoding='utf-8') as f:
                 f.write(relatorio)

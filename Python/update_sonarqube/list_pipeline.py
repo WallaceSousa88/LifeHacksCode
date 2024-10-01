@@ -1,4 +1,5 @@
 import requests
+
 from requests.auth import HTTPBasicAuth
 
 token = 'x'
@@ -11,7 +12,7 @@ response_projects = requests.get(url_projects, auth=HTTPBasicAuth('', token))
 if response_projects.status_code == 200:
     data_projects = response_projects.json()
     sorted_projects = sorted(data_projects['value'], key=lambda x: x['name'])
-    
+
     total_pipelines = 0
     with open('pipelines.txt', 'w', encoding='utf-8') as file:
         for project in sorted_projects:

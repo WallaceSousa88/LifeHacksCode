@@ -2,6 +2,8 @@ import pyautogui
 import time
 import sys
 import os
+import json
+
 from datetime import datetime, timedelta
 from docx import Document
 from docx.shared import Inches
@@ -11,6 +13,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
+
+import json
+with open('config.json', 'r') as f:
+    config = json.load(f)
+
+url_base = config['url_base']
 
 user_id = sys.argv[1]
 unidade_disco = sys.argv[2]
@@ -22,7 +30,7 @@ driver.maximize_window()
 screenshot_dir = f"{unidade_disco}:\\Users\\{user_id}\\Desktop\\Relatorio"
 doc = Document(f"{unidade_disco}:\\Users\\{user_id}\\Desktop\\Relatorio\\TI.AC.0097.docx")
 
-driver.get("https://dev.azure.com/cemig/_settings/organizationOverview")
+driver.get(f"{url_base}_settings/organizationOverview")
 time.sleep(15)
 
 element = driver.find_element(By.XPATH, "//div[@class='title-l' and text()='Overview']")
@@ -44,7 +52,7 @@ screenshot_path2 = os.path.join(screenshot_dir, screenshot_name2)
 screenshot2.save(screenshot_path2)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/_settings/groups")
+driver.get(f"{url_base}_settings/groups")
 time.sleep(5)
 
 screenshot3 = pyautogui.screenshot()
@@ -64,7 +72,7 @@ screenshot4 = pyautogui.screenshot()
 screenshot_name4 = "TI.AC.0097_print_4_permissions.png"
 screenshot_path4 = os.path.join(screenshot_dir, screenshot_name4)
 screenshot4.save(screenshot_path4)
-time.sleep(5)   
+time.sleep(5)
 
 search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//input[@type='text' and @aria-label='Search groups']")))
 search_field.click()
@@ -93,7 +101,7 @@ screenshot_path6 = os.path.join(screenshot_dir, screenshot_name6)
 screenshot6.save(screenshot_path6)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/_settings/groups")
+driver.get(f"{url_base}_settings/groups")
 time.sleep(5)
 
 search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//input[@type='text' and @aria-label='Search groups']")))
@@ -124,7 +132,7 @@ screenshot_path8 = os.path.join(screenshot_dir, screenshot_name8)
 screenshot8.save(screenshot_path8)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/_settings/groups")
+driver.get(f"{url_base}_settings/groups")
 time.sleep(5)
 
 search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//input[@type='text' and @aria-label='Search groups']")))
@@ -177,7 +185,7 @@ screenshot_path12 = os.path.join(screenshot_dir, screenshot_name12)
 screenshot12.save(screenshot_path12)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/_settings/groups")
+driver.get(f"{url_base}_settings/groups")
 time.sleep(5)
 
 search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//input[@type='text' and @aria-label='Search groups']")))
@@ -208,7 +216,7 @@ screenshot_path14 = os.path.join(screenshot_dir, screenshot_name14)
 screenshot14.save(screenshot_path14)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/_settings/groups")
+driver.get(f"{url_base}_settings/groups")
 time.sleep(5)
 
 search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//input[@type='text' and @aria-label='Search groups']")))
@@ -239,7 +247,7 @@ screenshot_path16 = os.path.join(screenshot_dir, screenshot_name16)
 screenshot16.save(screenshot_path16)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/_settings/groups")
+driver.get(f"{url_base}_settings/groups")
 time.sleep(5)
 
 search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//input[@type='text' and @aria-label='Search groups']")))
@@ -270,7 +278,7 @@ screenshot_path18 = os.path.join(screenshot_dir, screenshot_name18)
 screenshot18.save(screenshot_path18)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/_settings/groups")
+driver.get(f"{url_base}_settings/groups")
 time.sleep(5)
 
 search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//input[@type='text' and @aria-label='Search groups']")))
@@ -328,7 +336,7 @@ screenshot_path22 = os.path.join(screenshot_dir, screenshot_name22)
 screenshot22.save(screenshot_path22)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/_settings/groups")
+driver.get(f"{url_base}_settings/groups")
 time.sleep(5)
 
 search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//input[@type='text' and @aria-label='Search groups']")))
@@ -359,7 +367,7 @@ screenshot_path24 = os.path.join(screenshot_dir, screenshot_name24)
 screenshot24.save(screenshot_path24)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/_settings/groups")
+driver.get(f"{url_base}_settings/groups")
 time.sleep(5)
 
 search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//input[@type='text' and @aria-label='Search groups']")))
@@ -390,7 +398,7 @@ screenshot_path26 = os.path.join(screenshot_dir, screenshot_name26)
 screenshot26.save(screenshot_path26)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/_settings/groups")
+driver.get(f"{url_base}_settings/groups")
 time.sleep(5)
 
 search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//input[@type='text' and @aria-label='Search groups']")))
@@ -421,7 +429,7 @@ screenshot_path28 = os.path.join(screenshot_dir, screenshot_name28)
 screenshot28.save(screenshot_path28)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/_settings/groups")
+driver.get(f"{url_base}_settings/groups")
 time.sleep(5)
 
 search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//input[@type='text' and @aria-label='Search groups']")))
@@ -452,7 +460,7 @@ screenshot_path30 = os.path.join(screenshot_dir, screenshot_name30)
 screenshot30.save(screenshot_path30)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/_settings/groups")
+driver.get(f"{url_base}_settings/groups")
 time.sleep(5)
 
 search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//input[@type='text' and @aria-label='Search groups']")))
@@ -483,7 +491,7 @@ screenshot_path32 = os.path.join(screenshot_dir, screenshot_name32)
 screenshot32.save(screenshot_path32)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/SGL/_settings/permissions")
+driver.get(f"{url_base}SGL/_settings/permissions")
 time.sleep(5)
 
 screenshot33 = pyautogui.screenshot()
@@ -492,7 +500,7 @@ screenshot_path33 = os.path.join(screenshot_dir, screenshot_name33)
 screenshot33.save(screenshot_path33)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
+driver.get(f"{url_base}SGL/_settings/repositories")
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-BATCH-3']")))
@@ -517,7 +525,7 @@ screenshot_path34 = os.path.join(screenshot_dir, screenshot_name34)
 screenshot34.save(screenshot_path34)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
+driver.get(f"{url_base}SGL/_settings/repositories")
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-COLETOR-ANDROID']")))
@@ -542,7 +550,7 @@ screenshot_path35 = os.path.join(screenshot_dir, screenshot_name35)
 screenshot35.save(screenshot_path35)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
+driver.get(f"{url_base}SGL/_settings/repositories")
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-EMPREITEIRA-DESKTOP']")))
@@ -567,7 +575,7 @@ screenshot_path36 = os.path.join(screenshot_dir, screenshot_name36)
 screenshot36.save(screenshot_path36)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
+driver.get(f"{url_base}SGL/_settings/repositories")
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-WEB']")))
@@ -592,7 +600,7 @@ screenshot_path37 = os.path.join(screenshot_dir, screenshot_name37)
 screenshot37.save(screenshot_path37)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
+driver.get(f"{url_base}SGL/_settings/repositories")
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-BATCH-3']")))
@@ -617,7 +625,7 @@ screenshot_path38 = os.path.join(screenshot_dir, screenshot_name38)
 screenshot38.save(screenshot_path38)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
+driver.get(f"{url_base}SGL/_settings/repositories")
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-COLETOR-ANDROID']")))
@@ -642,7 +650,7 @@ screenshot_path39 = os.path.join(screenshot_dir, screenshot_name39)
 screenshot39.save(screenshot_path39)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
+driver.get(f"{url_base}SGL/_settings/repositories")
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-EMPREITEIRA-DESKTOP']")))
@@ -667,7 +675,7 @@ screenshot_path40 = os.path.join(screenshot_dir, screenshot_name40)
 screenshot40.save(screenshot_path40)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
+driver.get(f"{url_base}SGL/_settings/repositories")
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-WEB']")))
@@ -692,7 +700,7 @@ screenshot_path41 = os.path.join(screenshot_dir, screenshot_name41)
 screenshot41.save(screenshot_path41)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
+driver.get(f"{url_base}SGL/_settings/repositories")
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-BATCH-3']")))
@@ -717,7 +725,7 @@ screenshot_path42 = os.path.join(screenshot_dir, screenshot_name42)
 screenshot42.save(screenshot_path42)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/SGL/_settings/projectOverview")
+driver.get(f"{url_base}SGL/_settings/projectOverview")
 time.sleep(5)
 
 screenshot43 = pyautogui.screenshot()
@@ -726,7 +734,7 @@ screenshot_path43 = os.path.join(screenshot_dir, screenshot_name43)
 screenshot43.save(screenshot_path43)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
+driver.get(f"{url_base}SGL/_settings/repositories")
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-BATCH-3']")))
@@ -751,7 +759,7 @@ screenshot_path44 = os.path.join(screenshot_dir, screenshot_name44)
 screenshot44.save(screenshot_path44)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
+driver.get(f"{url_base}SGL/_settings/repositories")
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-COLETOR-ANDROID']")))
@@ -776,7 +784,7 @@ screenshot_path45 = os.path.join(screenshot_dir, screenshot_name45)
 screenshot45.save(screenshot_path45)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
+driver.get(f"{url_base}SGL/_settings/repositories")
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-EMPREITEIRA-DESKTOP']")))
@@ -801,7 +809,7 @@ screenshot_path46 = os.path.join(screenshot_dir, screenshot_name46)
 screenshot46.save(screenshot_path46)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
+driver.get(f"{url_base}SGL/_settings/repositories")
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-WEB']")))
@@ -826,7 +834,7 @@ screenshot_path47 = os.path.join(screenshot_dir, screenshot_name47)
 screenshot47.save(screenshot_path47)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
+driver.get(f"{url_base}SGL/_settings/repositories")
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-BATCH-3']")))
@@ -851,7 +859,7 @@ screenshot_path48 = os.path.join(screenshot_dir, screenshot_name48)
 screenshot48.save(screenshot_path48)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
+driver.get(f"{url_base}SGL/_settings/repositories")
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-WEB']")))
@@ -876,7 +884,7 @@ screenshot_path49 = os.path.join(screenshot_dir, screenshot_name49)
 screenshot49.save(screenshot_path49)
 time.sleep(5)
 
-# driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
+# driver.get(f"{url_base}SGL/_settings/repositories")
 # time.sleep(5)
 
 # element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-COLETOR-ANDROID']")))
@@ -901,7 +909,7 @@ time.sleep(5)
 # screenshot50.save(screenshot_path50)
 # time.sleep(5)
 
-# driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
+# driver.get(f"{url_base}SGL/_settings/repositories")
 # time.sleep(5)
 
 # element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-EMPREITEIRA-DESKTOP']")))
@@ -926,7 +934,7 @@ time.sleep(5)
 # screenshot51.save(screenshot_path51)
 # time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
+driver.get(f"{url_base}SGL/_settings/repositories")
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-BATCH-3']")))
@@ -951,7 +959,7 @@ screenshot_path52 = os.path.join(screenshot_dir, screenshot_name52)
 screenshot52.save(screenshot_path52)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
+driver.get(f"{url_base}SGL/_settings/repositories")
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-COLETOR-ANDROID']")))
@@ -976,7 +984,7 @@ screenshot_path53 = os.path.join(screenshot_dir, screenshot_name53)
 screenshot53.save(screenshot_path53)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
+driver.get(f"{url_base}SGL/_settings/repositories")
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-EMPREITEIRA-DESKTOP']")))
@@ -1001,7 +1009,7 @@ screenshot_path54 = os.path.join(screenshot_dir, screenshot_name54)
 screenshot54.save(screenshot_path54)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/SGL/_settings/repositories")
+driver.get(f"{url_base}SGL/_settings/repositories")
 time.sleep(5)
 
 element = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='text-ellipsis flex-self-center' and text()='SGL-WEB']")))
@@ -1026,7 +1034,7 @@ screenshot_path55 = os.path.join(screenshot_dir, screenshot_name55)
 screenshot55.save(screenshot_path55)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/_settings/groups")
+driver.get(f"{url_base}_settings/groups")
 time.sleep(5)
 
 search_field = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//input[@type='text' and @aria-label='Search groups']")))
@@ -1048,7 +1056,7 @@ screenshot_path56 = os.path.join(screenshot_dir, screenshot_name56)
 screenshot56.save(screenshot_path56)
 time.sleep(5)
 
-driver.get("https://dev.azure.com/cemig/_settings/audit")
+driver.get(f"{url_base}_settings/audit")
 time.sleep(5)
 
 screenshot57 = pyautogui.screenshot()
@@ -1062,7 +1070,7 @@ ninety_days_ago = hoje - timedelta(days=90)
 
 ninety_days_ago = ninety_days_ago.replace(hour=datetime.now().hour, minute=0) + timedelta(hours=4)
 hoje = hoje.replace(hour=23, minute=59)
-url = f"https://dev.azure.com/cemig/_settings/audit?logs-period={ninety_days_ago.strftime('%Y-%m-%dT%H:%M')}Z-{hoje.strftime('%Y-%m-%dT%H:%M')}Z"
+url = f"{url_base}_settings/audit?logs-period={ninety_days_ago.strftime('%Y-%m-%dT%H:%M')}Z-{hoje.strftime('%Y-%m-%dT%H:%M')}Z"
 driver.get(url)
 time.sleep(5)
 
