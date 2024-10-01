@@ -29,6 +29,7 @@ def dias_uteis_no_mes(ano, mes, pais='BR'):
     return dias_uteis
 
 ano = 2024
-mes = 9
+mes = 1
 dias_uteis = dias_uteis_no_mes(ano, mes)
+
 print(f'O número de dias úteis em {mes}/{ano} é: {dias_uteis}')
