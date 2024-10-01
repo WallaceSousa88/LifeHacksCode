@@ -31,7 +31,7 @@ time.sleep(1)
 username_field.send_keys(Keys.ENTER)
 time.sleep(5)
 
-with open("novos_itens.txt", "r", encoding="utf-8") as f:
+with open("novos_itens_denuncia.txt", "r", encoding="utf-8") as f:
     itens = f.read().splitlines()
 
 contato_element = WebDriverWait(driver, 20).until(

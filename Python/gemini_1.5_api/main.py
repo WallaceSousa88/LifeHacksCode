@@ -24,10 +24,14 @@ model = genai.GenerativeModel(
 chat = model.start_chat(history=[])
 
 print("Conversa iniciada!")
+print("-" * 30)
+
 while True:
     mensagem = input("Sua mensagem: ")
     if mensagem.lower() == "sair":
         break
 
+    print("-" * 30)
     response = chat.send_message({"parts": [{"text": mensagem}]})
     print(f"Gemini: {response.text}")
+    print("-" * 30)

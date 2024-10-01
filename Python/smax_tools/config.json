@@ -1,6 +1,7 @@
 {
-    "login_url" : "Endereco_Login_SMAX" ,
+    "url" : "" ,
+    "login_url" : "" ,
     "tenant_id" : "" ,
     "matricula" : "" ,
-    "driver_selenium" : "Local_Driver_Selenium"
+    "driver_selenium" : ""
 }
