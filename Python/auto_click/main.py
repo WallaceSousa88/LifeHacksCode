@@ -10,13 +10,14 @@ import tkinter as tk
 from tkinter import ttk
 
 class Listener:
-    def __init__(self):
+    def __init__(self, stop_event):
         self.__listKey = []
         self.__hotkey = {}
         self.__validKey = []
+        self.stop_event = stop_event
 
     def start(self):
-        while True:
+        while not self.stop_event.is_set():
             key = keyboard.read_event()
             if key.name in self.__validKey and key.event_type == 'down':
                 if key.name not in self.__listKey:
@@ -42,21 +43,22 @@ selected_keys = []
 mouse_click_type = 'none'
 keyboard_interval_range = (0.1, 0.3)
 
-def press_key_randomly():
-    while loop_active:
-        if selected_keys:
+def press_key_randomly(stop_event):
+    while not stop_event.is_set():
+        if selected_keys and loop_active:
             key_to_press = random.choice(selected_keys)
             pyautogui.press(key_to_press)
             time_interval = random.uniform(*keyboard_interval_range)
             time.sleep(time_interval)
 
-def click_mouse():
-    while click_active:
-        if mouse_click_type == 'left':
-            pyautogui.click(button='left')
-        elif mouse_click_type == 'right':
-            pyautogui.click(button='right')
-        time.sleep(0.1)
+def click_mouse(stop_event):
+    while not stop_event.is_set():
+        if click_active:
+            if mouse_click_type == 'left':
+                pyautogui.click(button='left')
+            elif mouse_click_type == 'right':
+                pyautogui.click(button='right')
+            time.sleep(0.1)
 
 def toggle_loop():
     global loop_active, click_active
@@ -64,8 +66,8 @@ def toggle_loop():
     click_active = loop_active
     if loop_active:
         print("Loop ativado.")
-        threading.Thread(target=press_key_randomly).start()
-        threading.Thread(target=click_mouse).start()
+        threading.Thread(target=press_key_randomly, args=(stop_event,)).start()
+        threading.Thread(target=click_mouse, args=(stop_event,)).start()
     else:
         print("Loop desativado.")
 
@@ -81,10 +83,18 @@ def close_app():
     global loop_active, click_active
     loop_active = False
     click_active = False
+    stop_event.set()
     root.destroy()
 
+def on_closing():
+    close_app()
+
 def main():
-    lis = Listener()
+    global stop_event
+    stop_event = threading.Event()
+
+    global lis
+    lis = Listener(stop_event)
     lis.addHotKey('f4', toggle_loop)
     threading.Thread(target=lis.start).start()
 
@@ -121,6 +131,8 @@ def main():
     ttk.Button(main_frame, text="Encerrar Aplicativo", command=close_app).grid(row=1, column=0, columnspan=2, pady=10)
 
     ttk.Label(root, text="Pressione F4 para iniciar ou parar o programa.").pack(pady=5)
+
+    root.protocol("WM_DELETE_WINDOW", on_closing)
 
     root.mainloop()
 
