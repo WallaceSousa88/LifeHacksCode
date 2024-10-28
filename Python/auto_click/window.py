@@ -9,6 +9,7 @@ def get_window_size():
         height = root.winfo_height()
         print(f"Largura: {width}, Altura: {height}")
         root.destroy()
+        input("Pressione Enter para sair...")
 
     button = tk.Button(root, text="Obter Tamanho da Janela", command=show_size)
     button.pack(pady=20)
