@@ -1,59 +1,18 @@
-#### Diagramas de Classes
+A aplicação possui as seguintes entidades:
 
-```mermaid
-classDiagram
-    class Usuario {
-        +int id
-        +string nomeUsuario
-        +string senha
-    }
+`Usuário`: Cada usuário possui um identificador único (id), um nome de usuário (nomeUsuario) e uma senha (senha).
 
-    class Fornecedor {
-        +int id
-        +string nomeFantasia
-        +string CNPJ
-        +string telefone
-        +string email
-    }
+`Fornecedor`: Cada fornecedor possui um identificador único (id), um nome fantasia (nomeFantasia), um CNPJ (CNPJ), um telefone (telefone) e um email (email).
 
-    class Medicamento {
-        +int id
-        +string nomeComercial
-        +decimal precoCusto
-        +decimal precoVenda
-        +int? fornecedorId
-        +byte[]? imagem
-    }
+`Medicamento`: Cada medicamento possui um identificador único (id), um nome comercial (nomeComercial), um preço de custo (precoCusto), um preço de venda (precoVenda), um identificador de fornecedor (fornecedorId) e uma imagem (imagem).
 
-    class Lote {
-        +int id
-        +int quantidade
-        +DateTime dataFabricacao
-        +DateTime dataValidade
-        +int? medicamentoId
-    }
+`Lote`: Cada lote possui um identificador único (id), uma quantidade (quantidade), uma data de fabricação (dataFabricacao), uma data de validade (dataValidade) e um identificador de medicamento (medicamentoId).
 
-    class Entrada {
-        +int id
-        +DateTime dataEntrada
-        +int quantidadeRecebida
-        +int loteId
-    }
+`Entrada`: Cada entrada possui um identificador único (id), uma data de entrada (dataEntrada), uma quantidade recebida (quantidadeRecebida) e um identificador de lote (loteId).
 
-    class Saida {
-        +int id
-        +DateTime dataSaida
-        +int quantidadeSaida
-        +int loteId
-    }
+`Saída`: Cada saída possui um identificador único (id), uma data de saída (dataSaida), uma quantidade saída (quantidadeSaida) e um identificador de lote (loteId).
 
-    Fornecedor "1" --> "0..*" Medicamento : fornece
-    Medicamento "1" --> "0..*" Lote : contém
-    Lote "1" --> "0..*" Entrada : tem
-    Lote "1" --> "0..*" Saida : tem
-```
-
-#### Diagramas de Entidade-Relacionamento (ER)
+#### Diagrama de Entidade-Relacionamento (ER)
 
 ```mermaid
 erDiagram
