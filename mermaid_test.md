@@ -76,8 +76,8 @@ erDiagram
         string nomeComercial
         decimal precoCusto
         decimal precoVenda
-        int? fornecedorId
-        byte[]? imagem
+        int fornecedorId
+        byte[] imagem
     }
 
     LOTE {
@@ -85,7 +85,7 @@ erDiagram
         int quantidade
         DateTime dataFabricacao
         DateTime dataValidade
-        int? medicamentoId
+        int medicamentoId
     }
 
     ENTRADA {
