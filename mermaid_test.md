@@ -4,32 +4,53 @@
 classDiagram
     class Usuario {
         +int id
-        +string nome
+        +string nomeUsuario
         +string senha
-    }
-
-    class Lote {
-        +int id
-        +int medicamentoId
-        +int quantidade
-        +Date dataValidade
     }
 
     class Fornecedor {
         +int id
-        +string nome
-        +string contato
+        +string nomeFantasia
+        +string CNPJ
+        +string telefone
+        +string email
     }
 
     class Medicamento {
         +int id
-        +string nome
-        +string descricao
+        +string nomeComercial
+        +decimal precoCusto
+        +decimal precoVenda
+        +int? fornecedorId
+        +byte[]? imagem
     }
 
-    Usuario "1" --> "0..*" Lote : associa
-    Lote "1" --> "1" Medicamento : contém
+    class Lote {
+        +int id
+        +int quantidade
+        +DateTime dataFabricacao
+        +DateTime dataValidade
+        +int? medicamentoId
+    }
+
+    class Entrada {
+        +int id
+        +DateTime dataEntrada
+        +int quantidadeRecebida
+        +int loteId
+    }
+
+    class Saida {
+        +int id
+        +DateTime dataSaida
+        +int quantidadeSaida
+        +int loteId
+    }
+
     Fornecedor "1" --> "0..*" Medicamento : fornece
+    Medicamento "1" --> "0..*" Lote : contém
+    Lote "1" --> "0..*" Entrada : tem
+    Lote "1" --> "0..*" Saida : tem
 ```
 
 #### Diagramas de Entidade-Relacionamento (ER)
@@ -38,30 +59,51 @@ classDiagram
 erDiagram
     USUARIO {
         int id
-        string nome
+        string nomeUsuario
         string senha
-    }
-
-    LOTE {
-        int id
-        int medicamentoId
-        int quantidade
-        Date dataValidade
     }
 
     FORNECEDOR {
         int id
-        string nome
-        string contato
+        string nomeFantasia
+        string CNPJ
+        string telefone
+        string email
     }
 
     MEDICAMENTO {
         int id
-        string nome
-        string descricao
+        string nomeComercial
+        decimal precoCusto
+        decimal precoVenda
+        int? fornecedorId
+        byte[]? imagem
     }
 
-    USUARIO ||--o{ LOTE : "associa"
-    LOTE ||--|| MEDICAMENTO : "contém"
+    LOTE {
+        int id
+        int quantidade
+        DateTime dataFabricacao
+        DateTime dataValidade
+        int? medicamentoId
+    }
+
+    ENTRADA {
+        int id
+        DateTime dataEntrada
+        int quantidadeRecebida
+        int loteId
+    }
+
+    SAIDA {
+        int id
+        DateTime dataSaida
+        int quantidadeSaida
+        int loteId
+    }
+
     FORNECEDOR ||--o{ MEDICAMENTO : "fornece"
+    MEDICAMENTO ||--o{ LOTE : "contém"
+    LOTE ||--o{ ENTRADA : "tem"
+    LOTE ||--o{ SAIDA : "tem"
 ```
