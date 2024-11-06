@@ -67,13 +67,19 @@ centro_x, centro_y = largura_tela // 2, altura_tela // 2
 def mover_mouse_em_circulo():
     global movimento_circular_ativo, intervalo_movimento_circular
     while movimento_circular_ativo:
-        angulo = random.uniform(0, 2 * 3.14159)
-        variacao_raio = random.uniform(-5, 5)
-        raio = 25 + variacao_raio
-        novo_x = centro_x + int(raio * math.cos(angulo))
-        novo_y = centro_y + int(raio * math.sin(angulo))
-        pyautogui.moveTo(novo_x, novo_y, duration=random.uniform(0.1, 0.4))
-        time.sleep(random.uniform(*intervalo_movimento_circular))
+        tempo_total = random.uniform(0.1, 0.5)
+        passos = 360 // 5
+        duracao_por_passo = tempo_total / passos
+
+        for angulo in range(0, 360, 5):
+            if not movimento_circular_ativo:
+                break
+            radianos = math.radians(angulo)
+            raio = 100
+            novo_x = centro_x + int(raio * math.cos(radianos))
+            novo_y = centro_y + int(raio * math.sin(radianos))
+            pyautogui.moveTo(novo_x, novo_y, duration=0)
+            time.sleep(duracao_por_passo)
 
 def alternar_loop():
     global loop_ativo, clique_ativo, movimento_circular_ativo, threads_ativas
