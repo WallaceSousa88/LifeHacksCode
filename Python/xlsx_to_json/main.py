@@ -4,7 +4,7 @@ import pandas as pd
 import os
 import json
 
-def converter_xlsx_para_json(pasta_xlsx, pasta_json):
+def xlsx_to_json(pasta_xlsx, pasta_json):
     for nome_arquivo in os.listdir(pasta_xlsx):
         if nome_arquivo.endswith(".xlsx"):
             caminho_arquivo_excel = os.path.join(pasta_xlsx, nome_arquivo)
@@ -40,6 +40,6 @@ def converter_xlsx_para_json(pasta_xlsx, pasta_json):
                 print("Relação: Os arquivos têm o mesmo tamanho\n")
 
 if __name__ == "__main__":
-    pasta_xlsx = "xlsx"
-    pasta_json = "json"
-    converter_xlsx_para_json(pasta_xlsx, pasta_json)
+    pasta_xlsx = "in"
+    pasta_json = "out"
+    xlsx_to_json(pasta_xlsx, pasta_json)
