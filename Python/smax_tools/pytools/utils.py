@@ -59,7 +59,7 @@ def press_tab(driver, times=1):
 
 def press_enter(driver):
     webdriver.ActionChains(driver).send_keys(Keys.RETURN).perform()
-    time.sleep(5)
+    time.sleep(1)
 
 def is_boolean_list(items):
     normalized_items = [unicodedata.normalize('NFKD', item).encode('ASCII', 'ignore').decode('ASCII').lower() for item in items]
