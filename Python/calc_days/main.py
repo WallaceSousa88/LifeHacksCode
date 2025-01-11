@@ -29,10 +29,7 @@ def dias_uteis_no_mes(ano, mes, pais='BR'):
     return dias_uteis
 
 def dias_uteis_por_ano(ano, pais='BR'):
-    meses = [
-        "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
-        "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
-    ]
+    meses = [ "Janeiro" , "Fevereiro" , "Março" , "Abril" , "Maio" , "Junho" , "Julho" , "Agosto" , "Setembro" , "Outubro" , "Novembro" , "Dezembro" ]
     dias_uteis_meses = []
 
     for mes in range(1, 13):
@@ -42,10 +39,10 @@ def dias_uteis_por_ano(ano, pais='BR'):
     return dias_uteis_meses
 
 ano = 2025
-mes = 9
+mes = 1
 dias_uteis = dias_uteis_no_mes(ano, mes)
-print(f'O número de dias úteis em {mes}/{ano} é: {dias_uteis}')
+# print(f'O número de dias úteis em {mes}/{ano} é: {dias_uteis}')
 
-# dias_uteis_ano = dias_uteis_por_ano(ano)
-# for mes, dias_uteis in dias_uteis_ano:
-#     print(f'{mes}: {dias_uteis} dias úteis')
+dias_uteis_ano = dias_uteis_por_ano(ano)
+for mes, dias_uteis in dias_uteis_ano:
+    print(f'{mes}: {dias_uteis} dias úteis')
