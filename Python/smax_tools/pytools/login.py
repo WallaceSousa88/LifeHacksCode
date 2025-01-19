@@ -1,32 +1,21 @@
-import json
 import time
 import subprocess
 import requests
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.edge.service import Service as EdgeService
 from selenium.webdriver.edge.options import Options as EdgeOptions
 
-def kill_edge_processes():
-    try:
-        subprocess.run(["taskkill", "/F", "/IM", "msedge.exe"], check=True)
-    except subprocess.CalledProcessError as e:
-        print(f"Não há processos do Edge para encerrar: {e}")
-
 def login():
-    kill_edge_processes()
+    subprocess.run(["taskkill", "/F", "/IM", "msedge.exe"], check=False, capture_output=True)
     subprocess.Popen(["C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe", "--remote-debugging-port=9222"])
     time.sleep(5)
 
-    with open('config.json', 'r') as config_file:
-        config = json.load(config_file)
-
-    edge_driver_path = config['edge_driver_path']
-    url = config['url']
+    edge_driver_path = "C:\\edgedriver_win64\\msedgedriver.exe"
+    url = "x"
 
     service = EdgeService(executable_path=edge_driver_path)
     options = EdgeOptions()
@@ -40,16 +29,23 @@ def login():
         EC.presence_of_element_located((By.ID, 'username'))
     )
     username_field.send_keys('username')
-    username_field.send_keys(Keys.RETURN)
+
+    next_button = WebDriverWait(driver, 30).until(
+            EC.element_to_be_clickable((By.ID, 'next'))
+        )
+    next_button.click()
 
     WebDriverWait(driver, 30).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, '.main-toolbar-icon-wrapper[role="button"][ng-click="showRecentConversations()"]'))
     )
 
-    return driver
-
-def get_session_from_driver(driver):
     session = requests.Session()
     for cookie in driver.get_cookies():
         session.cookies.set(cookie['name'], cookie['value'])
+
+    driver.minimize_window()
     return session
+
+if __name__ == '__main__':
+    session = login()
+    print("Sessão criada com sucesso!")
