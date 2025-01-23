@@ -1,51 +1,43 @@
-import time
+import json
 import subprocess
-import requests
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.edge.service import Service as EdgeService
 from selenium.webdriver.edge.options import Options as EdgeOptions
+from selenium.webdriver.edge.service import Service as EdgeService
+from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
-def login():
-    subprocess.run(["taskkill", "/F", "/IM", "msedge.exe"], check=False, capture_output=True)
-    subprocess.Popen(["C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe", "--remote-debugging-port=9222"])
-    time.sleep(5)
+with open('..\\config.json', 'r') as config_file:
+    config = json.load(config_file)
 
-    edge_driver_path = "C:\\edgedriver_win64\\msedgedriver.exe"
-    url = "x"
+URL = config['url']
+DEBUG_PORT = 9222
 
-    service = EdgeService(executable_path=edge_driver_path)
+def get_session_and_login():
+    edge_process = subprocess.Popen([
+        "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+        f"--remote-debugging-port={DEBUG_PORT}",
+        "--user-data-dir=C:\\Temp\\EdgeProfile",
+        "--disable-features=msEdgeSync"
+    ])
+
+    edge_service = EdgeService(EdgeChromiumDriverManager().install())
     options = EdgeOptions()
     options.add_argument("--start-maximized")
-    options.add_experimental_option("debuggerAddress", "localhost:9222")
-    driver = webdriver.Edge(service=service, options=options)
+    options.add_experimental_option("debuggerAddress", f"localhost:{DEBUG_PORT}")
+    driver = webdriver.Edge(service=edge_service, options=options)
 
-    driver.get(f"{url}")
+    driver.get(URL)
 
-    username_field = WebDriverWait(driver, 30).until(
-        EC.presence_of_element_located((By.ID, 'username'))
-    )
-    username_field.send_keys('username')
+    username_field = WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.ID, "username")))
+    username_field.send_keys("username")
 
-    next_button = WebDriverWait(driver, 30).until(
-            EC.element_to_be_clickable((By.ID, 'next'))
-        )
+    next_button = WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.ID, "next")))
     next_button.click()
 
-    WebDriverWait(driver, 30).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, '.main-toolbar-icon-wrapper[role="button"][ng-click="showRecentConversations()"]'))
-    )
+    return driver, edge_process
 
-    session = requests.Session()
-    for cookie in driver.get_cookies():
-        session.cookies.set(cookie['name'], cookie['value'])
-
-    driver.minimize_window()
-    return session
-
-if __name__ == '__main__':
-    session = login()
-    print("Sessão criada com sucesso!")
+if __name__ == "__main__":
+    driver, edge_process = get_session_and_login()

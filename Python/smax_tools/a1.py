@@ -9,14 +9,11 @@ def gerar_sql_query(html_content):
         nonlocal soup
         try:
             soup = BeautifulSoup(html_content, 'html.parser')
-
             tag_com_id_modulo = soup.find(attrs={"data-idmodulo": True})
-
             if tag_com_id_modulo:
                 return tag_com_id_modulo['data-idmodulo']
             else:
                 return "0"
-
         except Exception as e:
             print(f"Ocorreu um erro ao processar o HTML: {e}")
             return "0"
@@ -46,14 +43,11 @@ def gerar_sql_query(html_content):
 
     conditions = []
     current_category = None
-    first_condition = True
 
     def process_list(ul_element, indent_level=0):
         nonlocal query
         nonlocal conditions
         nonlocal current_category
-        nonlocal first_condition
-        nonlocal soup
 
         for li in ul_element.find_all('li', recursive=False):
             handle = li.find('div', class_='dd-handle')
@@ -67,17 +61,16 @@ def gerar_sql_query(html_content):
 
                 if indent_level == 0:
                     if current_category:
-                      query += "      OR (\n"
-                      if conditions:
-                        query += '        ' + ' OR\n        '.join(conditions)
-                        query +='\n'
-                      query += "      )\n"
-                      conditions = []
+                        if conditions:
+                            query += "      (\n"
+                            query += '        ' + ' OR\n        '.join(conditions)
+                            query += '\n      )\n      OR\n'
+                        conditions = []
                     current_category = text.replace("'", "''")
 
                 elif indent_level == 1:
-                   escaped_text = text.replace("'", "''")
-                   conditions.append(f"B.DES_ITEM = '{escaped_text}' AND C.DES_CATEGORIA = '{current_category}'")
+                    escaped_text = text.replace("'", "''").replace('"', '')
+                    conditions.append(f"B.DES_ITEM = '{escaped_text}' AND C.DES_CATEGORIA = '{current_category}'")
 
             sub_ol = li.find('ol', class_='dd-list')
             if sub_ol:
@@ -87,12 +80,10 @@ def gerar_sql_query(html_content):
     if main_ol:
         process_list(main_ol)
 
-    if current_category:
-      query += "      OR (\n"
-      if conditions:
-         query += '        ' + ' OR\n        '.join(conditions)
-         query +='\n'
-      query += "      )\n"
+    if current_category and conditions:
+        query += "      (\n"
+        query += '        ' + ' OR\n        '.join(conditions)
+        query += '\n      )\n'
 
     query += "    )\n"
     query += "ORDER BY\n"
