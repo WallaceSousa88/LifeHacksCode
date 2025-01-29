@@ -26,3 +26,8 @@ def extract_pdf(pasta_entrada, pasta_saida):
 
             with open(caminho_saida, 'w', encoding='utf-8') as f:
                 f.write(dados_extraidos)
+
+if __name__ == "__main__":
+    pasta_entrada = os.path.join(os.path.dirname(__file__), '..', 'in')
+    pasta_saida = os.path.join(os.path.dirname(__file__), '..', 'out')
+    extract_pdf(pasta_entrada, pasta_saida)
