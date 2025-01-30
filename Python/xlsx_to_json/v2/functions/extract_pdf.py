@@ -1,7 +1,8 @@
 import os
 import pdfplumber
+import shutil
 
-def extract_pdf(pasta_entrada, pasta_saida):
+def extract_pdf(input_folder, output_folder):
     def extract_data(caminho_pdf):
         with pdfplumber.open(caminho_pdf) as pdf:
             texto_formatado = ""
@@ -14,20 +15,21 @@ def extract_pdf(pasta_entrada, pasta_saida):
                         texto_formatado += linha_formatada + "\n"
         return texto_formatado
 
-    if not os.path.exists(pasta_saida):
-        os.makedirs(pasta_saida)
+    if os.path.exists(output_folder):
+        shutil.rmtree(output_folder)
+    os.makedirs(output_folder)
 
-    for nome_arquivo in os.listdir(pasta_entrada):
+    for nome_arquivo in os.listdir(input_folder):
         if nome_arquivo.endswith(".pdf"):
-            caminho_pdf = os.path.join(pasta_entrada, nome_arquivo)
+            caminho_pdf = os.path.join(input_folder, nome_arquivo)
             dados_extraidos = extract_data(caminho_pdf)
 
-            caminho_saida = os.path.join(pasta_saida, nome_arquivo.replace(".pdf", ".csv"))
+            caminho_saida = os.path.join(output_folder, nome_arquivo.replace(".pdf", ".csv"))
 
             with open(caminho_saida, 'w', encoding='utf-8') as f:
                 f.write(dados_extraidos)
 
 if __name__ == "__main__":
-    pasta_entrada = os.path.join(os.path.dirname(__file__), '..', 'in')
-    pasta_saida = os.path.join(os.path.dirname(__file__), '..', 'out')
-    extract_pdf(pasta_entrada, pasta_saida)
+    input_folder = os.path.join(os.path.dirname(__file__), '..', 'in')
+    output_folder = os.path.join(os.path.dirname(__file__), '..', 'out')
+    extract_pdf(input_folder, output_folder)
