@@ -6,7 +6,17 @@
 import os
 import google.generativeai as genai
 
-genai.configure(api_key=os.environ['GOOGLE_API_KEY'])
+api_key = os.getenv('GOOGLE_API_KEY')
+if not api_key:
+    print("Erro: A variável de ambiente GOOGLE_API_KEY não está definida.")
+    exit()
+
+genai.configure(api_key=api_key)
+
+# for model in genai.list_models():
+#   print(f"Nome do modelo: {model.name}")
+#   print(f"  Descrição: {model.description}")
+#   print(f"  Capabilities: {model.supported_generation_methods}")
 
 generation_config = {
   "temperature": 0.5,
@@ -32,6 +42,9 @@ while True:
         break
 
     print("-" * 30)
-    response = chat.send_message({"parts": [{"text": mensagem}]})
-    print(f"Gemini: {response.text}")
+    try:
+        response = chat.send_message({"parts": [{"text": mensagem}]})
+        print(f"Gemini: {response.text}")
+    except Exception as e:
+        print(f"Erro ao comunicar com o Gemini: {e}")
     print("-" * 30)
