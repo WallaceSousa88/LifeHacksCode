@@ -1,23 +1,39 @@
-import time
+import logging
 
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.edge.service import Service
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
 
-driver = webdriver.Edge(service=Service(EdgeChromiumDriverManager().install()))
+logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 
-url = 'https://example.com'
+def salvar_codigo_fonte(driver, url, output_file='codigo_fonte.html', wait_time=10):
+    try:
+        driver.get(url)
 
-try:
-    driver.get(url)
+        WebDriverWait(driver, wait_time).until(
+            lambda d: d.execute_script("return document.readyState") == "complete"
+        )
 
-    time.sleep(5)
+        codigo_fonte = driver.page_source
+        with open(output_file, 'w', encoding='utf-8') as file:
+            file.write(codigo_fonte)
 
-    codigo_fonte = driver.page_source
-    with open('codigo_fonte.html', 'w', encoding='utf-8') as file:
-        file.write(codigo_fonte)
+        logging.info("Código-fonte salvo!")
+    except Exception as e:
+        logging.error(f"Ocorreu o erro: {e}")
 
-    print("Código-fonte salvo com sucesso!")
-finally:
-    driver.quit()
+def main():
+    url = 'https://example.com'
+
+    service = Service(EdgeChromiumDriverManager().install())
+    driver = webdriver.Edge(service=service)
+
+    try:
+        salvar_codigo_fonte(driver, url)
+    finally:
+        driver.quit()
+
+if __name__ == '__main__':
+    main()
