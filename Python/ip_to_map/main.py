@@ -1,9 +1,12 @@
+# pip install BeautifulSoup4 folium
+
 import os
 import re
 import time
 import json
 import folium
 import requests
+
 from bs4 import BeautifulSoup, Tag
 
 def get_ip(ip, json_file='ip_info.json'):
@@ -114,7 +117,7 @@ def fix_html(html_file='ip_map.html'):
     print(f"HTML updated successfully in '{html_file}'.")
 
 if __name__ == '__main__':
-    get_ip('187.69.91.52')
+    get_ip('8.8.8.8')
     wait_file('ip_info.json')
     make_map()
     wait_file('ip_map.html')
