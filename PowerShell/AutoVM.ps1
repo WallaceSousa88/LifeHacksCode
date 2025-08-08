@@ -36,13 +36,5 @@ Write-Host "Processadores configurados: $NumProcessadores"
 Set-VMDvdDrive -VMName $NomeVM -Path $CaminhoISO
 Write-Host "Imagem ISO conectada: $CaminhoISO"
 
-$Switch = Get-VMSwitch | Select-Object -First 1
-if ($Switch) {
-    Add-VMNetworkAdapter -VMName $NomeVM -SwitchName $Switch.Name
-    Write-Host "Adaptador de rede conectado ao switch: $($Switch.Name)"
-} else {
-    Write-Host "Nenhum switch virtual encontrado. Adaptador de rede nao adicionado." -ForegroundColor Yellow
-}
-
 Start-VM -Name $NomeVM
 Write-Host "VM iniciada. Prossiga com a instalacao manual do Windows." -ForegroundColor Green
