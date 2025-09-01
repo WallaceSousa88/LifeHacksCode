@@ -1,63 +1,38 @@
-# pip install pyttsx3
+import requests
 
-import pyttsx3
-import os
+subscription_key = "x"
+endpoint = "https://eastus2.tts.speech.microsoft.com/cognitiveservices/v1"
 
-def listar_vozes():
-    engine = pyttsx3.init()
-    voices = engine.getProperty('voices')
+with open("x.txt", "r", encoding="utf-8") as file:
+    text = file.read()
 
-    if not voices:
-        print("Nenhuma voz SAPI5 encontrada no sistema.")
-        return []
+voice_name = "pt-BR-FranciscaNeural"
+style = "cheerful"
 
-    print("Vozes disponíveis no seu sistema:")
-    for i, voice in enumerate(voices):
-        idioma = voice.languages[0] if voice.languages else 'N/A'
-        print(f"{i+1}. ID: {voice.id}, Nome: {voice.name}, Idioma: {idioma}")
+headers = {
+    "Ocp-Apim-Subscription-Key": subscription_key,
+    "Content-Type": "application/ssml+xml",
+    "X-Microsoft-OutputFormat": "riff-16khz-16bit-mono-pcm",
+    "User-Agent": "CopilotPythonTTS"
+}
 
-    return voices
+ssml = f"""
+<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis'
+       xmlns:mstts='http://www.w3.org/2001/mstts' xml:lang='pt-BR'>
+  <voice name='{voice_name}'>
+    <mstts:express-as style='{style}'>
+      {text}
+    </mstts:express-as>
+  </voice>
+</speak>
+"""
 
-def gerar_audio(texto, filename="output.wav", voice_id=None, rate=170, volume=1.0):
-    engine = pyttsx3.init()
-    engine.setProperty('rate', rate)
-    engine.setProperty('volume', volume)
+response = requests.post(endpoint, headers=headers, data=ssml.encode("utf-8"))
 
-    voices = engine.getProperty('voices')
-    selected_voice = None
-
-    if voice_id:
-        for voice in voices:
-            if voice.id == voice_id:
-                selected_voice = voice
-                break
-
-    if not selected_voice:
-        for voice in voices:
-            if voice.languages and 'pt-BR' in voice.languages:
-                selected_voice = voice
-                break
-        if not selected_voice:
-            selected_voice = voices[0]
-            print(f"Usando a voz padrão: {selected_voice.name} (ID: {selected_voice.id})")
-        else:
-            print(f"Usando a voz em português: {selected_voice.name} (ID: {selected_voice.id})")
-    else:
-        print(f"Usando a voz especificada: {selected_voice.name} (ID: {selected_voice.id})")
-
-    engine.setProperty('voice', selected_voice.id)
-
-    print(f"Gerando áudio e salvando em {filename}...")
-    engine.save_to_file(texto, filename)
-    engine.runAndWait()
-
-    if os.path.exists(filename):
-        print(f"Áudio salvo com sucesso em: {os.path.abspath(filename)}")
-    else:
-        print(f"Erro: O arquivo '{filename}' não foi criado. Tente salvar em .wav.")
-
-if __name__ == "__main__":
-    vozes = listar_vozes()
-    with open("x.txt", "r", encoding="utf-8") as arquivo:
-        texto = arquivo.read()
-    gerar_audio(texto, filename="x.wav", voice_id=None)
+if response.status_code == 200:
+    with open("output.wav", "wb") as audio:
+        audio.write(response.content)
+    print("Áudio gerado com sucesso: output.wav")
+else:
+    print(f"Erro: {response.status_code}")
+    print(response.text)
