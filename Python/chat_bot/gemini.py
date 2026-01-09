@@ -18,7 +18,7 @@ def gemini(patch_q="question.txt", patch_a="Gemini.txt"):
         client = genai.Client()
         response = client.models.generate_content(
             # https://ai.google.dev/gemini-api/docs/thinking?hl=pt-br
-            model="gemini-2.5-flash-preview-05-20",
+            model="gemini-3-flash-preview",
             contents=pergunta,
             config=types.GenerateContentConfig(
                 # 0 a 24576 ~ 12288
