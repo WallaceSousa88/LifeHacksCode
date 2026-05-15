@@ -1,221 +1,185 @@
-# pip install keyboard pyautogui
+# pip install customtkinter keyboard pyautogui
 
+import customtkinter as ctk
 import keyboard
 import pyautogui
 import random
-import time
 import threading
-import tkinter as tk
+import json
+import os
+import logging
 
-from tkinter import ttk
-from concurrent.futures import ThreadPoolExecutor
+CONFIG_FILE = "config.json"
+LOG_FILE = "automacao.log"
+ATALHO_GLOBAL = 'f4'
 
-TECLAS_VALIDAS = ['num1', 'num2', 'num3', 'num4', 'space']
-INTERVALO_TECLADO_PADRAO = (0.1, 0.5)
-INTERVALO_MOUSE_PADRAO = (0.1, 0.5)
-OPCOES_MOUSE = [('Nenhum', 'nenhum'), ('Clique Esquerdo', 'esquerdo'), ('Clique Direito', 'direito')]
-ATALHO_ATIVAR_DESATIVAR = 'f4'
+logging.basicConfig(
+    filename=LOG_FILE,
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
+ctk.set_appearance_mode("System")
+ctk.set_default_color_theme("blue")
 
 class Automation:
-    def __init__(self):
-      self.loop_ativo = False
-      self.clique_ativo = False
-      self.teclas_selecionadas = []
-      self.tipo_clique_mouse = 'nenhum'
-      self.intervalo_teclado = INTERVALO_TECLADO_PADRAO
-      self.intervalo_mouse = INTERVALO_MOUSE_PADRAO
-      self.executor = ThreadPoolExecutor(max_workers=2)
-      self.futures = []
-
-    def _pressionar_tecla_aleatoriamente(self):
-        while self.loop_ativo:
-            if self.teclas_selecionadas:
-                pyautogui.press(random.choice(self.teclas_selecionadas))
-                time.sleep(random.uniform(*self.intervalo_teclado))
-
-    def _clicar_mouse(self):
-        while self.clique_ativo:
-            if self.tipo_clique_mouse == 'esquerdo':
-                pyautogui.click(button='left')
-            elif self.tipo_clique_mouse == 'direito':
-                pyautogui.click(button='right')
-            time.sleep(0.1)
-
-    def iniciar_automacao(self):
-        self.futures = []
-        if self.loop_ativo:
-            funcoes = [self._pressionar_tecla_aleatoriamente, self._clicar_mouse]
-            for funcao in funcoes:
-                future = self.executor.submit(funcao)
-                self.futures.append(future)
-
-    def parar_automacao(self):
+    def __init__(self, ui_callback):
+        pyautogui.FAILSAFE = True
+        self.stop_event = threading.Event()
         self.loop_ativo = False
-        self.clique_ativo = False
-        for future in self.futures:
-            future.cancel()
+        self.ui_callback = ui_callback
+        self.teclas_selecionadas = []
+        self.tipo_clique_mouse = 'nenhum'
+        self.intervalo_teclado = (0.1, 0.5)
+        self.intervalo_mouse = (0.1, 0.5)
 
-class Control:
-    def __init__(self, automation):
-      self.evento_parar = threading.Event()
-      self.automation = automation
-      self.__lista_teclas = []
-      self.__atalhos = {}
-      self.__teclas_validas = []
-      self._ouvindo = False
+    def _worker_teclado(self):
+        logging.info("Thread de Teclado iniciada.")
+        try:
+            while not self.stop_event.is_set():
+                if self.teclas_selecionadas:
+                    tecla = random.choice(self.teclas_selecionadas)
+                    pyautogui.press(tecla)
+                    if self.stop_event.wait(random.uniform(*self.intervalo_teclado)):
+                        break
+                else:
+                    self.stop_event.wait(0.2)
+        except Exception as e:
+            logging.error(f"Erro na thread de teclado: {e}")
 
-    def _iniciar_ouvinte_teclado(self):
-      while not self.evento_parar.is_set():
-            tecla = keyboard.read_event()
-            if tecla.name in self.__teclas_validas and tecla.event_type == 'down':
-                self.__lista_teclas.append(tecla.name)
-                atalho = '+'.join(self.__lista_teclas)
-                if atalho in self.__atalhos:
-                    func, args = self.__atalhos[atalho]
-                    func(*args)
-                    self.__lista_teclas.clear()
-            else:
-                self.__lista_teclas.clear()
+    def _worker_mouse(self):
+        logging.info("Thread de Mouse iniciada.")
+        try:
+            while not self.stop_event.is_set():
+                if self.tipo_clique_mouse != 'nenhum':
+                    botao = 'left' if self.tipo_clique_mouse == 'esquerdo' else 'right'
+                    pyautogui.click(button=botao)
+                    if self.stop_event.wait(random.uniform(*self.intervalo_mouse)):
+                        break
+                else:
+                    self.stop_event.wait(0.2)
+        except pyautogui.FailSafeException:
+            logging.warning("FAILSAFE disparado pelo usuário!")
+            self.ui_callback("emergencia", "FAILSAFE ATIVADO")
+        except Exception as e:
+            logging.error(f"Erro na thread de mouse: {e}")
 
-    def adicionar_atalho(self, atalho, callback, *args):
-        self.__atalhos[atalho] = callback, args
-        for tecla in atalho.split('+'):
-            self.__teclas_validas.append(tecla)
-
-    def alternar_loop(self, atualizar_status_callback):
-        self.automation.loop_ativo = not self.automation.loop_ativo
-        self.automation.clique_ativo = self.automation.loop_ativo
-        if self.automation.loop_ativo:
-            self.automation.iniciar_automacao()
-        else:
-            self.automation.parar_automacao()
-        atualizar_status_callback()
-
-    def iniciar_ouvinte(self):
-      if not self._ouvindo:
-        threading.Thread(target=self._iniciar_ouvinte_teclado).start()
-        self._ouvindo = True
+    def iniciar(self):
+        self.stop_event.clear()
+        self.loop_ativo = True
+        threading.Thread(target=self._worker_teclado, daemon=True).start()
+        threading.Thread(target=self._worker_mouse, daemon=True).start()
 
     def parar(self):
-      self.evento_parar.set()
+        self.loop_ativo = False
+        self.stop_event.set()
+        logging.info("Automação solicitou parada.")
 
-class AutoClickerApp:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Auto Clicker v1.0")
-        self.root.geometry("500x410")
-        self.root.protocol("WM_DELETE_WINDOW", self.ao_fechar)
-        self.automation = Automation()
-        self.control = Control(self.automation)
-        self.control.adicionar_atalho(ATALHO_ATIVAR_DESATIVAR, self.control.alternar_loop, self.atualizar_status_label)
-        self.control.iniciar_ouvinte()
-        self._inicializar_layout()
-        self.status_label = ttk.Label(root, text="Status: Desativado")
-        self.status_label.pack(pady=5)
-        ttk.Label(root, text=f"Pressione {ATALHO_ATIVAR_DESATIVAR} para iniciar ou parar o programa.").pack(pady=5)
-        self._centralizar_janela()
+class App(ctk.CTk):
+    def __init__(self):
+        super().__init__()
+        self.automation = Automation(self.callback_emergencia)
+        self.title("AutoPro Clicker v3.0")
+        self.geometry("520x550")
+        self.grid_columnconfigure((0, 1), weight=1)
+        self._criar_interface()
+        self.carregar_config()
+        keyboard.add_hotkey(ATALHO_GLOBAL, self.alternar_estado)
 
-    def _centralizar_janela(self):
-      screen_width = self.root.winfo_screenwidth()
-      screen_height = self.root.winfo_screenheight()
-      x = (screen_width - 480) // 2
-      y = (screen_height - 450) // 2
-      self.root.geometry(f"500x410+{x}+{y}")
+    def _criar_interface(self):
+        self.frame_tec = ctk.CTkFrame(self)
+        self.frame_tec.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
+        ctk.CTkLabel(self.frame_tec, text="Teclado", font=("Roboto", 16, "bold")).pack(pady=5)
 
-    def _inicializar_layout(self):
-        frame_principal = ttk.Frame(self.root)
-        frame_principal.pack(padx=10, pady=10, fill="both", expand=True)
-        frame_principal.columnconfigure(0, weight=1)
-        frame_principal.columnconfigure(1, weight=1)
+        self.chk_vars = {}
+        for tecla in ['num1', 'num2', 'num3', 'num4', 'space']:
+            var = ctk.BooleanVar()
+            ctk.CTkCheckBox(self.frame_tec, text=tecla.upper(), variable=var).pack(pady=2, anchor="w", padx=20)
+            self.chk_vars[tecla] = var
 
-        self._criar_frame_teclas(frame_principal)
-        self._criar_frame_mouse(frame_principal)
+        ctk.CTkLabel(self.frame_tec, text="Intervalo (min/max):").pack(pady=(10, 0))
+        self.tec_min = ctk.CTkEntry(self.frame_tec, width=60); self.tec_min.pack(side="left", padx=(20, 5), pady=5)
+        self.tec_max = ctk.CTkEntry(self.frame_tec, width=60); self.tec_max.pack(side="left", padx=5, pady=5)
 
-        ttk.Button(frame_principal, text="Atualizar Intervalos", command=self.atualizar_intervalos).grid(row=2, column=0, columnspan=2, pady=10)
-        ttk.Button(frame_principal, text="Encerrar Aplicativo", command=self.fechar_app).grid(row=3, column=0, columnspan=2,pady=10)
+        self.frame_mou = ctk.CTkFrame(self)
+        self.frame_mou.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
+        ctk.CTkLabel(self.frame_mou, text="Mouse", font=("Roboto", 16, "bold")).pack(pady=5)
 
-    def _criar_frame_teclas(self, frame_principal):
-        frame_teclas = ttk.LabelFrame(frame_principal, text="Teclas", labelanchor='n')
-        frame_teclas.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
-        self.variaveis_teclas = {}
-        for tecla in TECLAS_VALIDAS:
-            var = tk.BooleanVar()
-            chk = ttk.Checkbutton(frame_teclas, text=tecla, variable=var, command=self.atualizar_teclas_selecionadas)
-            chk.pack(anchor='w')
-            self.variaveis_teclas[tecla] = var
+        self.mouse_var = ctk.StringVar(value="nenhum")
+        for txt, val in [("Nenhum", "nenhum"), ("Esquerdo", "esquerdo"), ("Direito", "direito")]:
+            ctk.CTkRadioButton(self.frame_mou, text=txt, variable=self.mouse_var, value=val).pack(pady=2, anchor="w", padx=20)
 
-        label_intervalo_teclado = ttk.Label(frame_teclas, text="Intervalo Teclado (s):")
-        label_intervalo_teclado.pack(anchor='center', pady=5)
-        frame_intervalo_teclado = ttk.Frame(frame_teclas)
-        frame_intervalo_teclado.pack(anchor='center', pady=5)
-        ttk.Label(frame_intervalo_teclado, text="Min:").pack(side='left')
-        self.spin_intervalo_teclado_min = ttk.Spinbox(frame_intervalo_teclado, from_=0.01, to=10.0, width=5, increment=0.1)
-        self.spin_intervalo_teclado_min.insert(0, f"{self.automation.intervalo_teclado[0]}")
-        self.spin_intervalo_teclado_min.pack(side='left', padx=5)
-        ttk.Label(frame_intervalo_teclado, text="Max:").pack(side='left')
-        self.spin_intervalo_teclado_max = ttk.Spinbox(frame_intervalo_teclado, from_=0.01, to=10.0, width=5, increment=0.1)
-        self.spin_intervalo_teclado_max.insert(0, f"{self.automation.intervalo_teclado[1]}")
-        self.spin_intervalo_teclado_max.pack(side='left', padx=5)
+        ctk.CTkLabel(self.frame_mou, text="Intervalo (min/max):").pack(pady=(10, 0))
+        self.mou_min = ctk.CTkEntry(self.frame_mou, width=60); self.mou_min.pack(side="left", padx=(20, 5), pady=5)
+        self.mou_max = ctk.CTkEntry(self.frame_mou, width=60); self.mou_max.pack(side="left", padx=5, pady=5)
 
-    def _criar_frame_mouse(self, frame_principal):
-      frame_mouse = ttk.LabelFrame(frame_principal, text="Mouse", labelanchor='n')
-      frame_mouse.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
-      self.variavel_mouse = tk.StringVar(value='nenhum')
-      for texto, valor in OPCOES_MOUSE:
-            rdo = ttk.Radiobutton(frame_mouse, text=texto, variable=self.variavel_mouse, value=valor,
-                                  command=self.atualizar_tipo_clique_mouse)
-            rdo.pack(anchor='w')
+        self.btn_salvar = ctk.CTkButton(self, text="Salvar Configurações", fg_color="gray", command=self.salvar_config)
+        self.btn_salvar.grid(row=1, column=0, columnspan=2, pady=10)
 
-      label_intervalo_mouse = ttk.Label(frame_mouse, text="Intervalo Movimento (s):")
-      label_intervalo_mouse.pack(anchor='center', pady=5)
-      frame_intervalo_mouse = ttk.Frame(frame_mouse)
-      frame_intervalo_mouse.pack(anchor='center', pady=5)
-      ttk.Label(frame_intervalo_mouse, text="Min:").pack(side='left')
-      self.spin_intervalo_mouse_min = ttk.Spinbox(frame_intervalo_mouse, from_=0.01, to=10.0, width=5, increment=0.1)
-      self.spin_intervalo_mouse_min.insert(0, f"{self.automation.intervalo_mouse[0]}")
-      self.spin_intervalo_mouse_min.pack(side='left', padx=5)
-      ttk.Label(frame_intervalo_mouse, text="Max:").pack(side='left')
-      self.spin_intervalo_mouse_max = ttk.Spinbox(frame_intervalo_mouse, from_=0.01, to=10.0, width=5, increment=0.1)
-      self.spin_intervalo_mouse_max.insert(0, f"{self.automation.intervalo_mouse[1]}")
-      self.spin_intervalo_mouse_max.pack(side='left', padx=5)
+        self.status_frame = ctk.CTkFrame(self, fg_color="transparent")
+        self.status_frame.grid(row=2, column=0, columnspan=2, pady=10)
 
-    def atualizar_teclas_selecionadas(self):
-        self.automation.teclas_selecionadas = [tecla for tecla, var in self.variaveis_teclas.items() if var.get()]
+        self.canvas_status = ctk.CTkCanvas(self.status_frame, width=20, height=20, highlightthickness=0, bg="#2b2b2b")
+        self.canvas_status.pack(side="left", padx=10)
+        self.luz = self.canvas_status.create_oval(2, 2, 18, 18, fill="red")
 
-    def atualizar_tipo_clique_mouse(self):
-      self.automation.tipo_clique_mouse = self.variavel_mouse.get()
+        self.lbl_status = ctk.CTkLabel(self.status_frame, text=f"Status: PARADO (Atalho: {ATALHO_GLOBAL.upper()})", font=("Roboto", 13))
+        self.lbl_status.pack(side="left")
 
-    def atualizar_intervalos(self):
+    def sincronizar_dados(self):
         try:
-            self.automation.intervalo_teclado = (float(self.spin_intervalo_teclado_min.get()), float(self.spin_intervalo_teclado_max.get()))
-            self.automation.intervalo_mouse = (float(self.spin_intervalo_mouse_min.get()), float(self.spin_intervalo_mouse_max.get()))
+            self.automation.teclas_selecionadas = [t for t, v in self.chk_vars.items() if v.get()]
+            self.automation.tipo_clique_mouse = self.mouse_var.get()
+            self.automation.intervalo_teclado = (float(self.tec_min.get()), float(self.tec_max.get()))
+            self.automation.intervalo_mouse = (float(self.mou_min.get()), float(self.mou_max.get()))
+            return True
         except ValueError:
-            self.spin_intervalo_teclado_min.delete(0, tk.END)
-            self.spin_intervalo_teclado_min.insert(0, f"{self.automation.intervalo_teclado[0]}")
-            self.spin_intervalo_teclado_max.delete(0, tk.END)
-            self.spin_intervalo_teclado_max.insert(0, f"{self.automation.intervalo_teclado[1]}")
-            self.spin_intervalo_mouse_min.delete(0, tk.END)
-            self.spin_intervalo_mouse_min.insert(0, f"{self.automation.intervalo_mouse[0]}")
-            self.spin_intervalo_mouse_max.delete(0, tk.END)
-            self.spin_intervalo_mouse_max.insert(0, f"{self.automation.intervalo_mouse[1]}")
+            self.lbl_status.configure(text="Erro: Valores Numéricos Inválidos", text_color="red")
+            return False
 
-    def atualizar_status_label(self):
+    def alternar_estado(self):
         if self.automation.loop_ativo:
-            self.status_label.config(text="Status: Ativado")
+            self.automation.parar()
+            self.lbl_status.configure(text=f"Status: PARADO", text_color="white")
+            self.canvas_status.itemconfig(self.luz, fill="red")
         else:
-            self.status_label.config(text="Status: Desativado")
+            if self.sincronizar_dados():
+                self.automation.iniciar()
+                self.lbl_status.configure(text="Status: RODANDO", text_color="#4ade80")
+                self.canvas_status.itemconfig(self.luz, fill="green")
 
-    def fechar_app(self):
-        self.control.parar()
-        self.root.destroy()
+    def callback_emergencia(self, tipo, msg):
+        self.lbl_status.configure(text=f"STATUS: {msg}", text_color="orange")
+        self.canvas_status.itemconfig(self.luz, fill="orange")
+        self.automation.loop_ativo = False
 
-    def ao_fechar(self):
-        self.fechar_app()
+    def salvar_config(self):
+        data = {
+            "teclas": [t for t, v in self.chk_vars.items() if v.get()],
+            "mouse": self.mouse_var.get(),
+            "t_min": self.tec_min.get(), "t_max": self.tec_max.get(),
+            "m_min": self.mu_min.get() if hasattr(self, 'mou_min') else "0.1",
+            "m_min": self.mou_min.get(), "m_max": self.mou_max.get()
+        }
+        with open(CONFIG_FILE, "w") as f:
+            json.dump(data, f, indent=4)
+        logging.info("Configurações salvas via UI.")
 
-def main():
-    root = tk.Tk()
-    app = AutoClickerApp(root)
-    root.mainloop()
+    def carregar_config(self):
+        if os.path.exists(CONFIG_FILE):
+            try:
+                with open(CONFIG_FILE, "r") as f:
+                    d = json.load(f)
+                    for t, v in self.chk_vars.items(): v.set(t in d.get("teclas", []))
+                    self.mouse_var.set(d.get("mouse", "nenhum"))
+                    self.tec_min.insert(0, d.get("t_min", "0.1"))
+                    self.tec_max.insert(0, d.get("t_max", "0.5"))
+                    self.mou_min.insert(0, d.get("m_min", "0.1"))
+                    self.mou_max.insert(0, d.get("m_max", "0.5"))
+                self.sincronizar_dados()
+            except Exception as e:
+                logging.error(f"Erro ao carregar JSON: {e}")
 
 if __name__ == "__main__":
-    main()
+    app = App()
+    app.mainloop()
