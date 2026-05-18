@@ -1,0 +1,6 @@
+{
+  "name": "SkyPrint",
+  "description": "Gerenciador de filas de impressão em tempo real com perfis de Gerente e Operador.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

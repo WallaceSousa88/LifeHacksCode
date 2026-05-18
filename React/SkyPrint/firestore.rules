@@ -1,0 +1,72 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Common Helpers
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function getUserRole(uid) {
+      return get(/databases/$(database)/documents/users/$(uid)).data.role;
+    }
+
+    function isManager() {
+      return isSignedIn() && getUserRole(request.auth.uid) == 'manager';
+    }
+
+    function isOperator() {
+      return isSignedIn() && (getUserRole(request.auth.uid) == 'operator' || getUserRole(request.auth.uid) == 'manager');
+    }
+
+    // User Profile
+    match /users/{userId} {
+      allow get: if isSignedIn();
+      allow list: if isManager();
+      allow create, update: if false; // Only server (Admin SDK) should manage user profiles now
+    }
+
+    match /auth_secrets/{userId} {
+      allow read, write: if false; // Strictly server-side only
+    }
+
+    // Printers
+    match /printers/{printerId} {
+      allow read: if isOperator();
+      allow write: if isManager();
+    }
+
+    // Services
+    match /printers/{printerId}/services/{serviceId} {
+      function isValidService(data) {
+        return data.keys().hasAll(['description', 'status', 'order', 'printerId', 'createdAt'])
+               && data.description is string && data.description.size() <= 1000
+               && data.status in ['pending', 'completed']
+               && data.order is number
+               && data.printerId == printerId;
+      }
+
+      allow read: if isOperator();
+      
+      allow create: if isManager() && isValidService(request.resource.data) 
+                    && request.resource.data.status == 'pending'
+                    && request.resource.data.createdAt == request.time;
+      
+      allow update: if isManager() && isValidService(request.resource.data)
+                    && (
+                      // Manager can edit anything
+                      true
+                    );
+      
+      allow delete: if isManager();
+    }
+  }
+}
