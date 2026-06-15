@@ -6,6 +6,7 @@ import threading
 import json
 import os
 import logging
+import time
 
 CONFIG_FILE = "config.json"
 LOG_FILE = "automacao.log"
@@ -26,9 +27,10 @@ class Automation:
         self.stop_event = threading.Event()
         self.loop_ativo = False
         self.ui_callback = ui_callback
-        self.teclas_config = [] 
+        self.teclas_config = [] # list of dicts: {"tecla": "a", "min": 0.1, "max": 0.5}
         self.tipo_clique_mouse = 'nenhum'
         self.intervalo_mouse = (0.1, 0.5)
+        self.humanizar = False
 
     def _worker_tecla_individual(self, config):
         tecla = config.get("tecla")
@@ -37,7 +39,13 @@ class Automation:
         logging.info(f"Thread iniciada para tecla '{tecla}' ({t_min}s - {t_max}s).")
         try:
             while not self.stop_event.is_set():
-                pyautogui.press(tecla)
+                if self.humanizar:
+                    pyautogui.keyDown(tecla)
+                    time.sleep(random.uniform(0.05, 0.12))
+                    pyautogui.keyUp(tecla)
+                else:
+                    pyautogui.press(tecla)
+                    
                 if self.stop_event.wait(random.uniform(t_min, t_max)):
                     break
         except Exception as e:
@@ -49,7 +57,14 @@ class Automation:
             while not self.stop_event.is_set():
                 if self.tipo_clique_mouse != 'nenhum':
                     botao = 'left' if self.tipo_clique_mouse == 'esquerdo' else 'right'
-                    pyautogui.click(button=botao)
+                    
+                    if self.humanizar:
+                        pyautogui.mouseDown(button=botao)
+                        time.sleep(random.uniform(0.05, 0.12))
+                        pyautogui.mouseUp(button=botao)
+                    else:
+                        pyautogui.click(button=botao)
+                        
                     if self.stop_event.wait(random.uniform(*self.intervalo_mouse)):
                         break
                 else:
@@ -123,13 +138,18 @@ class App(ctk.CTk):
         self.mou_min = ctk.CTkEntry(interval_frame, width=60); self.mou_min.pack(side="left", padx=(0, 5))
         self.mou_max = ctk.CTkEntry(interval_frame, width=60); self.mou_max.pack(side="left")
 
+        # Humanizar
+        self.chk_humanizar_var = ctk.BooleanVar(value=False)
+        self.chk_humanizar = ctk.CTkCheckBox(self, text="Humanizar Ações (Delay aleatório ao pressionar)", variable=self.chk_humanizar_var)
+        self.chk_humanizar.grid(row=1, column=0, columnspan=2, pady=(10, 0))
+
         # Botão Salvar
         self.btn_salvar = ctk.CTkButton(self, text="Salvar Configurações", fg_color="gray", command=self.salvar_config)
-        self.btn_salvar.grid(row=1, column=0, columnspan=2, pady=10)
+        self.btn_salvar.grid(row=2, column=0, columnspan=2, pady=10)
 
         # Status
         self.status_frame = ctk.CTkFrame(self, fg_color="transparent")
-        self.status_frame.grid(row=2, column=0, columnspan=2, pady=10)
+        self.status_frame.grid(row=3, column=0, columnspan=2, pady=10)
 
         self.canvas_status = ctk.CTkCanvas(self.status_frame, width=20, height=20, highlightthickness=0, bg="#2b2b2b")
         self.canvas_status.pack(side="left", padx=10)
@@ -190,6 +210,7 @@ class App(ctk.CTk):
             self.automation.teclas_config = list(self.lista_teclas)
             self.automation.tipo_clique_mouse = self.mouse_var.get()
             self.automation.intervalo_mouse = (float(self.mou_min.get()), float(self.mou_max.get()))
+            self.automation.humanizar = self.chk_humanizar_var.get()
             return True
         except ValueError:
             self.lbl_status.configure(text="Erro: Valores Numéricos do Mouse Inválidos", text_color="red")
@@ -216,7 +237,8 @@ class App(ctk.CTk):
             "lista_teclas": self.lista_teclas,
             "mouse": self.mouse_var.get(),
             "m_min": self.mou_min.get(), 
-            "m_max": self.mou_max.get()
+            "m_max": self.mou_max.get(),
+            "humanizar": self.chk_humanizar_var.get()
         }
         with open(CONFIG_FILE, "w") as f:
             json.dump(data, f, indent=4)
@@ -242,6 +264,7 @@ class App(ctk.CTk):
                     self.mouse_var.set(d.get("mouse", "nenhum"))
                     self.mou_min.insert(0, d.get("m_min", "0.1"))
                     self.mou_max.insert(0, d.get("m_max", "0.5"))
+                    self.chk_humanizar_var.set(d.get("humanizar", False))
                 self.sincronizar_dados()
             except Exception as e:
                 logging.error(f"Erro ao carregar JSON: {e}")
