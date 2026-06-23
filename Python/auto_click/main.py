@@ -199,22 +199,33 @@ class App(ctk.CTk):
 
         if not tecla:
             return
+            
+        # Validação contra a lista oficial de teclas do PyAutoGUI
+        tecla_lower = tecla.lower()
+        if tecla_lower not in pyautogui.KEYBOARD_KEYS:
+            self.lbl_status.configure(text=f"Erro: A tecla '{tecla}' não é válida", text_color="red")
+            return
 
         try:
             t_min_f = float(t_min) if t_min else 0.1
             t_max_f = float(t_max) if t_max else 0.5
-
+            
             self.lista_teclas.append({
-                "tecla": tecla,
+                "tecla": tecla_lower, # Salva padronizado para evitar erros
                 "min": t_min_f,
                 "max": t_max_f
             })
-
+            
             self.entry_nova_tecla.delete(0, 'end')
             self.entry_tec_min.delete(0, 'end')
             self.entry_tec_max.delete(0, 'end')
-
+            
             self.atualizar_lista_teclas_ui()
+            
+            # Limpa mensagens de erro caso existam
+            if not self.automation.loop_ativo:
+                self.lbl_status.configure(text=f"Status: PARADO (Atalho: {ATALHO_GLOBAL.upper()})", text_color="white")
+                
         except ValueError:
             self.lbl_status.configure(text="Erro: Tempos da tecla inválidos", text_color="red")
 
