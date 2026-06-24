@@ -27,10 +27,11 @@ class Automation:
         self.stop_event = threading.Event()
         self.loop_ativo = False
         self.ui_callback = ui_callback
-        self.teclas_config = []
+        self.teclas_config = [] # list of dicts: {"tecla": "a", "min": 0.1, "max": 0.5}
         self.tipo_clique_mouse = 'nenhum'
         self.intervalo_mouse = (0.1, 0.5)
         self.humanizar = False
+        self.threads_ativas = []
 
     def _worker_tecla_individual(self, config):
         tecla = config.get("tecla")
@@ -76,11 +77,24 @@ class Automation:
             logging.error(f"Erro na thread de mouse: {e}")
 
     def iniciar(self):
+        # Garante que qualquer thread anterior seja finalizada antes de iniciar novas
+        self.parar()
+        for t in self.threads_ativas:
+            if t.is_alive():
+                t.join(timeout=0.5)
+        self.threads_ativas.clear()
+
         self.stop_event.clear()
         self.loop_ativo = True
+        
         for config in self.teclas_config:
-            threading.Thread(target=self._worker_tecla_individual, args=(config,), daemon=True).start()
-        threading.Thread(target=self._worker_mouse, daemon=True).start()
+            t = threading.Thread(target=self._worker_tecla_individual, args=(config,), daemon=True)
+            self.threads_ativas.append(t)
+            t.start()
+            
+        t_mouse = threading.Thread(target=self._worker_mouse, daemon=True)
+        self.threads_ativas.append(t_mouse)
+        t_mouse.start()
 
     def parar(self):
         self.loop_ativo = False
