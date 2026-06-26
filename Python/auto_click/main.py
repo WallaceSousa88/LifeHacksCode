@@ -35,22 +35,34 @@ class Automation:
 
     def _worker_tecla_individual(self, config):
         tecla = config.get("tecla")
+        is_hold = config.get("hold", False)
         t_min = float(config.get("min", 0.1))
         t_max = float(config.get("max", 0.5))
-        logging.info(f"Thread iniciada para tecla '{tecla}' ({t_min}s - {t_max}s).")
-        try:
-            while not self.stop_event.is_set():
-                if self.humanizar:
-                    pyautogui.keyDown(tecla)
-                    time.sleep(random.uniform(0.05, 0.12))
-                    pyautogui.keyUp(tecla)
-                else:
-                    pyautogui.press(tecla)
 
-                if self.stop_event.wait(random.uniform(t_min, t_max)):
-                    break
-        except Exception as e:
-            logging.error(f"Erro na thread da tecla '{tecla}': {e}")
+        logging.info(f"Thread iniciada para tecla '{tecla}' (Hold: {is_hold}, Intervalo: {t_min}s - {t_max}s).")
+
+        if is_hold:
+            try:
+                pyautogui.keyDown(tecla)
+                self.stop_event.wait()
+            except Exception as e:
+                logging.error(f"Erro na thread da tecla '{tecla}' (Hold): {e}")
+            finally:
+                pyautogui.keyUp(tecla)
+        else:
+            try:
+                while not self.stop_event.is_set():
+                    if self.humanizar:
+                        pyautogui.keyDown(tecla)
+                        time.sleep(random.uniform(0.05, 0.12))
+                        pyautogui.keyUp(tecla)
+                    else:
+                        pyautogui.press(tecla)
+
+                    if self.stop_event.wait(random.uniform(t_min, t_max)):
+                        break
+            except Exception as e:
+                logging.error(f"Erro na thread da tecla '{tecla}': {e}")
 
     def _worker_mouse(self):
         logging.info("Thread de Mouse iniciada.")
@@ -100,6 +112,7 @@ class Automation:
         self.stop_event.set()
         logging.info("Automação solicitou parada.")
 
+
 class App(ctk.CTk):
     def __init__(self):
         super().__init__()
@@ -109,6 +122,8 @@ class App(ctk.CTk):
         self.geometry("450x800")
         self.resizable(False, False)
 
+        self.protocol("WM_DELETE_WINDOW", self.on_closing)
+
         self.perfis = {"Padrão": self._get_default_config()}
         self.perfil_ativo = "Padrão"
         self.lista_teclas = []
@@ -116,6 +131,14 @@ class App(ctk.CTk):
         self._criar_interface()
         self.carregar_config()
         keyboard.add_hotkey(ATALHO_GLOBAL, self.alternar_estado)
+
+    def on_closing(self):
+        self.automation.parar()
+
+        if self.automation.threads_ativas:
+            time.sleep(0.15)
+
+        self.destroy()
 
     def _get_default_config(self):
         return {
@@ -160,13 +183,17 @@ class App(ctk.CTk):
         form_frame = ctk.CTkFrame(self.frame_tec, fg_color="transparent")
         form_frame.pack(fill="x", padx=10, pady=10)
 
-        self.entry_nova_tecla = ctk.CTkEntry(form_frame, width=70, placeholder_text="Tecla")
+        self.entry_nova_tecla = ctk.CTkEntry(form_frame, width=50, placeholder_text="Tecla")
         self.entry_nova_tecla.pack(side="left", padx=5, expand=True, fill="x")
 
-        self.entry_tec_min = ctk.CTkEntry(form_frame, width=60, placeholder_text="Mín(s)")
+        self.chk_hold_var = ctk.BooleanVar(value=False)
+        self.chk_hold = ctk.CTkCheckBox(form_frame, text="Segurar", variable=self.chk_hold_var, command=self.toggle_hold, font=("Segoe UI", 12), width=50)
+        self.chk_hold.pack(side="left", padx=5)
+
+        self.entry_tec_min = ctk.CTkEntry(form_frame, width=50, placeholder_text="Mín")
         self.entry_tec_min.pack(side="left", padx=5)
 
-        self.entry_tec_max = ctk.CTkEntry(form_frame, width=60, placeholder_text="Máx(s)")
+        self.entry_tec_max = ctk.CTkEntry(form_frame, width=50, placeholder_text="Máx")
         self.entry_tec_max.pack(side="left", padx=5)
 
         btn_add = ctk.CTkButton(form_frame, text="➕", width=35, font=("Segoe UI", 16), command=self.adicionar_tecla)
@@ -190,8 +217,8 @@ class App(ctk.CTk):
         interval_frame = ctk.CTkFrame(self.frame_mou, fg_color="transparent")
         interval_frame.pack(fill="x", padx=15, pady=(5, 15))
         ctk.CTkLabel(interval_frame, text="Intervalo: ", font=("Segoe UI", 13), text_color="#a3a3a3").pack(side="left", padx=(0, 10))
-        self.mou_min = ctk.CTkEntry(interval_frame, width=60, placeholder_text="Mín"); self.mou_min.pack(side="left", padx=5)
-        self.mou_max = ctk.CTkEntry(interval_frame, width=60, placeholder_text="Máx"); self.mou_max.pack(side="left", padx=5)
+        self.mou_min = ctk.CTkEntry(interval_frame, width=60, placeholder_text="Mín(s)"); self.mou_min.pack(side="left", padx=5)
+        self.mou_max = ctk.CTkEntry(interval_frame, width=60, placeholder_text="Máx(s)"); self.mou_max.pack(side="left", padx=5)
 
         self.frame_ctrl = ctk.CTkFrame(self, fg_color="transparent")
         self.frame_ctrl.pack(fill="x", padx=20, pady=10)
@@ -212,10 +239,19 @@ class App(ctk.CTk):
 
         ctk.CTkLabel(self.status_frame, text=f"Atalho: {ATALHO_GLOBAL.upper()}", font=("Segoe UI", 12), text_color="#a3a3a3").pack(side="right", padx=20)
 
+    def toggle_hold(self):
+        if self.chk_hold_var.get():
+            self.entry_tec_min.configure(state="disabled")
+            self.entry_tec_max.configure(state="disabled")
+        else:
+            self.entry_tec_min.configure(state="normal")
+            self.entry_tec_max.configure(state="normal")
+
     def adicionar_tecla(self):
         tecla = self.entry_nova_tecla.get().strip()
         t_min = self.entry_tec_min.get().strip()
         t_max = self.entry_tec_max.get().strip()
+        is_hold = self.chk_hold_var.get()
 
         if not tecla:
             return
@@ -226,18 +262,26 @@ class App(ctk.CTk):
             return
 
         try:
-            t_min_f = float(t_min) if t_min else 0.1
-            t_max_f = float(t_max) if t_max else 0.5
+            if is_hold:
+                t_min_f, t_max_f = 0.0, 0.0
+            else:
+                t_min_f = float(t_min) if t_min else 0.1
+                t_max_f = float(t_max) if t_max else 0.5
 
             self.lista_teclas.append({
                 "tecla": tecla_lower,
                 "min": t_min_f,
-                "max": t_max_f
+                "max": t_max_f,
+                "hold": is_hold
             })
 
             self.entry_nova_tecla.delete(0, 'end')
-            self.entry_tec_min.delete(0, 'end')
-            self.entry_tec_max.delete(0, 'end')
+            if not is_hold:
+                self.entry_tec_min.delete(0, 'end')
+                self.entry_tec_max.delete(0, 'end')
+
+            self.chk_hold_var.set(False)
+            self.toggle_hold()
 
             self.atualizar_lista_teclas_ui()
 
@@ -260,8 +304,14 @@ class App(ctk.CTk):
             row_frame = ctk.CTkFrame(self.scroll_teclas, fg_color="transparent")
             row_frame.pack(fill="x", pady=2)
 
-            texto = f" {config['tecla'].upper()}   |   {config['min']}s - {config['max']}s"
-            lbl = ctk.CTkLabel(row_frame, text=texto, font=("Segoe UI", 13, "bold"), anchor="w")
+            if config.get("hold", False):
+                texto = f" {config['tecla'].upper()}   |   SEMPRE PRESSIONADA"
+                cor_texto = "#f59e0b"
+            else:
+                texto = f" {config['tecla'].upper()}   |   {config['min']}s - {config['max']}s"
+                cor_texto = "#e5e5e5"
+
+            lbl = ctk.CTkLabel(row_frame, text=texto, text_color=cor_texto, font=("Segoe UI", 13, "bold"), anchor="w")
             lbl.pack(side="left", padx=5)
 
             btn_del = ctk.CTkButton(row_frame, text="🗑", width=30, height=24, fg_color="#ef4444", hover_color="#dc2626", font=("Segoe UI", 12),
