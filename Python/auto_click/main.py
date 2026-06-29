@@ -38,9 +38,9 @@ class Automation:
         is_hold = config.get("hold", False)
         t_min = float(config.get("min", 0.1))
         t_max = float(config.get("max", 0.5))
-
+        
         logging.info(f"Thread iniciada para tecla '{tecla}' (Hold: {is_hold}, Intervalo: {t_min}s - {t_max}s).")
-
+        
         if is_hold:
             try:
                 pyautogui.keyDown(tecla)
@@ -58,7 +58,7 @@ class Automation:
                         pyautogui.keyUp(tecla)
                     else:
                         pyautogui.press(tecla)
-
+                        
                     if self.stop_event.wait(random.uniform(t_min, t_max)):
                         break
             except Exception as e:
@@ -70,14 +70,14 @@ class Automation:
             while not self.stop_event.is_set():
                 if self.tipo_clique_mouse != 'nenhum':
                     botao = 'left' if self.tipo_clique_mouse == 'esquerdo' else 'right'
-
+                    
                     if self.humanizar:
                         pyautogui.mouseDown(button=botao)
                         time.sleep(random.uniform(0.05, 0.12))
                         pyautogui.mouseUp(button=botao)
                     else:
                         pyautogui.click(button=botao)
-
+                        
                     if self.stop_event.wait(random.uniform(*self.intervalo_mouse)):
                         break
                 else:
@@ -97,12 +97,12 @@ class Automation:
 
         self.stop_event.clear()
         self.loop_ativo = True
-
+        
         for config in self.teclas_config:
             t = threading.Thread(target=self._worker_tecla_individual, args=(config,), daemon=True)
             self.threads_ativas.append(t)
             t.start()
-
+            
         t_mouse = threading.Thread(target=self._worker_mouse, daemon=True)
         self.threads_ativas.append(t_mouse)
         t_mouse.start()
@@ -117,27 +117,27 @@ class App(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.automation = Automation(self.callback_emergencia)
-        self.title("AutoPro Clicker v5.0")
-
+        self.title("AutoPro Clicker v1.0")
+        
         self.geometry("450x800")
         self.resizable(False, False)
-
+        
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
-
+        
         self.perfis = {"Padrão": self._get_default_config()}
         self.perfil_ativo = "Padrão"
         self.lista_teclas = []
-
+        
         self._criar_interface()
         self.carregar_config()
         keyboard.add_hotkey(ATALHO_GLOBAL, self.alternar_estado)
 
     def on_closing(self):
         self.automation.parar()
-
+        
         if self.automation.threads_ativas:
             time.sleep(0.15)
-
+            
         self.destroy()
 
     def _get_default_config(self):
@@ -150,52 +150,51 @@ class App(ctk.CTk):
         }
 
     def _criar_interface(self):
-
         self.frame_perfil = ctk.CTkFrame(self, fg_color="#1e1e1e", corner_radius=10)
         self.frame_perfil.pack(fill="x", padx=20, pady=(20, 10))
-
+        
         ctk.CTkLabel(self.frame_perfil, text="PERFIL DE CONFIGURAÇÃO", font=("Segoe UI", 12, "bold"), text_color="#3b82f6").pack(anchor="w", padx=15, pady=(10, 0))
-
+        
         perf_container = ctk.CTkFrame(self.frame_perfil, fg_color="transparent")
         perf_container.pack(fill="x", padx=10, pady=(10, 5))
-
+        
         self.perfil_var = ctk.StringVar(value="Padrão")
         self.opt_perfil = ctk.CTkOptionMenu(perf_container, variable=self.perfil_var, values=["Padrão"], command=self.trocar_perfil)
         self.opt_perfil.pack(side="left", expand=True, fill="x", padx=5)
 
         self.btn_excluir_perfil = ctk.CTkButton(perf_container, text="🗑", width=35, fg_color="#ef4444", hover_color="#dc2626", font=("Segoe UI", 16), command=self.excluir_perfil)
         self.btn_excluir_perfil.pack(side="left", padx=5)
-
+        
         add_perf_container = ctk.CTkFrame(self.frame_perfil, fg_color="transparent")
         add_perf_container.pack(fill="x", padx=10, pady=(0, 15))
-
+        
         self.entry_novo_perfil = ctk.CTkEntry(add_perf_container, placeholder_text="Nome do novo perfil...")
         self.entry_novo_perfil.pack(side="left", expand=True, fill="x", padx=5)
-
+        
         self.btn_novo_perfil = ctk.CTkButton(add_perf_container, text="Salvar Novo", width=100, font=("Segoe UI", 12, "bold"), command=self.adicionar_perfil)
         self.btn_novo_perfil.pack(side="left", padx=5)
 
         self.frame_tec = ctk.CTkFrame(self, fg_color="#1e1e1e", corner_radius=10)
         self.frame_tec.pack(fill="x", padx=20, pady=10)
-
+        
         ctk.CTkLabel(self.frame_tec, text="TECLADO", font=("Segoe UI", 12, "bold"), text_color="#3b82f6").pack(anchor="w", padx=15, pady=(10, 0))
 
         form_frame = ctk.CTkFrame(self.frame_tec, fg_color="transparent")
         form_frame.pack(fill="x", padx=10, pady=10)
-
+        
         self.entry_nova_tecla = ctk.CTkEntry(form_frame, width=50, placeholder_text="Tecla")
         self.entry_nova_tecla.pack(side="left", padx=5, expand=True, fill="x")
-
+        
         self.chk_hold_var = ctk.BooleanVar(value=False)
         self.chk_hold = ctk.CTkCheckBox(form_frame, text="Segurar", variable=self.chk_hold_var, command=self.toggle_hold, font=("Segoe UI", 12), width=50)
         self.chk_hold.pack(side="left", padx=5)
-
+        
         self.entry_tec_min = ctk.CTkEntry(form_frame, width=50, placeholder_text="Mín")
         self.entry_tec_min.pack(side="left", padx=5)
-
+        
         self.entry_tec_max = ctk.CTkEntry(form_frame, width=50, placeholder_text="Máx")
         self.entry_tec_max.pack(side="left", padx=5)
-
+        
         btn_add = ctk.CTkButton(form_frame, text="➕", width=35, font=("Segoe UI", 16), command=self.adicionar_tecla)
         btn_add.pack(side="left", padx=5)
 
@@ -204,12 +203,12 @@ class App(ctk.CTk):
 
         self.frame_mou = ctk.CTkFrame(self, fg_color="#1e1e1e", corner_radius=10)
         self.frame_mou.pack(fill="x", padx=20, pady=10)
-
+        
         ctk.CTkLabel(self.frame_mou, text="MOUSE", font=("Segoe UI", 12, "bold"), text_color="#3b82f6").pack(anchor="w", padx=15, pady=(10, 5))
 
         mouse_radios_frame = ctk.CTkFrame(self.frame_mou, fg_color="transparent")
         mouse_radios_frame.pack(fill="x", padx=15, pady=5)
-
+        
         self.mouse_var = ctk.StringVar(value="nenhum")
         for txt, val in [("Desativado", "nenhum"), ("Esquerdo", "esquerdo"), ("Direito", "direito")]:
             ctk.CTkRadioButton(mouse_radios_frame, text=txt, variable=self.mouse_var, value=val, font=("Segoe UI", 13)).pack(side="left", padx=(0, 15))
@@ -222,7 +221,7 @@ class App(ctk.CTk):
 
         self.frame_ctrl = ctk.CTkFrame(self, fg_color="transparent")
         self.frame_ctrl.pack(fill="x", padx=20, pady=10)
-
+        
         self.chk_humanizar_var = ctk.BooleanVar(value=False)
         self.chk_humanizar = ctk.CTkCheckBox(self.frame_ctrl, text="Humanizar Ações (Anti-cheat)", font=("Segoe UI", 13), variable=self.chk_humanizar_var)
         self.chk_humanizar.pack(pady=(0, 15))
@@ -236,7 +235,7 @@ class App(ctk.CTk):
 
         self.lbl_status = ctk.CTkLabel(self.status_frame, text="🔴 PARADO", font=("Segoe UI", 14, "bold"), text_color="#ef4444")
         self.lbl_status.pack(side="left", padx=20)
-
+        
         ctk.CTkLabel(self.status_frame, text=f"Atalho: {ATALHO_GLOBAL.upper()}", font=("Segoe UI", 12), text_color="#a3a3a3").pack(side="right", padx=20)
 
     def toggle_hold(self):
@@ -255,7 +254,7 @@ class App(ctk.CTk):
 
         if not tecla:
             return
-
+            
         tecla_lower = tecla.lower()
         if tecla_lower not in pyautogui.KEYBOARD_KEYS:
             self.lbl_status.configure(text=f"❌ Erro: A tecla '{tecla}' não é válida", text_color="#ef4444")
@@ -267,27 +266,27 @@ class App(ctk.CTk):
             else:
                 t_min_f = float(t_min) if t_min else 0.1
                 t_max_f = float(t_max) if t_max else 0.5
-
+            
             self.lista_teclas.append({
                 "tecla": tecla_lower,
                 "min": t_min_f,
                 "max": t_max_f,
                 "hold": is_hold
             })
-
+            
             self.entry_nova_tecla.delete(0, 'end')
             if not is_hold:
                 self.entry_tec_min.delete(0, 'end')
                 self.entry_tec_max.delete(0, 'end')
-
+            
             self.chk_hold_var.set(False)
             self.toggle_hold()
-
+            
             self.atualizar_lista_teclas_ui()
-
+            
             if not self.automation.loop_ativo:
                 self.lbl_status.configure(text="🔴 PARADO", text_color="#ef4444")
-
+                
         except ValueError:
             self.lbl_status.configure(text="❌ Erro: Tempos da tecla inválidos", text_color="#ef4444")
 
@@ -299,21 +298,21 @@ class App(ctk.CTk):
     def atualizar_lista_teclas_ui(self):
         for widget in self.scroll_teclas.winfo_children():
             widget.destroy()
-
+        
         for i, config in enumerate(self.lista_teclas):
             row_frame = ctk.CTkFrame(self.scroll_teclas, fg_color="transparent")
             row_frame.pack(fill="x", pady=2)
-
+            
             if config.get("hold", False):
                 texto = f" {config['tecla'].upper()}   |   SEMPRE PRESSIONADA"
                 cor_texto = "#f59e0b"
             else:
                 texto = f" {config['tecla'].upper()}   |   {config['min']}s - {config['max']}s"
                 cor_texto = "#e5e5e5"
-
+                
             lbl = ctk.CTkLabel(row_frame, text=texto, text_color=cor_texto, font=("Segoe UI", 13, "bold"), anchor="w")
             lbl.pack(side="left", padx=5)
-
+            
             btn_del = ctk.CTkButton(row_frame, text="🗑", width=30, height=24, fg_color="#ef4444", hover_color="#dc2626", font=("Segoe UI", 12),
                                     command=lambda idx=i: self.remover_tecla(idx))
             btn_del.pack(side="right", padx=5)
@@ -346,7 +345,7 @@ class App(ctk.CTk):
         self.perfis[self.perfil_ativo] = {
             "lista_teclas": self.lista_teclas.copy(),
             "mouse": self.mouse_var.get(),
-            "m_min": self.mou_min.get(),
+            "m_min": self.mou_min.get(), 
             "m_max": self.mou_max.get(),
             "humanizar": self.chk_humanizar_var.get()
         }
@@ -359,22 +358,22 @@ class App(ctk.CTk):
 
     def carregar_perfil_ativo_na_ui(self):
         config = self.perfis.get(self.perfil_ativo, self._get_default_config())
-
+        
         self.lista_teclas = config.get("lista_teclas", [])
         self.atualizar_lista_teclas_ui()
-
+        
         self.mouse_var.set(config.get("mouse", "nenhum"))
-
+        
         self.mou_min.delete(0, 'end')
         self.mou_min.insert(0, config.get("m_min", "0.1"))
-
+        
         self.mou_max.delete(0, 'end')
         self.mou_max.insert(0, config.get("m_max", "0.5"))
-
+        
         self.chk_humanizar_var.set(config.get("humanizar", False))
-
+        
         self.perfil_var.set(self.perfil_ativo)
-
+        
         if len(self.perfis) <= 1:
             self.btn_excluir_perfil.pack_forget()
         else:
@@ -384,15 +383,15 @@ class App(ctk.CTk):
         nome_novo_perfil = self.entry_novo_perfil.get().strip()
         if nome_novo_perfil and nome_novo_perfil not in self.perfis:
             self.salvar_perfil_atual_em_memoria()
-
+            
             self.perfis[nome_novo_perfil] = self.perfis[self.perfil_ativo].copy()
             self.perfil_ativo = nome_novo_perfil
-
+            
             self.opt_perfil.configure(values=list(self.perfis.keys()))
             self.perfil_var.set(nome_novo_perfil)
-
+            
             self.entry_novo_perfil.delete(0, 'end')
-
+            
             self.carregar_perfil_ativo_na_ui()
             self.salvar_config()
 
@@ -413,13 +412,13 @@ class App(ctk.CTk):
         with open(CONFIG_FILE, "w") as f:
             json.dump(data, f, indent=4)
         logging.info("Configurações e perfis salvos via UI.")
-
+        
     def carregar_config(self):
         if os.path.exists(CONFIG_FILE):
             try:
                 with open(CONFIG_FILE, "r") as f:
                     d = json.load(f)
-
+                    
                     if "perfis" in d:
                         self.perfis = d["perfis"]
                         self.perfil_ativo = d.get("perfil_ativo", "Padrão")
@@ -442,7 +441,7 @@ class App(ctk.CTk):
                             }
                         }
                         self.perfil_ativo = "Padrão"
-
+                    
                 self.opt_perfil.configure(values=list(self.perfis.keys()))
                 self.carregar_perfil_ativo_na_ui()
                 self.sincronizar_dados()
