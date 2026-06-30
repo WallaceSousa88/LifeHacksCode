@@ -9,11 +9,9 @@ def listar_arquivos(caminho, extensoes=None):
             if not extensoes or any(file.endswith(ext) for ext in extensoes):
                 yield os.path.join(root, file)
 
-def salvar_em_txt(caminho, itens_selecionados):
-    nome_arquivo = os.path.basename(caminho) + '.txt'
-    caminho_area_trabalho = os.path.join(os.path.expanduser("~"), "Desktop", nome_arquivo)
+def salvar_em_txt(caminho_destino, itens_selecionados):
     try:
-        with open(caminho_area_trabalho, 'w', encoding='utf-8') as f:
+        with open(caminho_destino, 'w', encoding='utf-8') as f:
             f.write("Abaixo está a lista dos arquivos neste diretório, seguida pelos conteúdos de cada arquivo:\n\n")
             for arquivo in itens_selecionados:
                 nome_do_arquivo = os.path.basename(arquivo)
@@ -24,10 +22,10 @@ def salvar_em_txt(caminho, itens_selecionados):
                 except Exception as e:
                     f.write(f"Erro ao ler o arquivo: {e}\n")
                 f.write(f"--- Fim do arquivo: {nome_do_arquivo} ---\n\n")
-        messagebox.showinfo("Sucesso", f"Lista de arquivos e seus conteúdos salva em: {caminho_area_trabalho}")
+        messagebox.showinfo("Sucesso", f"Lista de arquivos salva com sucesso em:\n{caminho_destino}")
         root.quit()
     except PermissionError:
-        messagebox.showerror("Erro", f"Permissão negada para escrever em: {caminho_area_trabalho}")
+        messagebox.showerror("Erro", f"Permissão negada para escrever em: {caminho_destino}")
     except Exception as e:
         messagebox.showerror("Erro", f"Erro ao salvar o arquivo: {e}")
 
@@ -39,8 +37,8 @@ def selecionar_diretorio():
 def listar_itens(caminho):
     janela_itens = tk.Toplevel()
     janela_itens.title("Selecionar Itens")
-    janela_itens.geometry("400x300")
-    centralizar_janela(janela_itens, 400, 300)
+    janela_itens.geometry("400x400")
+    centralizar_janela(janela_itens, 400, 400)
     janela_itens.transient(root)
 
     extensoes = entrada_extensoes.get().split()
@@ -49,14 +47,44 @@ def listar_itens(caminho):
 
     def marcar_item():
         itens_selecionados.clear()
-        for item in lista.curselection():
-            itens_selecionados.append(lista.get(item))
-        salvar_em_txt(caminho, itens_selecionados)
+        for index in lista.curselection():
+            caminho_completo = os.path.join(caminho, lista.get(index))
+            itens_selecionados.append(caminho_completo)
 
-    lista = tk.Listbox(janela_itens, selectmode=tk.MULTIPLE)
+        nome_sugerido = os.path.basename(caminho) + '.txt'
+        arquivo_destino = filedialog.asksaveasfilename(
+            defaultextension=".txt",
+            initialfile=nome_sugerido,
+            title="Salvar arquivo de saída",
+            filetypes=[("Text files", "*.txt"), ("All files", "*.*")]
+        )
+        if arquivo_destino:
+            salvar_em_txt(arquivo_destino, itens_selecionados)
+
+    frame_lista = tk.Frame(janela_itens)
+    frame_lista.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+
+    scrollbar = tk.Scrollbar(frame_lista)
+    scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+    lista = tk.Listbox(frame_lista, selectmode=tk.MULTIPLE, yscrollcommand=scrollbar.set)
     for item in itens:
-        lista.insert(tk.END, item)
-    lista.pack(fill=tk.BOTH, expand=True)
+        rel_path = os.path.relpath(item, caminho)
+        lista.insert(tk.END, rel_path)
+    lista.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+    scrollbar.config(command=lista.yview)
+
+    frame_botoes_selecao = tk.Frame(janela_itens)
+    frame_botoes_selecao.pack(fill=tk.X, padx=10)
+
+    def selecionar_tudo():
+        lista.select_set(0, tk.END)
+
+    def desmarcar_tudo():
+        lista.selection_clear(0, tk.END)
+
+    tk.Button(frame_botoes_selecao, text="Selecionar Tudo", command=selecionar_tudo).pack(side=tk.LEFT, expand=True, fill=tk.X, padx=2)
+    tk.Button(frame_botoes_selecao, text="Desmarcar Tudo", command=desmarcar_tudo).pack(side=tk.LEFT, expand=True, fill=tk.X, padx=2)
 
     botao_salvar = tk.Button(janela_itens, text="Salvar", command=marcar_item)
     botao_salvar.pack(pady=10)
