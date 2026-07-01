@@ -4,6 +4,8 @@ import tkinter as tk
 from tkinter import filedialog, messagebox
 
 def listar_arquivos(caminho, extensoes=None):
+    if extensoes:
+        extensoes = [ext if ext.startswith('.') else f'.{ext}' for ext in extensoes]
     for root, dirs, files in os.walk(caminho):
         for file in files:
             if not extensoes or any(file.endswith(ext) for ext in extensoes):
@@ -19,6 +21,8 @@ def salvar_em_txt(caminho_destino, itens_selecionados):
                 try:
                     with open(arquivo, 'r', encoding='utf-8') as file_content:
                         f.write(file_content.read() + '\n')
+                except UnicodeDecodeError:
+                    f.write(f"--- Erro: Arquivo ignorado (parece ser binário ou tem codificação não suportada) ---\n")
                 except Exception as e:
                     f.write(f"Erro ao ler o arquivo: {e}\n")
                 f.write(f"--- Fim do arquivo: {nome_do_arquivo} ---\n\n")
@@ -46,6 +50,10 @@ def listar_itens(caminho):
     itens_selecionados = []
 
     def marcar_item():
+        if not lista.curselection():
+            messagebox.showwarning("Aviso", "Por favor, selecione ao menos um arquivo.")
+            return
+
         itens_selecionados.clear()
         for index in lista.curselection():
             caminho_completo = os.path.join(caminho, lista.get(index))
