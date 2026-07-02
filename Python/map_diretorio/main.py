@@ -11,12 +11,12 @@ def listar_arquivos(caminho, extensoes=None):
             if not extensoes or any(file.endswith(ext) for ext in extensoes):
                 yield os.path.join(root, file)
 
-def salvar_em_txt(caminho_destino, itens_selecionados):
+def salvar_em_txt(caminho_destino, itens_selecionados, caminho_base):
     try:
         with open(caminho_destino, 'w', encoding='utf-8') as f:
             f.write("Abaixo está a lista dos arquivos neste diretório, seguida pelos conteúdos de cada arquivo:\n\n")
             for arquivo in itens_selecionados:
-                nome_do_arquivo = os.path.basename(arquivo)
+                nome_do_arquivo = os.path.relpath(arquivo, caminho_base)
                 f.write(f"--- Início do arquivo: {nome_do_arquivo} ---\n")
                 try:
                     with open(arquivo, 'r', encoding='utf-8') as file_content:
@@ -67,7 +67,7 @@ def listar_itens(caminho):
             filetypes=[("Text files", "*.txt"), ("All files", "*.*")]
         )
         if arquivo_destino:
-            salvar_em_txt(arquivo_destino, itens_selecionados)
+            salvar_em_txt(arquivo_destino, itens_selecionados, caminho)
 
     frame_lista = tk.Frame(janela_itens)
     frame_lista.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
