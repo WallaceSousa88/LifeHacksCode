@@ -31,10 +31,46 @@ class MapeadorDiretoriosApp:
                 if not extensoes or any(file.endswith(ext) for ext in extensoes):
                     yield os.path.join(root_dir, file)
 
+    def gerar_arvore_arquivos(self, itens_selecionados, caminho_base):
+        arvore = {}
+        for arquivo in itens_selecionados:
+            rel_path = os.path.relpath(arquivo, caminho_base)
+            partes = rel_path.split(os.sep)
+            atual = arvore
+            for parte in partes:
+                if parte not in atual:
+                    atual[parte] = {}
+                atual = atual[parte]
+
+        linhas_arvore = []
+        def formatar_arvore(no, prefixo=""):
+            chaves = list(no.keys())
+            chaves.sort()
+            for i, chave in enumerate(chaves):
+                is_last = (i == len(chaves) - 1)
+                conector = "└── " if is_last else "├── "
+                linhas_arvore.append(f"{prefixo}{conector}{chave}")
+                filhos = no[chave]
+                if filhos:
+                    novo_prefixo = prefixo + ("    " if is_last else "│   ")
+                    formatar_arvore(filhos, novo_prefixo)
+                    
+        formatar_arvore(arvore)
+        return "\n".join(linhas_arvore)
+
     def salvar_em_txt(self, caminho_destino, itens_selecionados, caminho_base):
         try:
             with open(caminho_destino, 'w', encoding='utf-8') as f:
-                f.write("Abaixo está a lista dos arquivos neste diretório, seguida pelos conteúdos de cada arquivo:\n\n")
+                f.write("Abaixo está a estrutura de diretórios e a lista dos arquivos, seguida pelos conteúdos de cada arquivo:\n\n")
+                
+                f.write("--- Estrutura de Diretórios ---\n")
+                nome_pasta_base = os.path.basename(caminho_base) or caminho_base
+                f.write(f"{nome_pasta_base}/\n")
+                arvore_texto = self.gerar_arvore_arquivos(itens_selecionados, caminho_base)
+                if arvore_texto:
+                    f.write(arvore_texto + "\n")
+                f.write("-------------------------------\n\n")
+
                 for arquivo in itens_selecionados:
                     nome_do_arquivo = os.path.relpath(arquivo, caminho_base)
                     f.write(f"--- Início do arquivo: {nome_do_arquivo} ---\n")
