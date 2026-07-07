@@ -26,7 +26,13 @@ class MapeadorDiretoriosApp:
     def listar_arquivos(self, caminho, extensoes=None):
         if extensoes:
             extensoes = [ext if ext.startswith('.') else f'.{ext}' for ext in extensoes]
+            
+        pastas_ignoradas = {'.git', 'venv', 'node_modules', '__pycache__', '.vscode', '.idea', 'dist', 'build', 'env'}
+        
         for root_dir, dirs, files in os.walk(caminho):
+            # Remove as pastas ignoradas da lista 'dirs' in-place para o os.walk não entrar nelas
+            dirs[:] = [d for d in dirs if d not in pastas_ignoradas]
+            
             for file in files:
                 if not extensoes or any(file.endswith(ext) for ext in extensoes):
                     yield os.path.join(root_dir, file)
