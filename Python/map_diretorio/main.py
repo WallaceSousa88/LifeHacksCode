@@ -26,13 +26,12 @@ class MapeadorDiretoriosApp:
     def listar_arquivos(self, caminho, extensoes=None):
         if extensoes:
             extensoes = [ext if ext.startswith('.') else f'.{ext}' for ext in extensoes]
-            
+
         pastas_ignoradas = {'.git', 'venv', 'node_modules', '__pycache__', '.vscode', '.idea', 'dist', 'build', 'env'}
-        
+
         for root_dir, dirs, files in os.walk(caminho):
-            # Remove as pastas ignoradas da lista 'dirs' in-place para o os.walk não entrar nelas
             dirs[:] = [d for d in dirs if d not in pastas_ignoradas]
-            
+
             for file in files:
                 if not extensoes or any(file.endswith(ext) for ext in extensoes):
                     yield os.path.join(root_dir, file)
@@ -60,40 +59,57 @@ class MapeadorDiretoriosApp:
                 if filhos:
                     novo_prefixo = prefixo + ("    " if is_last else "│   ")
                     formatar_arvore(filhos, novo_prefixo)
-                    
+
         formatar_arvore(arvore)
         return "\n".join(linhas_arvore)
 
+    def gerar_texto_final(self, itens_selecionados, caminho_base):
+        texto = []
+        texto.append("Abaixo está a estrutura de diretórios e a lista dos arquivos, seguida pelos conteúdos de cada arquivo:\n\n")
+
+        texto.append("--- Estrutura de Diretórios ---\n")
+        nome_pasta_base = os.path.basename(caminho_base) or caminho_base
+        texto.append(f"{nome_pasta_base}/\n")
+        arvore_texto = self.gerar_arvore_arquivos(itens_selecionados, caminho_base)
+        if arvore_texto:
+            texto.append(arvore_texto + "\n")
+        texto.append("-------------------------------\n\n")
+
+        for arquivo in itens_selecionados:
+            nome_do_arquivo = os.path.relpath(arquivo, caminho_base)
+            texto.append(f"--- Início do arquivo: {nome_do_arquivo} ---\n")
+            try:
+                with open(arquivo, 'r', encoding='utf-8') as file_content:
+                    texto.append(file_content.read() + '\n')
+            except UnicodeDecodeError:
+                texto.append(f"--- Erro: Arquivo ignorado (parece ser binário ou tem codificação não suportada) ---\n")
+            except Exception as e:
+                texto.append(f"Erro ao ler o arquivo: {e}\n")
+            texto.append(f"--- Fim do arquivo: {nome_do_arquivo} ---\n\n")
+
+        return "".join(texto)
+
     def salvar_em_txt(self, caminho_destino, itens_selecionados, caminho_base):
         try:
+            texto_final = self.gerar_texto_final(itens_selecionados, caminho_base)
             with open(caminho_destino, 'w', encoding='utf-8') as f:
-                f.write("Abaixo está a estrutura de diretórios e a lista dos arquivos, seguida pelos conteúdos de cada arquivo:\n\n")
-                
-                f.write("--- Estrutura de Diretórios ---\n")
-                nome_pasta_base = os.path.basename(caminho_base) or caminho_base
-                f.write(f"{nome_pasta_base}/\n")
-                arvore_texto = self.gerar_arvore_arquivos(itens_selecionados, caminho_base)
-                if arvore_texto:
-                    f.write(arvore_texto + "\n")
-                f.write("-------------------------------\n\n")
-
-                for arquivo in itens_selecionados:
-                    nome_do_arquivo = os.path.relpath(arquivo, caminho_base)
-                    f.write(f"--- Início do arquivo: {nome_do_arquivo} ---\n")
-                    try:
-                        with open(arquivo, 'r', encoding='utf-8') as file_content:
-                            f.write(file_content.read() + '\n')
-                    except UnicodeDecodeError:
-                        f.write(f"--- Erro: Arquivo ignorado (parece ser binário ou tem codificação não suportada) ---\n")
-                    except Exception as e:
-                        f.write(f"Erro ao ler o arquivo: {e}\n")
-                    f.write(f"--- Fim do arquivo: {nome_do_arquivo} ---\n\n")
+                f.write(texto_final)
             messagebox.showinfo("Sucesso", f"Lista de arquivos salva com sucesso em:\n{caminho_destino}")
             self.root.quit()
         except PermissionError:
             messagebox.showerror("Erro", f"Permissão negada para escrever em: {caminho_destino}")
         except Exception as e:
             messagebox.showerror("Erro", f"Erro ao salvar o arquivo: {e}")
+
+    def copiar_para_area_transferencia(self, itens_selecionados, caminho_base):
+        try:
+            texto_final = self.gerar_texto_final(itens_selecionados, caminho_base)
+            self.root.clipboard_clear()
+            self.root.clipboard_append(texto_final)
+            messagebox.showinfo("Sucesso", "Conteúdo copiado para a Área de Transferência com sucesso!")
+            self.root.quit()
+        except Exception as e:
+            messagebox.showerror("Erro", f"Erro ao copiar: {e}")
 
     def selecionar_diretorio(self):
         caminho = filedialog.askdirectory()
@@ -103,13 +119,13 @@ class MapeadorDiretoriosApp:
     def listar_itens(self, caminho):
         janela_itens = tk.Toplevel(self.root)
         janela_itens.title("Selecionar Itens")
-        janela_itens.geometry("400x400")
-        self.centralizar_janela(janela_itens, 400, 400)
+        janela_itens.geometry("450x450")
+        self.centralizar_janela(janela_itens, 450, 450)
         janela_itens.transient(self.root)
 
         extensoes = self.entrada_extensoes.get().split()
         itens = list(self.listar_arquivos(caminho, extensoes))
-        
+
         frame_lista = tk.Frame(janela_itens)
         frame_lista.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
@@ -135,15 +151,20 @@ class MapeadorDiretoriosApp:
         tk.Button(frame_botoes_selecao, text="Selecionar Tudo", command=selecionar_tudo).pack(side=tk.LEFT, expand=True, fill=tk.X, padx=2)
         tk.Button(frame_botoes_selecao, text="Desmarcar Tudo", command=desmarcar_tudo).pack(side=tk.LEFT, expand=True, fill=tk.X, padx=2)
 
-        def marcar_item():
+        def get_itens_selecionados():
             if not lista.curselection():
                 messagebox.showwarning("Aviso", "Por favor, selecione ao menos um arquivo.")
-                return
-
+                return None
             itens_selecionados = []
             for index in lista.curselection():
                 caminho_completo = os.path.join(caminho, lista.get(index))
                 itens_selecionados.append(caminho_completo)
+            return itens_selecionados
+
+        def marcar_item():
+            itens_selecionados = get_itens_selecionados()
+            if not itens_selecionados:
+                return
 
             nome_sugerido = os.path.basename(caminho) + '.txt'
             arquivo_destino = filedialog.asksaveasfilename(
@@ -155,8 +176,20 @@ class MapeadorDiretoriosApp:
             if arquivo_destino:
                 self.salvar_em_txt(arquivo_destino, itens_selecionados, caminho)
 
-        botao_salvar = tk.Button(janela_itens, text="Salvar", command=marcar_item)
-        botao_salvar.pack(pady=10)
+        def copiar_itens():
+            itens_selecionados = get_itens_selecionados()
+            if not itens_selecionados:
+                return
+            self.copiar_para_area_transferencia(itens_selecionados, caminho)
+
+        frame_acoes = tk.Frame(janela_itens)
+        frame_acoes.pack(pady=10)
+
+        botao_salvar = tk.Button(frame_acoes, text="Salvar em .txt", command=marcar_item)
+        botao_salvar.pack(side=tk.LEFT, padx=10)
+
+        botao_copiar = tk.Button(frame_acoes, text="Copiar para Área de Transferência", command=copiar_itens)
+        botao_copiar.pack(side=tk.LEFT, padx=10)
 
 def main():
     root = tk.Tk()
