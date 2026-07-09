@@ -119,8 +119,8 @@ class MapeadorDiretoriosApp:
     def listar_itens(self, caminho):
         janela_itens = tk.Toplevel(self.root)
         janela_itens.title("Selecionar Itens")
-        janela_itens.geometry("450x450")
-        self.centralizar_janela(janela_itens, 450, 450)
+        janela_itens.geometry("500x500")
+        self.centralizar_janela(janela_itens, 500, 500)
         janela_itens.transient(self.root)
 
         extensoes = self.entrada_extensoes.get().split()
@@ -135,18 +135,43 @@ class MapeadorDiretoriosApp:
         lista = tk.Listbox(frame_lista, selectmode=tk.MULTIPLE, yscrollcommand=scrollbar.set)
         for item in itens:
             rel_path = os.path.relpath(item, caminho)
-            lista.insert(tk.END, rel_path)
+            try:
+                tamanho_kb = os.path.getsize(item) / 1024
+                lista.insert(tk.END, f"{rel_path} ({tamanho_kb:.1f} KB)")
+            except Exception:
+                lista.insert(tk.END, f"{rel_path} (Erro ao ler tamanho)")
         lista.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         scrollbar.config(command=lista.yview)
 
         frame_botoes_selecao = tk.Frame(janela_itens)
         frame_botoes_selecao.pack(fill=tk.X, padx=10)
 
+        label_tamanho = tk.Label(janela_itens, text="Tamanho Total Selecionado: 0.0 KB", font=("Arial", 9, "bold"))
+        label_tamanho.pack(pady=5)
+
+        def atualizar_tamanho(event=None):
+            tamanho_total = 0
+            for index in lista.curselection():
+                try:
+                    tamanho_total += os.path.getsize(itens[index])
+                except Exception:
+                    pass
+            tamanho_kb = tamanho_total / 1024
+            if tamanho_kb > 1024:
+                tamanho_mb = tamanho_kb / 1024
+                label_tamanho.config(text=f"Tamanho Total Selecionado: {tamanho_mb:.2f} MB")
+            else:
+                label_tamanho.config(text=f"Tamanho Total Selecionado: {tamanho_kb:.1f} KB")
+
+        lista.bind('<<ListboxSelect>>', atualizar_tamanho)
+
         def selecionar_tudo():
             lista.select_set(0, tk.END)
+            atualizar_tamanho()
 
         def desmarcar_tudo():
             lista.selection_clear(0, tk.END)
+            atualizar_tamanho()
 
         tk.Button(frame_botoes_selecao, text="Selecionar Tudo", command=selecionar_tudo).pack(side=tk.LEFT, expand=True, fill=tk.X, padx=2)
         tk.Button(frame_botoes_selecao, text="Desmarcar Tudo", command=desmarcar_tudo).pack(side=tk.LEFT, expand=True, fill=tk.X, padx=2)
@@ -157,8 +182,7 @@ class MapeadorDiretoriosApp:
                 return None
             itens_selecionados = []
             for index in lista.curselection():
-                caminho_completo = os.path.join(caminho, lista.get(index))
-                itens_selecionados.append(caminho_completo)
+                itens_selecionados.append(itens[index])
             return itens_selecionados
 
         def marcar_item():
