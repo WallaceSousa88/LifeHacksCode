@@ -1,20 +1,41 @@
 import os
 import tkinter as tk
 from tkinter import filedialog, messagebox
+from tkinter import ttk
 
 class MapeadorDiretoriosApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Mapeador de Diretórios")
-        self.root.geometry("315x170")
-        self.centralizar_janela(self.root, 315, 170)
+        self.root.geometry("315x230")
+        self.centralizar_janela(self.root, 315, 230)
+
+        tk.Label(self.root, text="Perfil Rápido (Opcional):").pack(pady=(10, 0))
+        self.combo_perfil = ttk.Combobox(self.root, state="readonly", width=30)
+        self.perfis = {
+            "Personalizado / Todos os Arquivos": "",
+            "Web (.html .css .js .ts)": ".html .css .js .ts .tsx",
+            "Python (.py .ipynb)": ".py .ipynb",
+            "Data Science (.csv .json .py)": ".csv .json .py",
+            "C/C++ (.c .cpp .h)": ".c .cpp .h .hpp"
+        }
+        self.combo_perfil['values'] = list(self.perfis.keys())
+        self.combo_perfil.current(0)
+        self.combo_perfil.pack(pady=5)
+        self.combo_perfil.bind("<<ComboboxSelected>>", self.aplicar_perfil)
 
         tk.Label(self.root, text="Extensões (separadas por espaço):").pack(pady=5)
-        self.entrada_extensoes = tk.Entry(self.root)
+        self.entrada_extensoes = tk.Entry(self.root, width=32)
         self.entrada_extensoes.pack(pady=5)
 
         self.botao_selecionar = tk.Button(self.root, text="Selecionar Diretório", command=self.selecionar_diretorio)
-        self.botao_selecionar.pack(pady=20)
+        self.botao_selecionar.pack(pady=15)
+
+    def aplicar_perfil(self, event=None):
+        selecao = self.combo_perfil.get()
+        extensoes = self.perfis.get(selecao, "")
+        self.entrada_extensoes.delete(0, tk.END)
+        self.entrada_extensoes.insert(0, extensoes)
 
     def centralizar_janela(self, janela, largura, altura):
         largura_tela = janela.winfo_screenwidth()
