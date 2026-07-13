@@ -1,17 +1,20 @@
 import os
 import tkinter as tk
 from tkinter import filedialog, messagebox
-from tkinter import ttk
+import customtkinter
+
+customtkinter.set_appearance_mode("Dark")  # Modes: "System" (standard), "Dark", "Light"
+customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
 
 class MapeadorDiretoriosApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Mapeador de Diretórios")
-        self.root.geometry("315x230")
-        self.centralizar_janela(self.root, 315, 230)
+        self.root.geometry("400x280")
+        self.centralizar_janela(self.root, 400, 280)
 
-        tk.Label(self.root, text="Perfil Rápido (Opcional):").pack(pady=(10, 0))
-        self.combo_perfil = ttk.Combobox(self.root, state="readonly", width=30)
+        customtkinter.CTkLabel(self.root, text="Perfil Rápido (Opcional):", font=("Roboto", 14, "bold")).pack(pady=(15, 5))
+        
         self.perfis = {
             "Personalizado / Todos os Arquivos": "",
             "Web (.html .css .js .ts)": ".html .css .js .ts .tsx",
@@ -19,20 +22,18 @@ class MapeadorDiretoriosApp:
             "Data Science (.csv .json .py)": ".csv .json .py",
             "C/C++ (.c .cpp .h)": ".c .cpp .h .hpp"
         }
-        self.combo_perfil['values'] = list(self.perfis.keys())
-        self.combo_perfil.current(0)
+        self.combo_perfil = customtkinter.CTkComboBox(self.root, values=list(self.perfis.keys()), state="readonly", width=300, command=self.aplicar_perfil)
+        self.combo_perfil.set("Personalizado / Todos os Arquivos")
         self.combo_perfil.pack(pady=5)
-        self.combo_perfil.bind("<<ComboboxSelected>>", self.aplicar_perfil)
 
-        tk.Label(self.root, text="Extensões (separadas por espaço):").pack(pady=5)
-        self.entrada_extensoes = tk.Entry(self.root, width=32)
+        customtkinter.CTkLabel(self.root, text="Extensões (separadas por espaço):", font=("Roboto", 14, "bold")).pack(pady=(10, 5))
+        self.entrada_extensoes = customtkinter.CTkEntry(self.root, width=300)
         self.entrada_extensoes.pack(pady=5)
 
-        self.botao_selecionar = tk.Button(self.root, text="Selecionar Diretório", command=self.selecionar_diretorio)
-        self.botao_selecionar.pack(pady=15)
+        self.botao_selecionar = customtkinter.CTkButton(self.root, text="Selecionar Diretório", command=self.selecionar_diretorio, height=40)
+        self.botao_selecionar.pack(pady=20)
 
-    def aplicar_perfil(self, event=None):
-        selecao = self.combo_perfil.get()
+    def aplicar_perfil(self, selecao):
         extensoes = self.perfis.get(selecao, "")
         self.entrada_extensoes.delete(0, tk.END)
         self.entrada_extensoes.insert(0, extensoes)
@@ -138,72 +139,72 @@ class MapeadorDiretoriosApp:
             self.listar_itens(caminho)
 
     def listar_itens(self, caminho):
-        janela_itens = tk.Toplevel(self.root)
+        janela_itens = customtkinter.CTkToplevel(self.root)
         janela_itens.title("Selecionar Itens")
-        janela_itens.geometry("500x500")
-        self.centralizar_janela(janela_itens, 500, 500)
+        janela_itens.geometry("600x550")
+        self.centralizar_janela(janela_itens, 600, 550)
         janela_itens.transient(self.root)
+        janela_itens.grab_set()
 
         extensoes = self.entrada_extensoes.get().split()
         itens = list(self.listar_arquivos(caminho, extensoes))
 
-        frame_lista = tk.Frame(janela_itens)
-        frame_lista.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        scrollable_frame = customtkinter.CTkScrollableFrame(janela_itens, label_text="Arquivos Encontrados")
+        scrollable_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=10)
 
-        scrollbar = tk.Scrollbar(frame_lista)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        label_tamanho = customtkinter.CTkLabel(janela_itens, text="Tamanho Total Selecionado: 0.0 KB", font=("Roboto", 14, "bold"))
+        label_tamanho.pack(pady=5)
 
-        lista = tk.Listbox(frame_lista, selectmode=tk.MULTIPLE, yscrollcommand=scrollbar.set)
+        self.checkboxes = []
+
+        def atualizar_tamanho():
+            tamanho_total = 0
+            for cb, item_path in self.checkboxes:
+                if cb.get() == 1:
+                    try:
+                        tamanho_total += os.path.getsize(item_path)
+                    except Exception:
+                        pass
+            tamanho_kb = tamanho_total / 1024
+            if tamanho_kb > 1024:
+                tamanho_mb = tamanho_kb / 1024
+                label_tamanho.configure(text=f"Tamanho Total Selecionado: {tamanho_mb:.2f} MB")
+            else:
+                label_tamanho.configure(text=f"Tamanho Total Selecionado: {tamanho_kb:.1f} KB")
+
         for item in itens:
             rel_path = os.path.relpath(item, caminho)
             try:
                 tamanho_kb = os.path.getsize(item) / 1024
-                lista.insert(tk.END, f"{rel_path} ({tamanho_kb:.1f} KB)")
+                texto_cb = f"{rel_path} ({tamanho_kb:.1f} KB)"
             except Exception:
-                lista.insert(tk.END, f"{rel_path} (Erro ao ler tamanho)")
-        lista.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-        scrollbar.config(command=lista.yview)
+                texto_cb = f"{rel_path} (Erro ao ler tamanho)"
+            
+            cb = customtkinter.CTkCheckBox(scrollable_frame, text=texto_cb, command=atualizar_tamanho)
+            cb.pack(anchor="w", pady=5, padx=10)
+            self.checkboxes.append((cb, item))
 
-        frame_botoes_selecao = tk.Frame(janela_itens)
-        frame_botoes_selecao.pack(fill=tk.X, padx=10)
-
-        label_tamanho = tk.Label(janela_itens, text="Tamanho Total Selecionado: 0.0 KB", font=("Arial", 9, "bold"))
-        label_tamanho.pack(pady=5)
-
-        def atualizar_tamanho(event=None):
-            tamanho_total = 0
-            for index in lista.curselection():
-                try:
-                    tamanho_total += os.path.getsize(itens[index])
-                except Exception:
-                    pass
-            tamanho_kb = tamanho_total / 1024
-            if tamanho_kb > 1024:
-                tamanho_mb = tamanho_kb / 1024
-                label_tamanho.config(text=f"Tamanho Total Selecionado: {tamanho_mb:.2f} MB")
-            else:
-                label_tamanho.config(text=f"Tamanho Total Selecionado: {tamanho_kb:.1f} KB")
-
-        lista.bind('<<ListboxSelect>>', atualizar_tamanho)
+        frame_botoes_selecao = customtkinter.CTkFrame(janela_itens, fg_color="transparent")
+        frame_botoes_selecao.pack(fill=tk.X, padx=20, pady=5)
 
         def selecionar_tudo():
-            lista.select_set(0, tk.END)
+            for cb, _ in self.checkboxes:
+                cb.select()
             atualizar_tamanho()
 
         def desmarcar_tudo():
-            lista.selection_clear(0, tk.END)
+            for cb, _ in self.checkboxes:
+                cb.deselect()
             atualizar_tamanho()
 
-        tk.Button(frame_botoes_selecao, text="Selecionar Tudo", command=selecionar_tudo).pack(side=tk.LEFT, expand=True, fill=tk.X, padx=2)
-        tk.Button(frame_botoes_selecao, text="Desmarcar Tudo", command=desmarcar_tudo).pack(side=tk.LEFT, expand=True, fill=tk.X, padx=2)
+        customtkinter.CTkButton(frame_botoes_selecao, text="Selecionar Tudo", command=selecionar_tudo, fg_color="gray").pack(side=tk.LEFT, expand=True, fill=tk.X, padx=5)
+        customtkinter.CTkButton(frame_botoes_selecao, text="Desmarcar Tudo", command=desmarcar_tudo, fg_color="gray").pack(side=tk.LEFT, expand=True, fill=tk.X, padx=5)
 
         def get_itens_selecionados():
-            if not lista.curselection():
+            itens_selecionados = [item_path for cb, item_path in self.checkboxes if cb.get() == 1]
+            if not itens_selecionados:
                 messagebox.showwarning("Aviso", "Por favor, selecione ao menos um arquivo.")
                 return None
-            itens_selecionados = []
-            for index in lista.curselection():
-                itens_selecionados.append(itens[index])
             return itens_selecionados
 
         def marcar_item():
@@ -227,17 +228,14 @@ class MapeadorDiretoriosApp:
                 return
             self.copiar_para_area_transferencia(itens_selecionados, caminho)
 
-        frame_acoes = tk.Frame(janela_itens)
-        frame_acoes.pack(pady=10)
+        frame_acoes = customtkinter.CTkFrame(janela_itens, fg_color="transparent")
+        frame_acoes.pack(pady=15)
 
-        botao_salvar = tk.Button(frame_acoes, text="Salvar em .txt", command=marcar_item)
-        botao_salvar.pack(side=tk.LEFT, padx=10)
-
-        botao_copiar = tk.Button(frame_acoes, text="Copiar para Área de Transferência", command=copiar_itens)
-        botao_copiar.pack(side=tk.LEFT, padx=10)
+        customtkinter.CTkButton(frame_acoes, text="Salvar em .txt", command=marcar_item, height=35).pack(side=tk.LEFT, padx=10)
+        customtkinter.CTkButton(frame_acoes, text="Copiar para Área de Transferência", command=copiar_itens, height=35, fg_color="#2FA572", hover_color="#106A43").pack(side=tk.LEFT, padx=10)
 
 def main():
-    root = tk.Tk()
+    root = customtkinter.CTk()
     app = MapeadorDiretoriosApp(root)
     root.mainloop()
 
