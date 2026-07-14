@@ -3,8 +3,8 @@ import tkinter as tk
 from tkinter import filedialog, messagebox
 import customtkinter
 
-customtkinter.set_appearance_mode("Dark")  # Modes: "System" (standard), "Dark", "Light"
-customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
+customtkinter.set_appearance_mode("Dark")
+customtkinter.set_default_color_theme("blue")
 
 class MapeadorDiretoriosApp:
     def __init__(self, root):
@@ -14,7 +14,7 @@ class MapeadorDiretoriosApp:
         self.centralizar_janela(self.root, 400, 280)
 
         customtkinter.CTkLabel(self.root, text="Perfil Rápido (Opcional):", font=("Roboto", 14, "bold")).pack(pady=(15, 5))
-        
+
         self.perfis = {
             "Personalizado / Todos os Arquivos": "",
             "Web (.html .css .js .ts)": ".html .css .js .ts .tsx",
@@ -149,17 +149,20 @@ class MapeadorDiretoriosApp:
         extensoes = self.entrada_extensoes.get().split()
         itens = list(self.listar_arquivos(caminho, extensoes))
 
+        entrada_pesquisa = customtkinter.CTkEntry(janela_itens, placeholder_text="Buscar arquivo...")
+        entrada_pesquisa.pack(fill=tk.X, padx=20, pady=(10, 0))
+
         scrollable_frame = customtkinter.CTkScrollableFrame(janela_itens, label_text="Arquivos Encontrados")
         scrollable_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=10)
 
         label_tamanho = customtkinter.CTkLabel(janela_itens, text="Tamanho Total Selecionado: 0.0 KB", font=("Roboto", 14, "bold"))
         label_tamanho.pack(pady=5)
 
-        self.checkboxes = []
+        checkboxes = []
 
         def atualizar_tamanho():
             tamanho_total = 0
-            for cb, item_path in self.checkboxes:
+            for cb, item_path in checkboxes:
                 if cb.get() == 1:
                     try:
                         tamanho_total += os.path.getsize(item_path)
@@ -179,29 +182,42 @@ class MapeadorDiretoriosApp:
                 texto_cb = f"{rel_path} ({tamanho_kb:.1f} KB)"
             except Exception:
                 texto_cb = f"{rel_path} (Erro ao ler tamanho)"
-            
+
             cb = customtkinter.CTkCheckBox(scrollable_frame, text=texto_cb, command=atualizar_tamanho)
             cb.pack(anchor="w", pady=5, padx=10)
-            self.checkboxes.append((cb, item))
+            checkboxes.append((cb, item))
+
+        def filtrar_arquivos(event=None):
+            termo = entrada_pesquisa.get().lower()
+            for cb, _ in checkboxes:
+                texto_cb = cb.cget("text").lower()
+                if termo in texto_cb:
+                    cb.pack(anchor="w", pady=5, padx=10)
+                else:
+                    cb.pack_forget()
+
+        entrada_pesquisa.bind("<KeyRelease>", filtrar_arquivos)
 
         frame_botoes_selecao = customtkinter.CTkFrame(janela_itens, fg_color="transparent")
         frame_botoes_selecao.pack(fill=tk.X, padx=20, pady=5)
 
         def selecionar_tudo():
-            for cb, _ in self.checkboxes:
-                cb.select()
+            for cb, _ in checkboxes:
+                if cb.winfo_ismapped():
+                    cb.select()
             atualizar_tamanho()
 
         def desmarcar_tudo():
-            for cb, _ in self.checkboxes:
-                cb.deselect()
+            for cb, _ in checkboxes:
+                if cb.winfo_ismapped():
+                    cb.deselect()
             atualizar_tamanho()
 
         customtkinter.CTkButton(frame_botoes_selecao, text="Selecionar Tudo", command=selecionar_tudo, fg_color="gray").pack(side=tk.LEFT, expand=True, fill=tk.X, padx=5)
         customtkinter.CTkButton(frame_botoes_selecao, text="Desmarcar Tudo", command=desmarcar_tudo, fg_color="gray").pack(side=tk.LEFT, expand=True, fill=tk.X, padx=5)
 
         def get_itens_selecionados():
-            itens_selecionados = [item_path for cb, item_path in self.checkboxes if cb.get() == 1]
+            itens_selecionados = [item_path for cb, item_path in checkboxes if cb.get() == 1]
             if not itens_selecionados:
                 messagebox.showwarning("Aviso", "Por favor, selecione ao menos um arquivo.")
                 return None
