@@ -85,38 +85,67 @@ class MapeadorDiretoriosApp:
         formatar_arvore(arvore)
         return "\n".join(linhas_arvore)
 
-    def gerar_texto_final(self, itens_selecionados, caminho_base):
-        texto = []
-        texto.append("Abaixo está a estrutura de diretórios e a lista dos arquivos, seguida pelos conteúdos de cada arquivo:\n\n")
+    def gerar_textos_finais(self, itens_selecionados, caminho_base, max_size_bytes=2*1024*1024):
+        textos = []
+        chunk_atual = []
+        tamanho_atual = 0
 
-        texto.append("--- Estrutura de Diretórios ---\n")
+        cabecalho = "Abaixo está a estrutura de diretórios e a lista dos arquivos, seguida pelos conteúdos de cada arquivo:\n\n"
+        cabecalho += "--- Estrutura de Diretórios ---\n"
         nome_pasta_base = os.path.basename(caminho_base) or caminho_base
-        texto.append(f"{nome_pasta_base}/\n")
+        cabecalho += f"{nome_pasta_base}/\n"
         arvore_texto = self.gerar_arvore_arquivos(itens_selecionados, caminho_base)
         if arvore_texto:
-            texto.append(arvore_texto + "\n")
-        texto.append("-------------------------------\n\n")
+            cabecalho += arvore_texto + "\n"
+        cabecalho += "-------------------------------\n\n"
+
+        chunk_atual.append(cabecalho)
+        tamanho_atual += len(cabecalho.encode('utf-8'))
 
         for arquivo in itens_selecionados:
             nome_do_arquivo = os.path.relpath(arquivo, caminho_base)
-            texto.append(f"--- Início do arquivo: {nome_do_arquivo} ---\n")
+            conteudo_arquivo = f"--- Início do arquivo: {nome_do_arquivo} ---\n"
             try:
                 with open(arquivo, 'r', encoding='utf-8') as file_content:
-                    texto.append(file_content.read() + '\n')
+                    conteudo_arquivo += file_content.read() + '\n'
             except UnicodeDecodeError:
-                texto.append(f"--- Erro: Arquivo ignorado (parece ser binário ou tem codificação não suportada) ---\n")
+                conteudo_arquivo += f"--- Erro: Arquivo ignorado (parece ser binário ou tem codificação não suportada) ---\n"
             except Exception as e:
-                texto.append(f"Erro ao ler o arquivo: {e}\n")
-            texto.append(f"--- Fim do arquivo: {nome_do_arquivo} ---\n\n")
+                conteudo_arquivo += f"Erro ao ler o arquivo: {e}\n"
+            conteudo_arquivo += f"--- Fim do arquivo: {nome_do_arquivo} ---\n\n"
 
-        return "".join(texto)
+            tamanho_conteudo = len(conteudo_arquivo.encode('utf-8'))
+
+            if tamanho_atual + tamanho_conteudo > max_size_bytes and len(chunk_atual) > 1:
+                textos.append("".join(chunk_atual))
+                chunk_atual = []
+                tamanho_atual = 0
+            
+            chunk_atual.append(conteudo_arquivo)
+            tamanho_atual += tamanho_conteudo
+
+        if chunk_atual:
+            textos.append("".join(chunk_atual))
+            
+        return textos
 
     def salvar_em_txt(self, caminho_destino, itens_selecionados, caminho_base):
         try:
-            texto_final = self.gerar_texto_final(itens_selecionados, caminho_base)
-            with open(caminho_destino, 'w', encoding='utf-8') as f:
-                f.write(texto_final)
-            messagebox.showinfo("Sucesso", f"Lista de arquivos salva com sucesso em:\n{caminho_destino}")
+            textos = self.gerar_textos_finais(itens_selecionados, caminho_base, max_size_bytes=2*1024*1024)
+            if len(textos) == 1:
+                with open(caminho_destino, 'w', encoding='utf-8') as f:
+                    f.write(textos[0])
+                messagebox.showinfo("Sucesso", f"Lista de arquivos salva com sucesso em:\n{caminho_destino}")
+            else:
+                base_nome, ext = os.path.splitext(caminho_destino)
+                arquivos_salvos = []
+                for i, texto in enumerate(textos, 1):
+                    caminho_parte = f"{base_nome}_parte{i}{ext}"
+                    with open(caminho_parte, 'w', encoding='utf-8') as f:
+                        f.write(texto)
+                    arquivos_salvos.append(caminho_parte)
+                msg = f"O conteúdo excedeu 2MB e foi dividido em {len(textos)} partes:\n\n" + "\n".join(arquivos_salvos)
+                messagebox.showinfo("Sucesso", msg)
             self.root.quit()
         except PermissionError:
             messagebox.showerror("Erro", f"Permissão negada para escrever em: {caminho_destino}")
@@ -125,9 +154,20 @@ class MapeadorDiretoriosApp:
 
     def copiar_para_area_transferencia(self, itens_selecionados, caminho_base):
         try:
-            texto_final = self.gerar_texto_final(itens_selecionados, caminho_base)
+            textos = self.gerar_textos_finais(itens_selecionados, caminho_base, max_size_bytes=2*1024*1024)
+            texto_completo = "".join(textos)
+            tamanho_mb = len(texto_completo.encode('utf-8')) / (1024*1024)
+            
+            if tamanho_mb > 2.0:
+                resposta = messagebox.askyesno("Aviso de Tamanho", 
+                    f"O conteúdo selecionado tem {tamanho_mb:.1f} MB.\n\n"
+                    "Recomendamos usar a opção 'Salvar em .txt' para dividir os arquivos automaticamente.\n\n"
+                    "Deseja copiar tudo para a Área de Transferência mesmo assim?")
+                if not resposta:
+                    return
+            
             self.root.clipboard_clear()
-            self.root.clipboard_append(texto_final)
+            self.root.clipboard_append(texto_completo)
             messagebox.showinfo("Sucesso", "Conteúdo copiado para a Área de Transferência com sucesso!")
             self.root.quit()
         except Exception as e:
