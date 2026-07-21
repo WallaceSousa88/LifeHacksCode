@@ -1,6 +1,6 @@
 import os
 
-folder = r"C:\Users\Sky\Music"
+folder = os.path.join(os.path.expanduser('~'), 'Music')
 files = os.listdir(folder)
 files.sort()
 
