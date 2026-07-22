@@ -3,7 +3,11 @@
 import os
 import yt_dlp
 
-url = "x"
+url = input("Digite a URL do vídeo que deseja baixar: ").strip()
+
+if not url:
+    print("Erro: Nenhuma URL foi fornecida. Encerrando...")
+    exit()
 
 pasta_musicas = os.path.join(os.path.expanduser('~'), 'Music')
 
