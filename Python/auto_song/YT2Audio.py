@@ -16,7 +16,11 @@ ydl_opts = {
     'outtmpl': os.path.join(pasta_musicas, '%(title)s.%(ext)s'),
 }
 
-with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-    ydl.download([url])
-
-print("Download concluído !")
+try:
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([url])
+    print("Download concluído com sucesso!")
+except yt_dlp.utils.DownloadError as e:
+    print(f"Erro ao baixar o vídeo: Verifique a URL ou sua conexão.\nDetalhes: {e}")
+except Exception as e:
+    print(f"Ocorreu um erro inesperado: {e}")
