@@ -10,7 +10,8 @@ import {
   AlertCircle,
   CheckCircle2,
   Loader2,
-  Info
+  Info,
+  Sliders
 } from 'lucide-react';
 
 import { MetalonInput, CalculationResult } from './types';
@@ -18,10 +19,11 @@ import { ReportViewer } from './components/ReportViewer';
 import { generatePDFFromElement } from './utils/pdfGenerator';
 
 export default function App() {
-  // Input states (start empty for any dimension)
+  // Input states
   const [altura, setAltura] = useState<string>('');
   const [largura, setLargura] = useState<string>('');
   const [perfil, setPerfil] = useState<string>('');
+  const [vaoMaximo, setVaoMaximo] = useState<string>('80');
 
   // Status & loading states
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
@@ -44,6 +46,7 @@ export default function App() {
     // Validation
     const numAltura = parseFloat(altura.replace(',', '.'));
     const numLargura = parseFloat(largura.replace(',', '.'));
+    const numVaoMax = parseFloat(vaoMaximo.replace(',', '.'));
 
     if (isNaN(numAltura) || numAltura <= 0) {
       setErrorMsg('Por favor, informe uma altura válida em metros (número maior que zero).');
@@ -60,10 +63,16 @@ export default function App() {
       return;
     }
 
+    if (isNaN(numVaoMax) || numVaoMax <= 0) {
+      setErrorMsg('Por favor, informe um vão máximo válido em centímetros (ex: 80).');
+      return;
+    }
+
     const inputData: MetalonInput = {
       altura: numAltura,
       largura: numLargura,
       perfil: perfil.trim(),
+      vaoMaximo: numVaoMax,
     };
 
     try {
@@ -96,18 +105,16 @@ export default function App() {
 
       setIsProcessing(false);
       setIsGeneratingPDF(true);
-      setStatusMessage('Processando...');
+      setStatusMessage('Gerando relatório...');
 
       // Allow DOM to render reportRef
       await new Promise((resolve) => setTimeout(resolve, 300));
 
       if (reportRef.current) {
         const fileName = `Relatorio_Metalon_${numLargura.toFixed(2)}x${numAltura.toFixed(2)}m.pdf`;
-        const success = await generatePDFFromElement(reportRef.current, fileName);
-        if (success) {
-          setPdfDownloaded(true);
-          setTimeout(() => setPdfDownloaded(false), 5000);
-        }
+        await generatePDFFromElement(reportRef.current, fileName);
+        setPdfDownloaded(true);
+        setTimeout(() => setPdfDownloaded(false), 3000);
       }
     } catch (err: any) {
       console.error(err);
@@ -127,7 +134,7 @@ export default function App() {
     setIsGeneratingPDF(false);
     if (success) {
       setPdfDownloaded(true);
-      setTimeout(() => setPdfDownloaded(false), 4000);
+      setTimeout(() => setPdfDownloaded(false), 3000);
     }
   };
 
@@ -136,14 +143,14 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100/80 text-slate-900 pb-16">
+    <div className="min-h-screen flex flex-col bg-slate-100/80 text-slate-900 pb-16">
       {/* Top Navbar Header */}
       <header className="no-print bg-slate-900 text-white border-b border-slate-800 shadow-md">
         <div className="max-w-5xl mx-auto px-4 py-4 grid grid-cols-1 sm:grid-cols-3 items-center gap-3">
           {/* Esquerda: Nome da Empresa */}
           <div className="flex items-center justify-center sm:justify-start">
             <span className="text-2xl font-extrabold text-white font-poppins tracking-tight">
-              SkyMídia
+              SKYMÍDIA
             </span>
           </div>
 
@@ -160,9 +167,9 @@ export default function App() {
       </header>
 
       {/* Main Content Area */}
-      <main className="max-w-4xl mx-auto px-4 pt-8">
+      <main className={`max-w-6xl w-full mx-auto px-4 py-8 flex-1 flex flex-col ${!currentResult ? 'justify-center' : ''}`}>
         {/* Input Form Card */}
-        <section className="no-print bg-white rounded-2xl p-6 sm:p-8 shadow-xl border border-slate-200/80 mb-8">
+        <section className="no-print bg-white rounded-2xl p-6 sm:p-8 shadow-xl border border-slate-200/80 mb-8 md:w-2/3 mx-auto w-full">
           <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
             <div>
               <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
@@ -173,14 +180,10 @@ export default function App() {
                 Preencha as dimensões e o perfil para calcular a quantidade de barras de 6 metros.
               </p>
             </div>
-            <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-medium bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full border border-slate-200">
-              <Info className="w-3.5 h-3.5 text-[#707579]" />
-              Espaçamento Máx: 80 cm
-            </span>
           </div>
 
           <form onSubmit={handleGeneratePDF} className="space-y-6">
-            <div className="flex flex-col gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {/* Largura */}
               <div>
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
@@ -242,6 +245,29 @@ export default function App() {
                   required
                 />
               </div>
+
+              {/* Vão Máximo (cm) */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                  <Sliders className="w-4 h-4 text-[#707579]" />
+                  Vão Máximo (centímetros)
+                </label>
+                <div className="relative">
+                  <input
+                    type="number"
+                    step="1"
+                    min="1"
+                    placeholder="Ex: 80"
+                    value={vaoMaximo}
+                    onChange={(e) => setVaoMaximo(e.target.value)}
+                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-slate-900 font-semibold focus:outline-none focus:ring-2 focus:ring-[#707579] focus:bg-white transition"
+                    required
+                  />
+                  <span className="absolute right-3 top-2.5 text-xs font-bold text-slate-400 bg-slate-200/70 px-2 py-0.5 rounded">
+                    cm
+                  </span>
+                </div>
+              </div>
             </div>
 
 
@@ -276,30 +302,33 @@ export default function App() {
           </form>
         </section>
 
-        {/* Toast / Banner when PDF is auto-downloaded */}
+        {/* Toast / Modal when PDF is auto-downloaded */}
         <AnimatePresence>
           {pdfDownloaded && (
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="no-print bg-emerald-600 text-white p-4 rounded-xl shadow-lg mb-6 flex items-center justify-between"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.2 }}
+              className="no-print fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-xs"
             >
-              <div className="flex items-center gap-3">
-                <CheckCircle2 className="w-6 h-6 text-emerald-200 shrink-0" />
-                <div>
-                  <h4 className="font-bold text-sm">PDF Gerado com Sucesso!</h4>
-                  <p className="text-xs text-emerald-100">
-                    O download do relatório em PDF foi iniciado no seu navegador.
-                  </p>
+              <div className="bg-emerald-600 text-white p-5 rounded-2xl shadow-2xl max-w-md w-full flex items-center justify-between gap-4 border border-emerald-500/30">
+                <div className="flex items-center gap-3.5">
+                  <CheckCircle2 className="w-7 h-7 text-emerald-200 shrink-0" />
+                  <div>
+                    <h4 className="font-bold text-base">PDF Gerado com Sucesso!</h4>
+                    <p className="text-xs text-emerald-100 mt-0.5">
+                      O download do relatório em PDF foi iniciado no seu navegador.
+                    </p>
+                  </div>
                 </div>
+                <button
+                  onClick={() => setPdfDownloaded(false)}
+                  className="text-xs font-semibold bg-emerald-700/90 hover:bg-emerald-800 text-white px-3.5 py-2 rounded-lg transition shrink-0 cursor-pointer"
+                >
+                  Fechar
+                </button>
               </div>
-              <button
-                onClick={() => setPdfDownloaded(false)}
-                className="text-xs bg-emerald-700 hover:bg-emerald-800 text-white px-3 py-1.5 rounded-lg transition"
-              >
-                Fechar
-              </button>
             </motion.div>
           )}
         </AnimatePresence>
@@ -307,26 +336,6 @@ export default function App() {
         {/* Results / PDF Report Display Section */}
         {currentResult && (
           <section className="space-y-4">
-            {/* Action Bar for On-Screen Report */}
-            <div className="no-print bg-white p-4 rounded-xl shadow-md border border-slate-200 flex items-center justify-end gap-2">
-              <button
-                onClick={handleManualPDFDownload}
-                disabled={isGeneratingPDF}
-                className="flex items-center gap-1.5 text-xs font-bold bg-[#707579] hover:bg-[#5d6266] text-white px-3.5 py-2 rounded-lg shadow transition cursor-pointer"
-              >
-                <FileDown className="w-4 h-4" />
-                <span>Baixar PDF Novamente</span>
-              </button>
-
-              <button
-                onClick={handlePrint}
-                className="flex items-center gap-1.5 text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-lg border border-slate-200 transition cursor-pointer"
-              >
-                <Printer className="w-4 h-4 text-slate-600" />
-                <span>Imprimir</span>
-              </button>
-            </div>
-
             {/* Document Report Viewer */}
             <ReportViewer
               markdown={currentResult.markdown}
