@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chrono Trigger — WebAssembly SNES Player</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-wrapper">
+        <header class="app-header">
+            <div class="header-content">
+                <div class="title-group">
+                    <span class="badge">WebAssembly &bull; 60 FPS</span>
+                    <h1>Chrono Trigger</h1>
+                    <p class="subtitle">SNES Engine rodando nativamente no navegador via WebAssembly</p>
+                </div>
+                <div class="header-actions">
+                    <button id="btn-fullscreen" class="btn btn-secondary" style="display: none;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+                        Tela Cheia
+                    </button>
+                    <button id="btn-change-rom" class="btn btn-secondary" style="display: none;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        Trocar ROM
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Dropzone para carregar a ROM -->
+            <section id="rom-dropzone" class="dropzone-container">
+                <div class="dropzone-box" id="drop-target">
+                    <div class="dropzone-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <rect x="2" y="6" width="20" height="12" rx="2"/>
+                            <circle cx="6" cy="12" r="2"/>
+                            <line x1="10" y1="12" x2="14" y2="12"/>
+                            <line x1="18" y1="10" x2="18" y2="10.01"/>
+                            <line x1="18" y1="14" x2="18" y2="14.01"/>
+                        </svg>
+                    </div>
+                    <h2>Carregar Chrono Trigger</h2>
+                    <p>Arraste e solte o arquivo da sua ROM (<strong>.sfc</strong>, <strong>.smc</strong> ou <strong>.zip</strong>) aqui</p>
+                    
+                    <div class="separator"><span>ou</span></div>
+                    
+                    <label for="rom-file-input" class="btn btn-primary">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        Selecionar Arquivo no PC
+                    </label>
+                    <input type="file" id="rom-file-input" accept=".sfc,.smc,.zip" hidden>
+
+                    <div class="dropzone-tips">
+                        <span>✓ Compatível com Microsoft Edge</span>
+                        <span>✓ Suporte a Gamepad/Controle USB ou Bluetooth</span>
+                        <span>✓ Save States no Navegador</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Container do Emulador WebAssembly -->
+            <section id="emulator-section" class="emulator-section" style="display: none;">
+                <div class="screen-frame">
+                    <div id="emulator-container"></div>
+                </div>
+            </section>
+
+            <!-- Guia de Controles e Dicas -->
+            <section class="controls-panel">
+                <h3>Mapeamento dos Controles (Teclado &amp; Controle)</h3>
+                <div class="controls-grid">
+                    <div class="control-item">
+                        <span class="control-key">Setas / D-Pad</span>
+                        <span class="control-action">Mover Crono</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-key">Z / Botão A</span>
+                        <span class="control-action">Confirmar / Conversar (A)</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-key">X / Botão B</span>
+                        <span class="control-action">Cancelar / Correr (B)</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-key">A / Botão X</span>
+                        <span class="control-action">Menu (X)</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-key">S / Botão Y</span>
+                        <span class="control-action">Ação secundária (Y)</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-key">Enter / Shift</span>
+                        <span class="control-action">Start / Select</span>
+                    </div>
+                </div>
+                <div class="gamepad-status" id="gamepad-status">
+                    <span class="status-indicator"></span>
+                    <span id="gamepad-label">Nenhum controle detectado (conecte via USB para habilitar automaticamente)</span>
+                </div>
+            </section>
+        </main>
+
+        <footer class="app-footer">
+            <p>Executado com núcleo <strong>Snes9x</strong> compilado em <strong>WebAssembly (WASM)</strong> via Emscripten &bull; Renderização via WebGL</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
